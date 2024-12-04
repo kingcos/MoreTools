@@ -1,10 +1,8 @@
 import { createApp } from 'vue'
-import './style.css'
+import { i18n } from './config/i18n'
 import App from './App.vue'
+import './style.css'
 
-// 检查系统暗黑模式
-if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  document.documentElement.classList.add('dark')
-}
-
-createApp(App).mount('#app')
+const app = createApp(App)
+app.use(i18n)
+app.mount('#app')

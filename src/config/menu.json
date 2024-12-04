@@ -2,27 +2,27 @@
     "menuItems": [
       {
         "id": "ai",
-        "title": "AI 助手",
+        "titleKey": "menu.ai.title",
         "isOpen": true,
         "children": [
-          { "id": "chat", "title": "ChatGPT", "component": "ChatPage" },
-          { "id": "claude", "title": "Claude", "component": "ChatPage" }
+          { "id": "chat", "titleKey": "menu.ai.chat", "component": "ChatPage" },
+          { "id": "claude", "titleKey": "menu.ai.claude", "component": "ChatPage" }
         ]
       },
       {
         "id": "social",
-        "title": "社交平台",
+        "titleKey": "menu.social.title",
         "isOpen": false,
         "children": [
-          { "id": "fanfou", "title": "我的饭否", "component": "FanfouPage" }
+          { "id": "fanfou", "titleKey": "menu.social.fanfou", "component": "FanfouPage" }
         ]
       },
       {
         "id": "entertainment",
-        "title": "娱乐",
+        "titleKey": "menu.entertainment.title",
         "isOpen": false,
         "children": [
-          { "id": "story", "title": "故事维维", "component": "StoryPage" }
+          { "id": "story", "titleKey": "menu.entertainment.story", "component": "StoryPage" }
         ]
       }
     ]

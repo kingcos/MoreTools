@@ -4,6 +4,10 @@ import ChatPage from './components/ChatPage.vue'
 import FanfouPage from './components/FanfouPage.vue'
 import StoryPage from './components/StoryPage.vue'
 import menuConfig from './config/menu.json'
+import { useI18n } from 'vue-i18n'
+import { LOCALES } from './config/i18n'
+
+const { locale, t } = useI18n()
 
 // 组件映射
 const componentMap = {
@@ -18,6 +22,7 @@ const isDarkMode = ref(document.documentElement.classList.contains('dark'))
 const currentPage = ref('')
 const searchQuery = ref('')
 const confirmingUnstar = ref<string | null>(null)
+const isLocaleMenuOpen = ref(false)
 
 // 收藏状态持久化
 const loadStarredState = () => {
@@ -55,7 +60,7 @@ const filteredMenuItems = computed(() => {
   return menuItems.value.map(menu => ({
     ...menu,
     children: menu.children.filter(child =>
-      child.title.toLowerCase().includes(searchQuery.value.toLowerCase())
+      t(child.titleKey).toLowerCase().includes(searchQuery.value.toLowerCase())
     )
   })).filter(menu => menu.children.length > 0)
 })
@@ -129,6 +134,12 @@ onMounted(() => {
     }
   })
 })
+
+// 添加语言切换函数
+const changeLocale = (code: string) => {
+  locale.value = code
+  localStorage.setItem('locale', code)
+}
 </script>
 
 <template>
@@ -146,7 +157,7 @@ onMounted(() => {
       <div class="h-full flex flex-col">
         <!-- 侧边栏头部 -->
         <div class="p-4 space-y-4">
-          <!-- 按钮组 -->
+          <!-- 关闭和暗黑模式按钮组 -->
           <div class="flex justify-between items-center">
             <button
               @click="toggleSidebar"
@@ -174,31 +185,24 @@ onMounted(() => {
                      text-gray-800 dark:text-white border border-transparent transition-all focus:outline-none"
             >
               <svg
-                v-if="!isDarkMode"
                 class="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
                 <path
+                  v-if="isDarkMode"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                />
+                <path
+                  v-else
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
                   d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                />
-              </svg>
-              <svg
-                v-else
-                class="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"
                 />
               </svg>
             </button>
@@ -209,7 +213,7 @@ onMounted(() => {
             <input
               v-model="searchQuery"
               type="text"
-              placeholder="搜索..."
+              :placeholder="t('common.search')"
               class="w-full px-4 py-2 rounded-lg bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 
                      text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400
                      focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400
@@ -232,7 +236,9 @@ onMounted(() => {
 
           <!-- 收藏列表 -->
           <div v-if="starredItems.length > 0" class="mt-4 border-t border-gray-200 dark:border-gray-700 pt-4">
-            <div class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">收藏</div>
+            <div class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+              {{ t('common.starred') }}
+            </div>
             <div class="space-y-1">
               <div
                 v-for="item in starredItems"
@@ -283,7 +289,9 @@ onMounted(() => {
 
         <!-- 侧边栏菜单 -->
         <div class="flex-1 overflow-y-auto">
-          <div class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">工具箱</div>
+          <div class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+            {{ t('common.toolbox') }}
+          </div>
           <nav class="px-4 py-2 space-y-2">
             <!-- 遍历过滤后的菜单项 -->
             <div v-for="menu in filteredMenuItems" :key="menu.id" class="space-y-1">
@@ -292,7 +300,7 @@ onMounted(() => {
                 @click="toggleMenu(menu.id)"
                 class="flex items-center justify-between p-2 rounded-lg cursor-pointer text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
               >
-                <span>{{ menu.title }}</span>
+                <span>{{ t(menu.titleKey) }}</span>
                 <svg
                   class="w-4 h-4 transition-transform"
                   :class="{ 'rotate-180': menu.isOpen }"
@@ -325,7 +333,7 @@ onMounted(() => {
                       : 'text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
                   ]"
                 >
-                  <span class="ml-2">{{ child.title }}</span>
+                  <span class="ml-2">{{ t(child.titleKey) }}</span>
                   <svg
                     @click.stop="toggleStar(menu.id, child.id)"
                     class="w-4 h-4"
@@ -345,6 +353,40 @@ onMounted(() => {
               </div>
             </div>
           </nav>
+        </div>
+
+        <!-- 新增：底部语言切换按钮 -->
+        <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+          <div class="relative">
+            <button
+              @click="isLocaleMenuOpen = !isLocaleMenuOpen"
+              class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
+                     text-gray-800 dark:text-white border border-transparent transition-all focus:outline-none"
+            >
+              <div class="flex items-center">
+                <span class="w-6 h-6 flex items-center justify-center">
+                  {{ LOCALES.find(l => l.code === locale)?.emoji }}
+                </span>
+              </div>
+            </button>
+            
+            <!-- 语言选择下拉菜单 -->
+            <div
+              v-if="isLocaleMenuOpen"
+              class="absolute bottom-full left-0 mb-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-50"
+            >
+              <div class="py-1">
+                <a
+                  v-for="lang in LOCALES"
+                  :key="lang.code"
+                  @click="changeLocale(lang.code); isLocaleMenuOpen = false"
+                  class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                >
+                  <span class="mr-2">{{ lang.emoji }}</span>{{ lang.name }}
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -378,7 +420,7 @@ onMounted(() => {
         </svg>
       </button>
 
-      <!-- 动态组件用于切换页面 -->
+      <!-- 动态组件于切换页面 -->
       <component 
         v-if="getCurrentComponent"
         :is="getCurrentComponent"
