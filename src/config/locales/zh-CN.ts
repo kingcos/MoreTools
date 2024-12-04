@@ -24,5 +24,14 @@ export default {
     toolbox: '工具箱',
     confirmUnstar: '确认取消收藏',
     cancel: '取消'
+  },
+  qrcode: {
+    placeholder: '请输入要转换的文本...',
+    save: '保存',
+    reset: '重置',
+    history: '历史记录',
+    clearAll: '清空全部',
+    copy: '复制文本',
+    delete: '删除'
   }
 }

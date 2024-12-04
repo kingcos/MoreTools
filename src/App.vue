@@ -228,24 +228,24 @@ const icons: Record<string, ReturnType<typeof defineComponent>> = {
             <div class="flex items-center space-x-2">
               <!-- Logo -->
               <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
-                <span class="text-white text-xl font-bold">D</span>
+                <span class="text-white text-xl font-bold">Mo</span>
               </div>
               
               <!-- 标题和链接 -->
               <div class="flex-1">
                 <h1 class="text-lg font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
-                  DoraBox
+                  MoreTools
                   <span class="text-sm text-gray-600 dark:text-gray-300">
-                    狸猫的工具箱
+                    摸摸工具箱
                   </span>
                 </h1>
                 <div class="text-sm text-gray-500 dark:text-gray-400">
                   <a 
-                    href="https://kingcos.me/dorabox" 
+                    href="https://kingcos.me/moretools" 
                     target="_blank"
                     class="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors"
                   >
-                    kingcos.me/dorabox
+                    kingcos.me/moretools
                   </a>
                 </div>
               </div>
@@ -381,12 +381,11 @@ const icons: Record<string, ReturnType<typeof defineComponent>> = {
                   ]"
                 >
                   <div class="flex items-center">
-                    <!-- 添加图标 -->
                     <component
                       :is="icons[`${child.icon}Icon`]"
-                      class="w-5 h-5 mr-2 text-gray-500 dark:text-gray-400"
+                      class="w-5 h-5 text-gray-600 dark:text-gray-300"
                     />
-                    <span class="ml-2">{{ t(child.titleKey) }}</span>
+                    <span class="ml-1 text-sm">{{ t(child.titleKey) }}</span>
                   </div>
                   <svg
                     @click.stop="toggleStar(menu.id, child.id)"
@@ -454,9 +453,15 @@ const icons: Record<string, ReturnType<typeof defineComponent>> = {
                   v-for="lang in LOCALES"
                   :key="lang.code"
                   @click="changeLocale(lang.code); isLocaleMenuOpen = false"
-                  class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                  class="block px-4 py-2 text-sm cursor-pointer"
+                  :class="[
+                    locale === lang.code 
+                      ? 'bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-200' 
+                      : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  ]"
                 >
-                  <span class="mr-2">{{ lang.emoji }}</span>{{ lang.name }}
+                  <span class="mr-2">{{ lang.emoji }}</span>
+                  <span>{{ lang.name }}</span>
                 </a>
               </div>
             </div>

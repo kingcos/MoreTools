@@ -12,6 +12,10 @@ export default {
     entertainment: {
       title: 'エンターテイメント',
       story: 'ストーリービビ'
+    },
+    devTools: {
+      title: '開発ツール',
+      qrcode: 'テキストからQRコード'
     }
   },
   common: {
@@ -20,5 +24,14 @@ export default {
     toolbox: 'ツールボックス',
     confirmUnstar: 'お気に入りを解除',
     cancel: 'キャンセル'
+  },
+  qrcode: {
+    placeholder: '変換するテキストを入力...',
+    save: '保存',
+    reset: 'リセット',
+    history: '履歴',
+    clearAll: 'すべて削除',
+    copy: 'テキストをコピー',
+    delete: '削除'
   }
 }
