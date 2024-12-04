@@ -171,7 +171,7 @@ const icons = {
     >
       <div class="h-full flex flex-col">
         <!-- 侧边栏头部 -->
-        <div class="p-4 space-y-4">
+        <div class="p-2 space-y-2">
           <!-- 关闭和暗黑模式按钮组 -->
           <div class="flex justify-between items-center">
             <button
@@ -224,8 +224,8 @@ const icons = {
           </div>
 
           <!-- 网站信息区域 -->
-          <div class="space-y-4">
-            <div class="flex items-center space-x-4">
+          <div class="space-y-2">
+            <div class="flex items-center space-x-2">
               <!-- Logo -->
               <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
                 <span class="text-white text-xl font-bold">D</span>
