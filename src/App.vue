@@ -1,78 +1,23 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue'
+import { ref, onMounted, computed, nextTick } from 'vue'
 import ChatPage from './components/ChatPage.vue'
 import FanfouPage from './components/FanfouPage.vue'
 import StoryPage from './components/StoryPage.vue'
 import menuConfig from './config/menu.json'
-
-const isSidebarOpen = ref(true)
-const isDarkMode = ref(document.documentElement.classList.contains('dark'))
-const currentPage = ref('')
-
-const toggleSidebar = () => {
-  isSidebarOpen.value = !isSidebarOpen.value
-}
-
-const toggleDarkMode = () => {
-  isDarkMode.value = !isDarkMode.value
-  if (isDarkMode.value) {
-    document.documentElement.classList.add('dark')
-  } else {
-    document.documentElement.classList.remove('dark')
-  }
-  localStorage.setItem('darkMode', isDarkMode.value ? 'dark' : 'light')
-}
-
-const handleResize = () => {
-  if (window.innerWidth < 768) {
-    isSidebarOpen.value = false
-  } else {
-    isSidebarOpen.value = true
-  }
-}
-
-onMounted(() => {
-  handleResize() // 初始化时检查窗口宽度
-  window.addEventListener('resize', handleResize)
-
-  const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-  darkModeMediaQuery.addEventListener('change', e => {
-    isDarkMode.value = e.matches
-    document.documentElement.classList.toggle('dark', e.matches)
-  })
-
-  const savedMode = localStorage.getItem('darkMode')
-  if (savedMode === 'dark') {
-    isDarkMode.value = true
-    document.documentElement.classList.add('dark')
-  }
-
-  // 使用 nextTick 确保 starredItems 计算完成
-  nextTick(() => {
-    if (starredItems.value.length > 0) {
-      currentPage.value = starredItems.value[0].id
-    } else {
-      const firstMenu = menuItems.value[0]
-      if (firstMenu && firstMenu.children.length > 0) {
-        currentPage.value = firstMenu.children[0].id
-      }
-    }
-  })
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
-})
 
 // 组件映射
 const componentMap = {
   ChatPage,
   FanfouPage,
   StoryPage
-}
+} as const
 
-// 搜索关键词
+// 状态管理
+const isSidebarOpen = ref(true)
+const isDarkMode = ref(document.documentElement.classList.contains('dark'))
+const currentPage = ref('')
 const searchQuery = ref('')
+const confirmingUnstar = ref<string | null>(null)
 
 // 收藏状态持久化
 const loadStarredState = () => {
@@ -80,7 +25,7 @@ const loadStarredState = () => {
   return saved ? JSON.parse(saved) : {}
 }
 
-// 将 JSON 配置转换为响应式数据
+// 初始化菜单数据
 const menuItems = ref(menuConfig.menuItems.map(item => ({
   ...item,
   children: item.children.map(child => ({
@@ -90,70 +35,7 @@ const menuItems = ref(menuConfig.menuItems.map(item => ({
   }))
 })))
 
-// 滤后的菜单项
-const filteredMenuItems = computed(() => {
-  if (!searchQuery.value) return menuItems.value
-
-  return menuItems.value.map(menu => ({
-    ...menu,
-    children: menu.children.filter(child =>
-      child.title.toLowerCase().includes(searchQuery.value.toLowerCase())
-    )
-  })).filter(menu => menu.children.length > 0)
-})
-
-// 切换菜单展开/收起
-const toggleMenu = (menuId: string) => {
-  const menu = menuItems.value.find(item => item.id === menuId)
-  if (menu) {
-    menu.isOpen = !menu.isOpen
-  }
-}
-
-// 选择页面
-const selectPage = (pageId: string) => {
-  currentPage.value = pageId
-  if (window.innerWidth < 768) {
-    isSidebarOpen.value = false
-  }
-}
-
-// 获取当前组件
-const getCurrentComponent = computed(() => {
-  // 先在收藏项中查找
-  const starredItem = starredItems.value.find(item => item.id === currentPage.value)
-  if (starredItem) {
-    return starredItem.component
-  }
-
-  // 如果收藏项中没有，在所有菜单项中查找
-  for (const menu of menuItems.value) {
-    const child = menu.children.find(item => item.id === currentPage.value)
-    if (child) {
-      return child.component
-    }
-  }
-  
-  // 默认返回第一个组件
-  return menuItems.value[0]?.children[0]?.component || null
-})
-
-// 切换收藏状态
-const toggleStar = (menuId: string, childId: string) => {
-  const menu = menuItems.value.find(item => item.id === menuId)
-  if (menu) {
-    const child = menu.children.find(item => item.id === childId)
-    if (child) {
-      child.isStarred = !child.isStarred
-      // 保存到 localStorage
-      const starredState = loadStarredState()
-      starredState[childId] = child.isStarred
-      localStorage.setItem('starredItems', JSON.stringify(starredState))
-    }
-  }
-}
-
-// 获取所有收藏的项目
+// 计算收藏项目
 const starredItems = computed(() => {
   const items: any[] = []
   menuItems.value.forEach(menu => {
@@ -166,8 +48,87 @@ const starredItems = computed(() => {
   return items
 })
 
-// 用于跟踪正在确认取消收藏的项目
-const confirmingUnstar = ref<string | null>(null)
+// 过滤菜单项
+const filteredMenuItems = computed(() => {
+  if (!searchQuery.value) return menuItems.value
+
+  return menuItems.value.map(menu => ({
+    ...menu,
+    children: menu.children.filter(child =>
+      child.title.toLowerCase().includes(searchQuery.value.toLowerCase())
+    )
+  })).filter(menu => menu.children.length > 0)
+})
+
+// 获取当前组件
+const getCurrentComponent = computed(() => {
+  const findComponent = (id: string) => {
+    // 先在收藏项中查找
+    const starredItem = starredItems.value.find(item => item.id === id)
+    if (starredItem) return starredItem.component
+
+    // 再在菜单项中查找
+    for (const menu of menuItems.value) {
+      const child = menu.children.find(item => item.id === id)
+      if (child) return child.component
+    }
+    return null
+  }
+
+  return findComponent(currentPage.value) || menuItems.value[0]?.children[0]?.component || null
+})
+
+// 事件处理
+const toggleSidebar = () => {
+  isSidebarOpen.value = !isSidebarOpen.value
+}
+
+const toggleDarkMode = () => {
+  isDarkMode.value = !isDarkMode.value
+  document.documentElement.classList.toggle('dark', isDarkMode.value)
+  localStorage.setItem('darkMode', isDarkMode.value ? 'dark' : 'light')
+}
+
+const toggleMenu = (menuId: string) => {
+  const menu = menuItems.value.find(item => item.id === menuId)
+  if (menu) {
+    menu.isOpen = !menu.isOpen
+  }
+}
+
+const toggleStar = (menuId: string, childId: string) => {
+  const menu = menuItems.value.find(item => item.id === menuId)
+  if (menu) {
+    const child = menu.children.find(item => item.id === childId)
+    if (child) {
+      child.isStarred = !child.isStarred
+      const starredState = loadStarredState()
+      starredState[childId] = child.isStarred
+      localStorage.setItem('starredItems', JSON.stringify(starredState))
+    }
+  }
+}
+
+const selectPage = (pageId: string) => {
+  currentPage.value = pageId
+  if (window.innerWidth < 768) {
+    isSidebarOpen.value = false
+  }
+}
+
+// 初始化
+onMounted(() => {
+  nextTick(() => {
+    if (starredItems.value.length > 0) {
+      currentPage.value = starredItems.value[0].id
+    } else {
+      const firstMenu = menuItems.value[0]
+      if (firstMenu?.children.length > 0) {
+        currentPage.value = firstMenu.children[0].id
+      }
+    }
+  })
+})
 </script>
 
 <template>
