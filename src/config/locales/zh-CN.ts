@@ -12,6 +12,10 @@ export default {
     entertainment: {
       title: '娱乐',
       story: '故事维维'
+    },
+    devTools: {
+      title: '开发常备',
+      qrcode: '文本转二维码'
     }
   },
   common: {

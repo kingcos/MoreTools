@@ -1,28 +1,16 @@
 {
     "menuItems": [
       {
-        "id": "ai",
-        "titleKey": "menu.ai.title",
+        "id": "dev-tools",
+        "titleKey": "menu.devTools.title",
         "isOpen": true,
         "children": [
-          { "id": "chat", "titleKey": "menu.ai.chat", "component": "ChatPage" },
-          { "id": "claude", "titleKey": "menu.ai.claude", "component": "ChatPage" }
-        ]
-      },
-      {
-        "id": "social",
-        "titleKey": "menu.social.title",
-        "isOpen": false,
-        "children": [
-          { "id": "fanfou", "titleKey": "menu.social.fanfou", "component": "FanfouPage" }
-        ]
-      },
-      {
-        "id": "entertainment",
-        "titleKey": "menu.entertainment.title",
-        "isOpen": false,
-        "children": [
-          { "id": "story", "titleKey": "menu.entertainment.story", "component": "StoryPage" }
+          {
+            "id": "qrcode",
+            "titleKey": "menu.devTools.qrcode",
+            "component": "QrcodePage",
+            "icon": "Qrcode"
+          }
         ]
       }
     ]

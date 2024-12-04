@@ -3,9 +3,11 @@ import { ref, onMounted, computed, nextTick } from 'vue'
 import ChatPage from './components/ChatPage.vue'
 import FanfouPage from './components/FanfouPage.vue'
 import StoryPage from './components/StoryPage.vue'
+import QrcodePage from './components/QrcodePage.vue'
 import menuConfig from './config/menu.json'
 import { useI18n } from 'vue-i18n'
 import { LOCALES } from './config/i18n'
+import QrcodeIcon from './components/icons/QrcodeIcon.vue'
 
 const { locale, t } = useI18n()
 
@@ -13,7 +15,8 @@ const { locale, t } = useI18n()
 const componentMap = {
   ChatPage,
   FanfouPage,
-  StoryPage
+  StoryPage,
+  QrcodePage
 } as const
 
 // 状态管理
@@ -134,7 +137,7 @@ onMounted(() => {
     }
   })
 
-  // 动态加载谷歌广告脚本
+  // 动态加载歌广告脚本
   const script = document.createElement('script')
   script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
   script.async = true
@@ -146,6 +149,11 @@ onMounted(() => {
 const changeLocale = (code: string) => {
   locale.value = code
   localStorage.setItem('locale', code)
+}
+
+// 注册图标组件
+const icons = {
+  QrcodeIcon
 }
 </script>
 
@@ -215,8 +223,40 @@ const changeLocale = (code: string) => {
             </button>
           </div>
 
+          <!-- 网站信息区域 -->
+          <div class="space-y-4">
+            <div class="flex items-center space-x-4">
+              <!-- Logo -->
+              <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
+                <span class="text-white text-xl font-bold">D</span>
+              </div>
+              
+              <!-- 标题和链接 -->
+              <div class="flex-1">
+                <h1 class="text-lg font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+                  DoraBox
+                  <span class="text-sm text-gray-600 dark:text-gray-300">
+                    狸猫的工具箱
+                  </span>
+                </h1>
+                <div class="text-sm text-gray-500 dark:text-gray-400">
+                  <a 
+                    href="https://kingcos.me/dorabox" 
+                    target="_blank"
+                    class="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors"
+                  >
+                    kingcos.me/dorabox
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 分割线 -->
+            <div class="border-t border-gray-200 dark:border-gray-700"></div>
+          </div>
+
           <!-- 搜索框 -->
-          <div class="relative mt-4">
+          <div class="relative mt-6">
             <input
               v-model="searchQuery"
               type="text"
@@ -259,7 +299,7 @@ const changeLocale = (code: string) => {
                 ]"
               >
                 <div class="flex items-center justify-between">
-                  <span class="text-sm">{{ item.title }}</span>
+                  <span class="text-sm">{{ t(item.titleKey) }}</span>
                   <svg
                     @click.stop="confirmingUnstar = confirmingUnstar === item.id ? null : item.id"
                     class="w-4 h-4 text-yellow-500 fill-current cursor-pointer"
@@ -340,7 +380,14 @@ const changeLocale = (code: string) => {
                       : 'text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
                   ]"
                 >
-                  <span class="ml-2">{{ t(child.titleKey) }}</span>
+                  <div class="flex items-center">
+                    <!-- 添加图标 -->
+                    <component
+                      :is="icons[`${child.icon}Icon`]"
+                      class="w-5 h-5 mr-2 text-gray-500 dark:text-gray-400"
+                    />
+                    <span class="ml-2">{{ t(child.titleKey) }}</span>
+                  </div>
                   <svg
                     @click.stop="toggleStar(menu.id, child.id)"
                     class="w-4 h-4"
