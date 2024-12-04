@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, nextTick } from 'vue'
+import { ref, onMounted, computed, nextTick, defineComponent } from 'vue'
 import ChatPage from './components/ChatPage.vue'
 import FanfouPage from './components/FanfouPage.vue'
 import StoryPage from './components/StoryPage.vue'
@@ -152,7 +152,7 @@ const changeLocale = (code: string) => {
 }
 
 // 注册图标组件
-const icons = {
+const icons: Record<string, ReturnType<typeof defineComponent>> = {
   QrcodeIcon
 }
 </script>
