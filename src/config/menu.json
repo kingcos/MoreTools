@@ -1,0 +1,29 @@
+{
+    "menuItems": [
+      {
+        "id": "ai",
+        "title": "AI 助手",
+        "isOpen": true,
+        "children": [
+          { "id": "chat", "title": "ChatGPT", "component": "ChatPage" },
+          { "id": "claude", "title": "Claude", "component": "ChatPage" }
+        ]
+      },
+      {
+        "id": "social",
+        "title": "社交平台",
+        "isOpen": false,
+        "children": [
+          { "id": "fanfou", "title": "我的饭否", "component": "FanfouPage" }
+        ]
+      },
+      {
+        "id": "entertainment",
+        "title": "娱乐",
+        "isOpen": false,
+        "children": [
+          { "id": "story", "title": "故事维维", "component": "StoryPage" }
+        ]
+      }
+    ]
+  }
