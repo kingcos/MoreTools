@@ -133,6 +133,13 @@ onMounted(() => {
       }
     }
   })
+
+  // 动态加载谷歌广告脚本
+  const script = document.createElement('script')
+  script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+  script.async = true
+  script.setAttribute('data-ad-client', 'ca-pub-9925978992661955')
+  document.head.appendChild(script)
 })
 
 // 添加语言切换函数
@@ -355,7 +362,27 @@ const changeLocale = (code: string) => {
           </nav>
         </div>
 
-        <!-- 新增：底部语言切换按钮 -->
+        <!-- 新增：广告区域 -->
+        <div class="p-4 border-t border-gray-200 dark:border-gray-700 relative">
+          <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 text-center relative">
+            <!-- 广告标识角标 -->
+            <div class="absolute top-0 left-0 bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300 
+                        text-xs px-2 py-0.5 rounded-tl-lg rounded-br-lg 
+                        opacity-75 transition-opacity hover:opacity-100">
+              广告
+            </div>
+            
+            <!-- 谷歌广告占位符 -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-9925978992661955"
+                 data-ad-slot="1547745371"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+          </div>
+        </div>
+
+        <!-- 底部语言切换按钮 -->
         <div class="p-4 border-t border-gray-200 dark:border-gray-700">
           <div class="relative">
             <button
@@ -428,7 +455,7 @@ const changeLocale = (code: string) => {
       />
     </div>
 
-    <!-- 遮罩层 - 仅在移动端且边栏打开时显示 -->
+    <!-- 遮罩层 - 仅在移动端且边栏开时显示 -->
     <div
       v-if="isSidebarOpen"
       @click="toggleSidebar"
