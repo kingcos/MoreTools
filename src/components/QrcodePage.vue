@@ -362,11 +362,6 @@ const clearHistory = () => {
   confirmingAction.value = null
 }
 
-// 修改确认清空函数
-const confirmClearHistory = () => {
-  confirmingAction.value = 'clear'
-}
-
 // 添加复制功能
 const copyText = async (text: string) => {
   try {
