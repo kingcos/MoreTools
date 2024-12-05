@@ -78,6 +78,27 @@
         </div>
       </div>
 
+      <!-- 广告区域 - 在历史记录之前 -->
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 relative">
+        <!-- 广告标识角标 -->
+        <div class="absolute top-0 left-0 bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300 
+                    text-xs px-2 py-0.5 rounded-tl-lg rounded-br-lg 
+                    opacity-75 transition-opacity hover:opacity-100">
+          {{ t('common.advertisement') }}
+        </div>
+        
+        <!-- 谷歌广告占位符 -->
+        <amp-ad width="100vw" height="320"
+            type="adsense"
+            data-ad-client="ca-pub-9925978992661955"
+            data-ad-slot="2839839840"
+            data-auto-format="rspv"
+            data-full-width="">
+          <div overflow=""></div>
+        </amp-ad>
+      </div>
+
+      <!-- 历史记录区域 -->
       <div v-if="history.length > 0 && !instantMode" class="space-y-4 min-h-[200px]">
         <div class="flex justify-between items-center">
           <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ t('qrcode.history') }}</h2>
