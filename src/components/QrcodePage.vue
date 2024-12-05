@@ -91,15 +91,7 @@
                       opacity-75 transition-opacity hover:opacity-100">
             {{ t('common.advertisement') }}
           </div>
-          
-          <amp-ad width="100vw" height="320"
-              type="adsense"
-              data-ad-client="ca-pub-9925978992661955"
-              data-ad-slot="2839839840"
-              data-auto-format="rspv"
-              data-full-width="">
-            <div overflow=""></div>
-          </amp-ad>
+          <AdSense ad-slot="2839839840" />
         </div>
 
         <div v-if="history.length > 0 && !instantMode" class="space-y-4 min-h-[200px]">
@@ -231,6 +223,15 @@
         </div>
       </div>
     </div>
+
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 relative">
+      <div class="absolute top-0 left-0 bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300 
+                  text-xs px-2 py-0.5 rounded-tl-lg rounded-br-lg 
+                  opacity-75 transition-opacity hover:opacity-100">
+        {{ t('common.advertisement') }}
+      </div>
+      <AdSense ad-slot="2839839840" />
+    </div>
   </div>
 </template>
 
@@ -238,6 +239,7 @@
 import { ref, onMounted, computed } from 'vue'
 import QrcodeVue from 'qrcode.vue'
 import { useI18n } from 'vue-i18n'
+import AdSense from './AdSense.vue'
 
 const { t } = useI18n()
 const inputText = ref('')
@@ -281,7 +283,7 @@ const deleteHistory = (index: number) => {
 const saveToHistory = () => {
   if (!inputText.value) return
   
-  // 检查是否存在相���文本的记录
+  // 检查是否存在相同文本的记录
   const existingIndex = history.value.findIndex(item => item.text === inputText.value)
   
   if (existingIndex !== -1) {
@@ -370,7 +372,7 @@ const clearHistory = () => {
 const copyText = async (text: string) => {
   try {
     await navigator.clipboard.writeText(text)
-    // 可以添加一个制成功的提示
+    // 可以添加一个复制成功的提示
   } catch (err) {
     console.error('复制失败:', err)
   }
