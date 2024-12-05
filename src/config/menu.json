@@ -16,6 +16,12 @@
             "titleKey": "menu.devTools.codec",
             "component": "CodecPage",
             "icon": "Code"
+          },
+          {
+            "id": "time",
+            "titleKey": "menu.devTools.time",
+            "component": "TimePage",
+            "icon": "Time"
           }
         ]
       }

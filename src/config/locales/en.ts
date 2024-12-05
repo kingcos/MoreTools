@@ -16,7 +16,8 @@ export default {
     devTools: {
       title: 'Dev Tools',
       qrcode: 'Text to QR Code',
-      codec: 'Encode/Decode'
+      codec: 'Encode & Decode',
+      time: 'Time Tools'
     }
   },
   common: {
@@ -59,9 +60,32 @@ export default {
     encode: 'Encode',
     decode: 'Decode',
     copy: 'Copy',
-    clear: 'Clear',
-    confirmClear: 'Confirm Clear',
+    reset: 'Reset',
+    confirmReset: 'Confirm Reset',
     cancel: 'Cancel',
+    copySuccess: 'Copied successfully',
+    copyFailed: 'Copy failed'
+  },
+  time: {
+    timestampConverter: 'Timestamp Converter',
+    timestampToDate: 'Timestamp to Date',
+    dateToTimestamp: 'Date to Timestamp',
+    inputTimestamp: 'Input',
+    outputDate: 'Output Date',
+    outputTimestamp: 'Output',
+    isMilliseconds: 'Milliseconds timestamp',
+    year: 'Year',
+    month: 'Month', 
+    day: 'Day',
+    hour: 'Hour',
+    minute: 'Minute',
+    second: 'Second',
+    millisecond: 'Millisecond',
+    milliseconds: 'Milliseconds',
+    seconds: 'Seconds',
+    copy: 'Copy',
+    reset: 'Reset',
+    confirmReset: 'Confirm Reset',
     copySuccess: 'Copied successfully',
     copyFailed: 'Copy failed'
   }

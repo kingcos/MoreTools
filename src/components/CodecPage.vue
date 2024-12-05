@@ -96,22 +96,26 @@
                 <div v-if="inputText" class="inline-block">
                   <div v-if="confirmingClear" class="flex items-center space-x-2">
                     <button
-                      @click="handleClear"
+                      @click="handleReset"
                       class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                              bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
-                    >{{ t('codec.confirmClear') }}</button>
+                    >{{ t('codec.confirmReset') }}</button>
                     <button
                       @click="confirmingClear = false"
                       class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                              bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
-                    >{{ t('codec.cancel') }}</button>
+                    >{{ t('common.cancel') }}</button>
                   </div>
                   <button
                     v-else
                     @click="confirmingClear = true"
-                    class="px-4 py-2 bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400
-                           rounded-lg transition-colors focus:outline-none"
-                  >{{ t('codec.clear') }}</button>
+                    class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none"
+                    :class="[
+                      confirmingClear
+                        ? 'bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400'
+                        : 'bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400'
+                    ]"
+                  >{{ t('codec.reset') }}</button>
                 </div>
               </div>
             </div>
@@ -200,7 +204,7 @@ const copyText = async () => {
 }
 
 // 清空输入
-const handleClear = () => {
+const handleReset = () => {
   inputText.value = ''
   outputText.value = ''
   confirmingClear.value = false

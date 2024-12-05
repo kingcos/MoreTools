@@ -16,7 +16,8 @@ export default {
     devTools: {
       title: '开发常备',
       qrcode: '文本转二维码',
-      codec: '编解码工具'
+      codec: '编解码工具',
+      time: '时间工具'
     }
   },
   common: {
@@ -59,9 +60,32 @@ export default {
     encode: '编码',
     decode: '解码',
     copy: '复制',
-    clear: '清空',
-    confirmClear: '确认清空',
+    reset: '重置',
+    confirmReset: '确认重置',
     cancel: '取消',
+    copySuccess: '复制成功',
+    copyFailed: '复制失败'
+  },
+  time: {
+    timestampConverter: '时间戳转换',
+    timestampToDate: '时间戳转时间',
+    dateToTimestamp: '时间转时间戳',
+    inputTimestamp: '输入',
+    outputDate: '输出日期时间',
+    outputTimestamp: '输出',
+    isMilliseconds: '毫秒时间戳',
+    year: '年',
+    month: '月', 
+    day: '日',
+    hour: '时',
+    minute: '分',
+    second: '秒',
+    millisecond: '毫秒',
+    milliseconds: '毫秒',
+    seconds: '秒',
+    copy: '复制',
+    reset: '重置',
+    confirmReset: '确认重置',
     copySuccess: '复制成功',
     copyFailed: '复制失败'
   }

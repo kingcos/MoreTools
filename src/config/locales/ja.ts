@@ -16,7 +16,7 @@ export default {
     devTools: {
       title: '開発ツール',
       qrcode: 'テキストからQRコード',
-      codec: 'エンコード/デコード'
+      codec: 'エンコード・デコード'
     }
   },
   common: {
@@ -59,9 +59,32 @@ export default {
     encode: 'エンコード',
     decode: 'デコード',
     copy: 'コピー',
-    clear: 'クリア',
-    confirmClear: 'クリア確認',
+    reset: 'リセット',
+    confirmReset: 'リセット確認',
     cancel: 'キャンセル',
+    copySuccess: 'コピーしました',
+    copyFailed: 'コピーに失敗しました'
+  },
+  time: {
+    timestampConverter: 'タイムスタンプ変換',
+    timestampToDate: 'タイムスタンプから日時',
+    dateToTimestamp: '日時からタイムスタンプ',
+    inputTimestamp: '入力',
+    outputDate: '出力日時',
+    outputTimestamp: '出力',
+    isMilliseconds: 'ミリ秒タイムスタンプ',
+    year: '年',
+    month: '月', 
+    day: '日',
+    hour: '時',
+    minute: '分',
+    second: '秒',
+    millisecond: 'ミリ秒',
+    milliseconds: 'ミリ秒',
+    seconds: '秒',
+    copy: 'コピー',
+    reset: 'リセット',
+    confirmReset: 'リセット確認',
     copySuccess: 'コピーしました',
     copyFailed: 'コピーに失敗しました'
   }

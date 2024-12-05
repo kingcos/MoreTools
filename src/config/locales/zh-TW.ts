@@ -16,7 +16,7 @@ export default {
     devTools: {
       title: '開發常備',
       qrcode: '文本轉二維碼',
-      codec: '編解碼工具'
+      codec: '編碼與解碼'
     }
   },
   common: {
@@ -45,7 +45,7 @@ export default {
     copyTitle: '複製文本',
     editTitle: '編輯',
     deleteTitle: '刪除',
-    confirmDelete: '確認刪除',
+    confirmDelete: '確認���除',
     copySuccess: '複製成功',
     copyFailed: '複製失敗'
   },
@@ -59,9 +59,32 @@ export default {
     encode: '編碼',
     decode: '解碼',
     copy: '複製',
-    clear: '清空',
-    confirmClear: '確認清空',
+    reset: '重置',
+    confirmReset: '確認重置',
     cancel: '取消',
+    copySuccess: '複製成功',
+    copyFailed: '複製失敗'
+  },
+  time: {
+    timestampConverter: '時間戳轉換',
+    timestampToDate: '時間戳轉時間',
+    dateToTimestamp: '時間轉時間戳',
+    inputTimestamp: '輸入',
+    outputDate: '輸出日期時間',
+    outputTimestamp: '輸出',
+    isMilliseconds: '毫秒時間戳',
+    year: '年',
+    month: '月', 
+    day: '日',
+    hour: '時',
+    minute: '分',
+    second: '秒',
+    millisecond: '毫秒',
+    milliseconds: '毫秒',
+    seconds: '秒',
+    copy: '複製',
+    reset: '重置',
+    confirmReset: '確認重置',
     copySuccess: '複製成功',
     copyFailed: '複製失敗'
   }

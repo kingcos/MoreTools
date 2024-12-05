@@ -5,12 +5,14 @@ import FanfouPage from './components/FanfouPage.vue'
 import StoryPage from './components/StoryPage.vue'
 import QrcodePage from './components/QrcodePage.vue'
 import CodecPage from './components/CodecPage.vue'
+import TimePage from './components/TimePage.vue'
 import menuConfig from './config/menu.json'
 import { useI18n } from 'vue-i18n'
 import { LOCALES } from './config/i18n'
 import QrcodeIcon from './components/icons/QrcodeIcon.vue'
 import Adsense from './components/Adsense.vue'
 import CodeIcon from './components/icons/CodeIcon.vue'
+import TimeIcon from './components/icons/TimeIcon.vue'
 
 const { locale, t } = useI18n()
 
@@ -20,7 +22,8 @@ const componentMap = {
   FanfouPage,
   StoryPage,
   QrcodePage,
-  CodecPage
+  CodecPage,
+  TimePage
 } as const
 
 // 状态管理
@@ -151,7 +154,8 @@ const changeLocale = (code: string) => {
 // 注册图标组件
 const icons: Record<string, ReturnType<typeof defineComponent>> = {
   QrcodeIcon,
-  CodeIcon
+  CodeIcon,
+  TimeIcon
 }
 </script>
 
@@ -229,7 +233,7 @@ const icons: Record<string, ReturnType<typeof defineComponent>> = {
                 <span class="text-white text-xl font-bold">Mo</span>
               </div>
               
-              <!-- 标题和链接 -->
+              <!-- 标题链接 -->
               <div class="flex-1">
                 <h1 class="text-lg font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
                   MoreTools
