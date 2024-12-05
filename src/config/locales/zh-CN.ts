@@ -32,6 +32,10 @@ export default {
     history: '历史记录',
     clearAll: '清空全部',
     copy: '复制文本',
-    delete: '删除'
+    delete: '删除',
+    incognito: '无痕模式',
+    download: '下载',
+    confirmReset: '确认重置',
+    confirmClear: '确认清空'
   }
 }

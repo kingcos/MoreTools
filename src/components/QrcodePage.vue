@@ -1,7 +1,7 @@
 <template>
   <div class="flex-1 bg-gray-50 dark:bg-gray-900 overflow-y-auto">
     <div class="p-4 max-w-4xl mx-auto space-y-4">
-      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">文本转二维码</h1>
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ t('menu.devTools.qrcode') }}</h1>
       
       <div class="flex flex-col md:flex-row gap-4">
         <div class="flex-grow bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
@@ -10,7 +10,7 @@
             class="w-full h-40 p-2 border border-gray-200 dark:border-gray-700 rounded-lg resize-none 
                    bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-0 focus:border-gray-300 
                    dark:focus:border-gray-600"
-            placeholder="请输入要转换的文本"
+            :placeholder="t('qrcode.placeholder')"
           ></textarea>
           <div class="mt-4 flex justify-between items-center">
             <div class="flex items-center gap-4">
@@ -18,7 +18,7 @@
                 @click="generateQRCode"
                 class="px-6 py-2 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 
                        text-white rounded-lg transition-colors focus:outline-none"
-              >生成二维码</button>
+              >{{ t('qrcode.save') }}</button>
               
               <button
                 @click="toggleInstantMode"
@@ -36,7 +36,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
-                  <span>无痕模式</span>
+                  <span>{{ t('qrcode.incognito') }}</span>
                 </div>
               </button>
             </div>
@@ -46,17 +46,17 @@
                 <button
                   @click="handleConfirm(-1, 'reset')"
                   class="text-red-500 hover:underline"
-                >确认重置</button>
+                >{{ t('qrcode.confirmReset') }}</button>
                 <button
                   @click="cancelAction"
                   class="text-gray-500 hover:underline"
-                >取消</button>
+                >{{ t('common.cancel') }}</button>
               </div>
               <button
                 v-else
                 @click="confirmingAction = 'reset'"
                 class="text-sm text-red-500 hover:text-red-600 transition-colors focus:outline-none"
-              >重置</button>
+              >{{ t('qrcode.reset') }}</button>
             </div>
           </div>
         </div>
@@ -74,13 +74,13 @@
             @click="downloadQRCode"
             class="px-4 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
                    text-gray-800 dark:text-white rounded-lg transition-colors focus:outline-none"
-          >下载</button>
+          >{{ t('qrcode.download') }}</button>
         </div>
       </div>
 
       <div v-if="history.length > 0 && !instantMode" class="space-y-4 min-h-[200px]">
         <div class="flex justify-between items-center">
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white">历史记录</h2>
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ t('qrcode.history') }}</h2>
           <div class="flex items-center h-8">
             <div v-if="confirmingAction === 'clear'" 
                  class="flex items-center space-x-2 text-xs fade-transition"
@@ -88,17 +88,17 @@
               <button
                 @click="clearHistory"
                 class="text-red-500 hover:underline"
-              >确认清空</button>
+              >{{ t('qrcode.confirmClear') }}</button>
               <button
                 @click="cancelAction"
                 class="text-gray-500 hover:underline"
-              >取消</button>
+              >{{ t('common.cancel') }}</button>
             </div>
             <button
               v-else
               @click="confirmingAction = 'clear'"
               class="text-sm text-red-500 hover:text-red-600 transition-colors focus:outline-none fade-transition"
-            >清空历史记录</button>
+            >{{ t('qrcode.clearAll') }}</button>
           </div>
         </div>
         
@@ -151,7 +151,7 @@
                 <button
                   @click="handleConfirm(index, 'edit')"
                   class="text-red-500 hover:underline"
-                >确��编辑</button>
+                >确编辑</button>
                 <button
                   @click="cancelAction"
                   class="text-gray-500 hover:underline"
@@ -220,7 +220,7 @@ const showAll = ref(false)
 const confirmingAction = ref<string | null>(null)
 const instantMode = ref(false)
 
-// 从本地存储加载历史记录
+// 从本地存储���载历史记录
 onMounted(() => {
   const savedHistory = localStorage.getItem('qrcode-history')
   if (savedHistory) {

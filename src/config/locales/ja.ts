@@ -32,6 +32,10 @@ export default {
     history: '履歴',
     clearAll: 'すべて削除',
     copy: 'テキストをコピー',
-    delete: '削除'
+    delete: '削除',
+    incognito: 'シークレットモード',
+    download: 'ダウンロード',
+    confirmReset: 'リセット確認',
+    confirmClear: '削除確認',
   }
 }

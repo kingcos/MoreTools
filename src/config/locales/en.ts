@@ -32,6 +32,10 @@ export default {
     history: 'History',
     clearAll: 'Clear All',
     copy: 'Copy Text',
-    delete: 'Delete'
+    delete: 'Delete',
+    incognito: 'Incognito Mode',
+    download: 'Download',
+    confirmReset: 'Confirm Reset',
+    confirmClear: 'Confirm Clear',
   }
 }
