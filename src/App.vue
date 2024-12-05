@@ -8,6 +8,7 @@ import menuConfig from './config/menu.json'
 import { useI18n } from 'vue-i18n'
 import { LOCALES } from './config/i18n'
 import QrcodeIcon from './components/icons/QrcodeIcon.vue'
+import { Adsense } from 'vue3-google-adsense'
 
 const { locale, t } = useI18n()
 
@@ -404,22 +405,17 @@ const icons: Record<string, ReturnType<typeof defineComponent>> = {
         <!-- 广告区域 -->
         <div class="p-4 border-t border-gray-200 dark:border-gray-700 relative">
           <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 text-center relative">
-            <!-- 广告标识角标 -->
             <div class="absolute top-0 left-0 bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300 
                         text-xs px-2 py-0.5 rounded-tl-lg rounded-br-lg 
                         opacity-75 transition-opacity hover:opacity-100">
               {{ t('common.advertisement') }}
             </div>
-            
-            <!-- 谷歌广告占位符 -->
-            <amp-ad width="100vw" height="320"
-                type="adsense"
-                data-ad-client="ca-pub-9925978992661955"
-                data-ad-slot="1547745371"
-                data-auto-format="rspv"
-                data-full-width="">
-              <div overflow=""></div>
-            </amp-ad>
+            <Adsense
+              data-ad-client="ca-pub-9925978992661955"
+              data-ad-slot="1547745371"
+              data-ad-format="auto"
+              data-full-width-responsive="true"
+            />
           </div>
         </div>
 

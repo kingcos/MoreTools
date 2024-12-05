@@ -91,15 +91,12 @@
                       opacity-75 transition-opacity hover:opacity-100">
             {{ t('common.advertisement') }}
           </div>
-          
-          <amp-ad width="100vw" height="320"
-              type="adsense"
-              data-ad-client="ca-pub-9925978992661955"
-              data-ad-slot="2839839840"
-              data-auto-format="rspv"
-              data-full-width="">
-            <div overflow=""></div>
-          </amp-ad>
+          <Adsense
+            data-ad-client="ca-pub-9925978992661955"
+            data-ad-slot="2839839840"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          />
         </div>
 
         <div v-if="history.length > 0 && !instantMode" class="space-y-4 min-h-[200px]">
@@ -238,6 +235,7 @@
 import { ref, onMounted, computed } from 'vue'
 import QrcodeVue from 'qrcode.vue'
 import { useI18n } from 'vue-i18n'
+import { Adsense } from 'vue3-google-adsense'
 
 const { t } = useI18n()
 const inputText = ref('')
@@ -281,7 +279,7 @@ const deleteHistory = (index: number) => {
 const saveToHistory = () => {
   if (!inputText.value) return
   
-  // 检查是否存在相���文本的记录
+  // 检查是否存在相同文本的记录
   const existingIndex = history.value.findIndex(item => item.text === inputText.value)
   
   if (existingIndex !== -1) {
