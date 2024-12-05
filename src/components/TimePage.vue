@@ -311,14 +311,14 @@ const copyText = async (text: string | number) => {
   try {
     await navigator.clipboard.writeText(String(text))
     ElMessage({
-      message: t('timestamp.copySuccess'),
+      message: t('time.copySuccess'),
       type: 'success',
       duration: 2000
     })
   } catch (err) {
     console.error('复制失败:', err)
     ElMessage({
-      message: t('timestamp.copyFailed'),
+      message: t('time.copyFailed'),
       type: 'error',
       duration: 2000
     })
