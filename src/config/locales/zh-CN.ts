@@ -44,6 +44,8 @@ export default {
     copyTitle: '复制文本',
     editTitle: '编辑',
     deleteTitle: '删除',
-    confirmDelete: '确认删除'
+    confirmDelete: '确认删除',
+    copySuccess: '复制成功',
+    copyFailed: '复制失败'
   }
 }

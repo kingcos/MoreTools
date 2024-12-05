@@ -44,6 +44,8 @@ export default {
     copyTitle: 'Copy Text',
     editTitle: 'Edit',
     deleteTitle: 'Delete',
-    confirmDelete: 'Confirm Delete'
+    confirmDelete: 'Confirm Delete',
+    copySuccess: 'Copied successfully',
+    copyFailed: 'Copy failed'
   }
 }

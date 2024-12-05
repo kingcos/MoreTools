@@ -28,20 +28,27 @@
 
               <div class="flex items-center gap-4">
                 <div class="flex items-center">
-                  <div v-if="confirmingAction === 'reset'" class="flex items-center space-x-2 text-xs">
+                  <div v-if="inputText && confirmingAction === 'reset'" class="flex items-center space-x-2">
                     <button
                       @click="handleConfirm(-1, 'reset')"
-                      class="text-red-500 hover:underline"
+                      class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
+                             bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
                     >{{ t('qrcode.confirmReset') }}</button>
                     <button
                       @click="cancelAction"
-                      class="text-gray-500 hover:underline"
+                      class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
+                             bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
                     >{{ t('common.cancel') }}</button>
                   </div>
                   <button
-                    v-else
+                    v-else-if="inputText"
                     @click="confirmingAction = 'reset'"
-                    class="text-sm text-red-500 hover:text-red-600 transition-colors focus:outline-none"
+                    class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none"
+                    :class="[
+                      confirmingAction === 'reset'
+                        ? 'bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400'
+                        : 'bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400'
+                    ]"
                   >{{ t('qrcode.reset') }}</button>
                 </div>
 
@@ -73,52 +80,53 @@
               :value="qrcodeText || ' '"
               :size="200"
               level="H"
-              render-as="svg"
+              render-as="canvas"
+              :background="isDarkMode ? '#1f2937' : '#ffffff'"
+              :foreground="isDarkMode ? '#ffffff' : '#000000'"
               class="mb-4"
               ref="qrcodeRef"
             ></qrcode-vue>
             <button
               @click="downloadQRCode"
-              class="px-4 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
-                     text-gray-800 dark:text-white rounded-lg transition-colors focus:outline-none"
+              class="px-4 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 
+                     dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg 
+                     transition-colors focus:outline-none"
             >{{ t('qrcode.download') }}</button>
           </div>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 relative">
-          <div class="absolute top-0 left-0 bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300 
-                      text-xs px-2 py-0.5 rounded-tl-lg rounded-br-lg 
-                      opacity-75 transition-opacity hover:opacity-100">
-            {{ t('common.advertisement') }}
-          </div>
-          <Adsense
-            adStyle="max-height: 150px;"
+        <Adsense
+            adStyle="max-height: 150px; width: 100%;"
             slotId="2839839840"
             format="auto"
             fullWidthResponsive="true"
-          />
-        </div>
+        />
 
         <div v-if="history.length > 0 && !instantMode" class="space-y-4 min-h-[200px]">
           <div class="flex justify-between items-center">
             <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ t('qrcode.history') }}</h2>
             <div class="flex items-center h-8">
-              <div v-if="confirmingAction === 'clear'" 
-                   class="flex items-center space-x-2 text-xs fade-transition"
-              >
+              <div v-if="confirmingAction === 'clear'" class="flex items-center space-x-2">
                 <button
                   @click="clearHistory"
-                  class="text-red-500 hover:underline"
+                  class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
+                         bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
                 >{{ t('qrcode.confirmClear') }}</button>
                 <button
                   @click="cancelAction"
-                  class="text-gray-500 hover:underline"
+                  class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
+                         bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
                 >{{ t('common.cancel') }}</button>
               </div>
               <button
                 v-else
                 @click="confirmingAction = 'clear'"
-                class="text-sm text-red-500 hover:text-red-600 transition-colors focus:outline-none fade-transition"
+                class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none"
+                :class="[
+                  confirmingAction === 'clear'
+                    ? 'bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400'
+                    : 'bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400'
+                ]"
               >{{ t('qrcode.clearAll') }}</button>
             </div>
           </div>
@@ -129,23 +137,15 @@
               :key="index"
               class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 flex items-center gap-4"
             >
-              <div class="flex-shrink-0 relative group cursor-pointer">
+              <div class="flex-shrink-0">
                 <qrcode-vue
                   :value="item.text"
                   :size="60"
                   level="H"
-                  render-as="svg"
-                  class="transition-transform duration-200"
+                  render-as="canvas"
+                  :background="isDarkMode ? '#1f2937' : '#ffffff'"
+                  :foreground="isDarkMode ? '#ffffff' : '#000000'"
                 ></qrcode-vue>
-                <div class="hidden group-hover:block absolute left-0 top-0 z-10 bg-white dark:bg-gray-800 p-3 
-                            rounded-lg shadow-lg transform -translate-x-1/4 -translate-y-1/4 scale-[2]">
-                  <qrcode-vue
-                    :value="item.text"
-                    :size="200"
-                    level="H"
-                    render-as="svg"
-                  ></qrcode-vue>
-                </div>
               </div>
               <div class="flex-grow min-w-0">
                 <p class="text-gray-900 dark:text-white text-left break-all line-clamp-2">{{ item.text }}</p>
@@ -160,7 +160,8 @@
               <div class="flex items-center gap-2 flex-shrink-0">
                 <button
                   @click="copyText(item.text)"
-                  class="p-2 text-gray-400 hover:text-blue-500 transition-colors focus:outline-none"
+                  class="p-2 rounded-lg transition-colors focus:outline-none
+                         bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
                   :title="t('qrcode.copyTitle')"
                 >
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -168,20 +169,23 @@
                           d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                   </svg>
                 </button>
-                <div v-if="confirmingAction === `edit-${index}`" class="flex items-center space-x-2 text-xs">
+                <div v-if="confirmingAction === `edit-${index}`" class="flex items-center space-x-2">
                   <button
                     @click="handleConfirm(index, 'edit')"
-                    class="text-red-500 hover:underline"
+                    class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
+                           bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400"
                   >{{ t('qrcode.confirmEdit') }}</button>
                   <button
                     @click="cancelAction"
-                    class="text-gray-500 hover:underline"
+                    class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
+                           bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
                   >{{ t('common.cancel') }}</button>
                 </div>
                 <button
                   v-else
-                  @click="confirmingAction = `edit-${index}`"
-                  class="p-2 text-gray-400 hover:text-blue-500 transition-colors focus:outline-none"
+                  @click="handleEdit(index, item)"
+                  class="p-2 rounded-lg transition-colors focus:outline-none
+                         bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
                   :title="t('qrcode.editTitle')"
                 >
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -190,20 +194,27 @@
                   </svg>
                 </button>
                 
-                <div v-if="confirmingAction === `delete-${index}`" class="flex items-center space-x-2 text-xs">
+                <div v-if="confirmingAction === `delete-${index}`" class="flex items-center space-x-2">
                   <button
                     @click="handleConfirm(index, 'delete')"
-                    class="text-red-500 hover:underline"
+                    class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
+                           bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
                   >{{ t('qrcode.confirmDelete') }}</button>
                   <button
                     @click="cancelAction"
-                    class="text-gray-500 hover:underline"
+                    class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
+                           bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
                   >{{ t('common.cancel') }}</button>
                 </div>
                 <button
                   v-else
                   @click="confirmingAction = `delete-${index}`"
-                  class="p-2 text-gray-400 hover:text-red-500 transition-colors focus:outline-none"
+                  class="p-2 rounded-lg transition-colors focus:outline-none"
+                  :class="[
+                    confirmingAction === `delete-${index}`
+                      ? 'bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400'
+                      : 'bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400'
+                  ]"
                   :title="t('qrcode.deleteTitle')"
                 >
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -216,8 +227,9 @@
             <button
               v-if="history.length > 3"
               @click="showAll = !showAll"
-              class="w-full py-2 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 
-                     dark:hover:text-gray-200 transition-colors focus:outline-none"
+              class="w-full py-2 text-sm rounded-lg transition-colors focus:outline-none
+                     bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
+                     text-gray-800 dark:text-white"
             >
               {{ showAll 
                   ? t('qrcode.showLess') 
@@ -236,6 +248,9 @@ import { ref, onMounted, computed } from 'vue'
 import QrcodeVue from 'qrcode.vue'
 import { useI18n } from 'vue-i18n'
 import Adsense from '../components/Adsense.vue'
+import { ElMessage } from 'element-plus'
+import 'element-plus/es/components/message/style/css'
+import { useDark } from '@vueuse/core'
 
 const { t } = useI18n()
 const inputText = ref('')
@@ -245,6 +260,9 @@ const qrcodeRef = ref()
 const showAll = ref(false)
 const confirmingAction = ref<string | null>(null)
 const instantMode = ref(false)
+
+// 检测暗黑模式
+const isDarkMode = useDark()
 
 // 从本地存储载历史记录
 onMounted(() => {
@@ -307,13 +325,11 @@ const saveToHistory = () => {
 const downloadQRCode = () => {
   if (!qrcodeRef.value) return
   
-  const svg = qrcodeRef.value.$el
-  const serializer = new XMLSerializer()
-  const source = serializer.serializeToString(svg)
-  const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(source)
+  const canvas = qrcodeRef.value.$el
+  const url = canvas.toDataURL('image/png')
   
   const link = document.createElement('a')
-  link.download = 'qrcode.svg'
+  link.download = 'qrcode.png'
   link.href = url
   link.click()
 }
@@ -368,15 +384,34 @@ const clearHistory = () => {
 const copyText = async (text: string) => {
   try {
     await navigator.clipboard.writeText(text)
-    // 可以添加一个制成功的提示
+    ElMessage({
+      message: t('qrcode.copySuccess'),
+      type: 'success',
+      duration: 2000
+    })
   } catch (err) {
     console.error('复制失败:', err)
+    ElMessage({
+      message: t('qrcode.copyFailed'),
+      type: 'error',
+      duration: 2000
+    })
   }
 }
 
 // 切换无痕模式
 const toggleInstantMode = () => {
   instantMode.value = !instantMode.value
+}
+
+// 修改编辑处理函数
+const handleEdit = (index: number, item: { text: string; timestamp: number }) => {
+  if (!item.text) return
+  if (inputText.value) {
+    confirmingAction.value = `edit-${index}`
+  } else {
+    editHistory(item)
+  }
 }
 </script>
 

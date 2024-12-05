@@ -44,6 +44,8 @@ export default {
     copyTitle: 'テキストをコピー',
     editTitle: '編集',
     deleteTitle: '削除',
-    confirmDelete: '削除を確認'
+    confirmDelete: '削除を確認',
+    copySuccess: 'コピーしました',
+    copyFailed: 'コピーに失敗しました'
   }
 }
