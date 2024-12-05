@@ -16,7 +16,8 @@ export default {
     devTools: {
       title: '開発ツール',
       qrcode: 'テキストからQRコード',
-      codec: 'エンコード・デコード'
+      codec: 'エンコード・デコード',
+      time: '時間ツール'
     }
   },
   common: {

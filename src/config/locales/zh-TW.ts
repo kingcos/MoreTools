@@ -16,7 +16,8 @@ export default {
     devTools: {
       title: '開發常備',
       qrcode: '文本轉二維碼',
-      codec: '編碼與解碼'
+      codec: '編碼與解碼',
+      time: '時間工具'
     }
   },
   common: {
@@ -45,7 +46,7 @@ export default {
     copyTitle: '複製文本',
     editTitle: '編輯',
     deleteTitle: '刪除',
-    confirmDelete: '確認���除',
+    confirmDelete: '確認除',
     copySuccess: '複製成功',
     copyFailed: '複製失敗'
   },

@@ -51,7 +51,7 @@
                     <div class="flex items-center">
                       <div v-if="inputTimestamp && confirmingAction === 'reset'" class="flex items-center space-x-2">
                         <button
-                          @click="handleConfirm(-1, 'reset')"
+                          @click="handleConfirm('reset')"
                           class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                                  bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
                         >{{ t('time.confirmReset') }}</button>
@@ -244,7 +244,7 @@ const convertedDate = computed(() => {
 
 const confirmingAction = ref<string | null>(null)
 
-const handleConfirm = (index: number, action: 'reset') => {
+const handleConfirm = (action: 'reset') => {
   if (action === 'reset') {
     handleReset()
   }
