@@ -8,7 +8,7 @@ import menuConfig from './config/menu.json'
 import { useI18n } from 'vue-i18n'
 import { LOCALES } from './config/i18n'
 import QrcodeIcon from './components/icons/QrcodeIcon.vue'
-import { Adsense } from 'vue3-google-adsense'
+import Adsense from './components/Adsense.vue'
 
 const { locale, t } = useI18n()
 
@@ -411,10 +411,10 @@ const icons: Record<string, ReturnType<typeof defineComponent>> = {
               {{ t('common.advertisement') }}
             </div>
             <Adsense
-              data-ad-client="ca-pub-9925978992661955"
-              data-ad-slot="1547745371"
-              data-ad-format="auto"
-              data-full-width-responsive="true"
+              adStyle="max-height: 150px;"
+              slotId="1547745371"
+              format="auto"
+              fullWidthResponsive="true"
             />
           </div>
         </div>

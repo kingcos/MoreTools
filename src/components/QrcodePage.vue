@@ -92,10 +92,10 @@
             {{ t('common.advertisement') }}
           </div>
           <Adsense
-            data-ad-client="ca-pub-9925978992661955"
-            data-ad-slot="2839839840"
-            data-ad-format="auto"
-            data-full-width-responsive="true"
+            adStyle="max-height: 150px;"
+            slotId="2839839840"
+            format="auto"
+            fullWidthResponsive="true"
           />
         </div>
 
@@ -235,7 +235,7 @@
 import { ref, onMounted, computed } from 'vue'
 import QrcodeVue from 'qrcode.vue'
 import { useI18n } from 'vue-i18n'
-import { Adsense } from 'vue3-google-adsense'
+import Adsense from '../components/Adsense.vue'
 
 const { t } = useI18n()
 const inputText = ref('')
