@@ -15,7 +15,8 @@ export default {
     },
     devTools: {
       title: 'Dev Tools',
-      qrcode: 'Text to QR Code'
+      qrcode: 'Text to QR Code',
+      codec: 'Encode/Decode'
     }
   },
   common: {
@@ -45,6 +46,22 @@ export default {
     editTitle: 'Edit',
     deleteTitle: 'Delete',
     confirmDelete: 'Confirm Delete',
+    copySuccess: 'Copied successfully',
+    copyFailed: 'Copy failed'
+  },
+  codec: {
+    url: 'URL Encode/Decode',
+    base64: 'Base64 Encode/Decode',
+    input: 'Enter text...',
+    output: 'Output result',
+    inputLabel: 'Input',
+    outputLabel: 'Output',
+    encode: 'Encode',
+    decode: 'Decode',
+    copy: 'Copy',
+    clear: 'Clear',
+    confirmClear: 'Confirm Clear',
+    cancel: 'Cancel',
     copySuccess: 'Copied successfully',
     copyFailed: 'Copy failed'
   }

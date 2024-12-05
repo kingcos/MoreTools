@@ -15,7 +15,8 @@ export default {
     },
     devTools: {
       title: '開発ツール',
-      qrcode: 'テキストからQRコード'
+      qrcode: 'テキストからQRコード',
+      codec: 'エンコード/デコード'
     }
   },
   common: {
@@ -45,6 +46,22 @@ export default {
     editTitle: '編集',
     deleteTitle: '削除',
     confirmDelete: '削除を確認',
+    copySuccess: 'コピーしました',
+    copyFailed: 'コピーに失敗しました'
+  },
+  codec: {
+    url: 'URLエンコード/デコード',
+    base64: 'Base64エンコード/デコード',
+    input: 'テキストを入力...',
+    output: '出力結果',
+    inputLabel: '入力',
+    outputLabel: '出力',
+    encode: 'エンコード',
+    decode: 'デコード',
+    copy: 'コピー',
+    clear: 'クリア',
+    confirmClear: 'クリア確認',
+    cancel: 'キャンセル',
     copySuccess: 'コピーしました',
     copyFailed: 'コピーに失敗しました'
   }

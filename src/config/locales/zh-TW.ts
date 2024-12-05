@@ -15,7 +15,8 @@ export default {
     },
     devTools: {
       title: '開發常備',
-      qrcode: '文本轉二維碼'
+      qrcode: '文本轉二維碼',
+      codec: '編解碼工具'
     }
   },
   common: {
@@ -45,6 +46,22 @@ export default {
     editTitle: '編輯',
     deleteTitle: '刪除',
     confirmDelete: '確認刪除',
+    copySuccess: '複製成功',
+    copyFailed: '複製失敗'
+  },
+  codec: {
+    url: 'URL編解碼',
+    base64: 'Base64編解碼',
+    input: '請輸入文本...',
+    output: '輸出結果',
+    inputLabel: '輸入',
+    outputLabel: '輸出',
+    encode: '編碼',
+    decode: '解碼',
+    copy: '複製',
+    clear: '清空',
+    confirmClear: '確認清空',
+    cancel: '取消',
     copySuccess: '複製成功',
     copyFailed: '複製失敗'
   }

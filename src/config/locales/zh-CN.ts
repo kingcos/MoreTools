@@ -15,7 +15,8 @@ export default {
     },
     devTools: {
       title: '开发常备',
-      qrcode: '文本转二维码'
+      qrcode: '文本转二维码',
+      codec: '编解码工具'
     }
   },
   common: {
@@ -45,6 +46,22 @@ export default {
     editTitle: '编辑',
     deleteTitle: '删除',
     confirmDelete: '确认删除',
+    copySuccess: '复制成功',
+    copyFailed: '复制失败'
+  },
+  codec: {
+    url: 'URL编解码',
+    base64: 'Base64编解码',
+    input: '输入文本...',
+    output: '输出结果',
+    inputLabel: '输入',
+    outputLabel: '输出',
+    encode: '编码',
+    decode: '解码',
+    copy: '复制',
+    clear: '清空',
+    confirmClear: '确认清空',
+    cancel: '取消',
     copySuccess: '复制成功',
     copyFailed: '复制失败'
   }

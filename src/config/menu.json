@@ -10,6 +10,12 @@
             "titleKey": "menu.devTools.qrcode",
             "component": "QrcodePage",
             "icon": "Qrcode"
+          },
+          {
+            "id": "codec",
+            "titleKey": "menu.devTools.codec",
+            "component": "CodecPage",
+            "icon": "Code"
           }
         ]
       }
