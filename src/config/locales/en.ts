@@ -23,7 +23,8 @@ export default {
     starred: 'Starred',
     toolbox: 'Toolbox',
     confirmUnstar: 'Confirm Unstar',
-    cancel: 'Cancel'
+    cancel: 'Cancel',
+    advertisement: 'Ad'
   },
   qrcode: {
     placeholder: 'Enter text to convert...',
@@ -37,5 +38,12 @@ export default {
     download: 'Download',
     confirmReset: 'Confirm Reset',
     confirmClear: 'Confirm Clear',
+    showMore: 'Show More ({count})',
+    showLess: 'Show Less',
+    confirmEdit: 'Confirm Edit',
+    copyTitle: 'Copy Text',
+    editTitle: 'Edit',
+    deleteTitle: 'Delete',
+    confirmDelete: 'Confirm Delete'
   }
 }

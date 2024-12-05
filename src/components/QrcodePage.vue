@@ -140,7 +140,7 @@
               <button
                 @click="copyText(item.text)"
                 class="p-2 text-gray-400 hover:text-blue-500 transition-colors focus:outline-none"
-                title="复制文本"
+                :title="t('qrcode.copyTitle')"
               >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -151,17 +151,17 @@
                 <button
                   @click="handleConfirm(index, 'edit')"
                   class="text-red-500 hover:underline"
-                >确编辑</button>
+                >{{ t('qrcode.confirmEdit') }}</button>
                 <button
                   @click="cancelAction"
                   class="text-gray-500 hover:underline"
-                >取消</button>
+                >{{ t('common.cancel') }}</button>
               </div>
               <button
                 v-else
                 @click="confirmingAction = `edit-${index}`"
                 class="p-2 text-gray-400 hover:text-blue-500 transition-colors focus:outline-none"
-                title="编辑"
+                :title="t('qrcode.editTitle')"
               >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -173,17 +173,17 @@
                 <button
                   @click="handleConfirm(index, 'delete')"
                   class="text-red-500 hover:underline"
-                >确认删除</button>
+                >{{ t('qrcode.confirmDelete') }}</button>
                 <button
                   @click="cancelAction"
                   class="text-gray-500 hover:underline"
-                >取消</button>
+                >{{ t('common.cancel') }}</button>
               </div>
               <button
                 v-else
                 @click="confirmingAction = `delete-${index}`"
                 class="p-2 text-gray-400 hover:text-red-500 transition-colors focus:outline-none"
-                title="删除"
+                :title="t('qrcode.deleteTitle')"
               >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -198,7 +198,10 @@
             class="w-full py-2 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 
                    dark:hover:text-gray-200 transition-colors focus:outline-none"
           >
-            {{ showAll ? '收起' : `展开更多 (${history.length - 3})` }}
+            {{ showAll 
+                ? t('qrcode.showLess') 
+                : t('qrcode.showMore', { count: history.length - 3 }) 
+            }}
           </button>
         </div>
       </div>
@@ -220,7 +223,7 @@ const showAll = ref(false)
 const confirmingAction = ref<string | null>(null)
 const instantMode = ref(false)
 
-// 从本地存储���载历史记录
+// 从本地存储载历史记录
 onMounted(() => {
   const savedHistory = localStorage.getItem('qrcode-history')
   if (savedHistory) {

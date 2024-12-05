@@ -401,14 +401,14 @@ const icons: Record<string, ReturnType<typeof defineComponent>> = {
           </nav>
         </div>
 
-        <!-- 新增：广告区域 -->
+        <!-- 广告区域 -->
         <div class="p-4 border-t border-gray-200 dark:border-gray-700 relative">
           <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 text-center relative">
             <!-- 广告标识角标 -->
             <div class="absolute top-0 left-0 bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300 
                         text-xs px-2 py-0.5 rounded-tl-lg rounded-br-lg 
                         opacity-75 transition-opacity hover:opacity-100">
-              广告
+              {{ t('common.advertisement') }}
             </div>
             
             <!-- 谷歌广告占位符 -->

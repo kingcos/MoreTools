@@ -23,7 +23,8 @@ export default {
     starred: '收藏',
     toolbox: '工具箱',
     confirmUnstar: '確認取消收藏',
-    cancel: '取消'
+    cancel: '取消',
+    advertisement: '廣告'
   },
   qrcode: {
     placeholder: '請輸入要轉換的文本...',
@@ -37,5 +38,12 @@ export default {
     download: '下載',
     confirmReset: '確認重置',
     confirmClear: '確認清空',
+    showMore: '展開更多 ({count})',
+    showLess: '收起',
+    confirmEdit: '確認編輯',
+    copyTitle: '複製文本',
+    editTitle: '編輯',
+    deleteTitle: '刪除',
+    confirmDelete: '確認刪除'
   }
 }

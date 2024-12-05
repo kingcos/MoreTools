@@ -23,7 +23,8 @@ export default {
     starred: '收藏',
     toolbox: '工具箱',
     confirmUnstar: '确认取消收藏',
-    cancel: '取消'
+    cancel: '取消',
+    advertisement: '广告'
   },
   qrcode: {
     placeholder: '请输入要转换的文本...',
@@ -36,6 +37,13 @@ export default {
     incognito: '无痕模式',
     download: '下载',
     confirmReset: '确认重置',
-    confirmClear: '确认清空'
+    confirmClear: '确认清空',
+    showMore: '展开更多 ({count})',
+    showLess: '收起',
+    confirmEdit: '确认编辑',
+    copyTitle: '复制文本',
+    editTitle: '编辑',
+    deleteTitle: '删除',
+    confirmDelete: '确认删除'
   }
 }

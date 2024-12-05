@@ -23,7 +23,8 @@ export default {
     starred: 'お気に入り',
     toolbox: 'ツールボックス',
     confirmUnstar: 'お気に入りを解除',
-    cancel: 'キャンセル'
+    cancel: 'キャンセル',
+    advertisement: '広告'
   },
   qrcode: {
     placeholder: '変換するテキストを入力...',
@@ -37,5 +38,12 @@ export default {
     download: 'ダウンロード',
     confirmReset: 'リセット確認',
     confirmClear: '削除確認',
+    showMore: 'もっと見る ({count})',
+    showLess: '折りたたむ',
+    confirmEdit: '編集を確認',
+    copyTitle: 'テキストをコピー',
+    editTitle: '編集',
+    deleteTitle: '削除',
+    confirmDelete: '削除を確認'
   }
 }
