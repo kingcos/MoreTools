@@ -95,13 +95,15 @@
           </div>
         </div>
 
-        <Adsense
-            adStyle="max-height: 150px; width: 100%;"
-            slotId="2839839840"
-            format="auto"
-            fullWidthResponsive="true"
-        />
-
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 relative">
+            <Adsense
+                adStyle="max-height: 150px; width: 100%;"
+                slotId="2839839840"
+                format="auto"
+                fullWidthResponsive="true"
+            />
+        </div>
+        
         <div v-if="history.length > 0 && !instantMode" class="space-y-4 min-h-[200px]">
           <div class="flex justify-between items-center">
             <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ t('qrcode.history') }}</h2>

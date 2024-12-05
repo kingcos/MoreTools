@@ -403,12 +403,16 @@ const icons: Record<string, ReturnType<typeof defineComponent>> = {
         </div>
 
         <!-- 广告区域 -->
-        <Adsense
-          adStyle="max-height: 150px; width: 100%;"
-          slotId="1547745371"
-          format="auto"
-          fullWidthResponsive="true"
-        />
+        <div class="p-4 border-t border-gray-200 dark:border-gray-700 relative">
+          <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 text-center relative">
+            <Adsense
+              adStyle="max-height: 150px; width: 100%;"
+              slotId="1547745371"
+              format="auto"
+              fullWidthResponsive="true"
+            />
+          </div>
+        </div>
 
         <!-- 底部语言切换按钮 -->
         <div class="p-4 border-t border-gray-200 dark:border-gray-700">
