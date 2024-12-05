@@ -28,7 +28,7 @@ export default {
   },
   qrcode: {
     placeholder: 'Enter text to convert...',
-    save: 'Save',
+    save: 'Generate QR Code',
     reset: 'Reset',
     history: 'History',
     clearAll: 'Clear All',

@@ -20,7 +20,7 @@ const componentMap = {
 } as const
 
 // 状态管理
-const isSidebarOpen = ref(true)
+const isSidebarOpen = ref(window.innerWidth >= 768)
 const isDarkMode = ref(document.documentElement.classList.contains('dark'))
 const currentPage = ref('')
 const searchQuery = ref('')

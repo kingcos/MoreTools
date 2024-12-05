@@ -28,7 +28,7 @@ export default {
   },
   qrcode: {
     placeholder: '変換するテキストを入力...',
-    save: '保存',
+    save: 'QRコード生成',
     reset: 'リセット',
     history: '履歴',
     clearAll: 'すべて削除',

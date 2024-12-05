@@ -28,7 +28,7 @@ export default {
   },
   qrcode: {
     placeholder: '請輸入要轉換的文本...',
-    save: '保存',
+    save: '生成二維碼',
     reset: '重置',
     history: '歷史記錄',
     clearAll: '清空全部',

@@ -28,7 +28,7 @@ export default {
   },
   qrcode: {
     placeholder: '请输入要转换的文本...',
-    save: '保存',
+    save: '生成二维码',
     reset: '重置',
     history: '历史记录',
     clearAll: '清空全部',
