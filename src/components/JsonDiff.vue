@@ -60,15 +60,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { ElMessage, ElIcon } from 'element-plus'
-import { Codemirror } from 'vue-codemirror'
 import { json } from '@codemirror/lang-json'
-import { lineNumbers } from '@codemirror/view'
 import { EditorView } from '@codemirror/view'
-import { Fold } from '@element-plus/icons-vue'
-import * as DiffMatchPatch from 'diff-match-patch'
 import { MergeView } from '@codemirror/merge'
 import { basicSetup } from 'codemirror'
 import { EditorState } from '@codemirror/state'
@@ -77,31 +72,9 @@ const { t } = useI18n()
 
 const originalJson = ref('')
 const modifiedJson = ref('')
-const diffResult = ref('')
 const error = ref('')
 const confirmingClear = ref(false)
 const editorContainer = ref<HTMLElement | null>(null)
-
-const dmp = new DiffMatchPatch.diff_match_patch()
-
-const extensions = computed(() => [
-  json(),
-  lineNumbers(),
-  EditorView.theme({
-    '&': {
-      backgroundColor: 'transparent !important',
-      height: '100%'
-    },
-    '.cm-gutters': {
-      backgroundColor: 'transparent !important',
-      borderRight: '1px solid var(--el-border-color-lighter)'
-    },
-    '.cm-content': {
-      height: '100%',
-      minHeight: '200px'
-    }
-  })
-])
 
 const formatJson = (jsonStr: string): string => {
   try {
@@ -140,7 +113,7 @@ const createMergeView = () => {
 
   editorContainer.value.innerHTML = ''
 
-  const mergeViewConfig = new MergeView({
+  new MergeView({
     a: {
       doc: originalJson.value,
       extensions: [
@@ -170,24 +143,13 @@ const createMergeView = () => {
       ]
     },
     parent: editorContainer.value,
-    revertControls: true,
+    revertControls: "a-to-b",
     highlightChanges: true,
     collapseUnchanged: {
       margin: 50,
       minSize: 30
     }
   })
-}
-
-const copyDiff = async () => {
-  try {
-    const tempDiv = document.createElement('div')
-    tempDiv.innerHTML = diffResult.value
-    await navigator.clipboard.writeText(tempDiv.textContent || '')
-    ElMessage.success(t('json.copySuccess'))
-  } catch (e) {
-    ElMessage.error(t('json.copyError'))
-  }
 }
 
 onMounted(() => {
