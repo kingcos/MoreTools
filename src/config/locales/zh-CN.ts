@@ -14,11 +14,11 @@ export default {
       story: '故事维维'
     },
     devTools: {
-      title: '开发常备',
-      qrcode: '文本转二维码',
-      codec: '编解码工具',
-      time: '时间工具',
-      json: 'JSON工具'
+      title: '开发工具',
+      qrcode: '二维码',
+      codec: '编解码',
+      time: '时间',
+      json: 'JSON'
     }
   },
   common: {
@@ -35,9 +35,17 @@ export default {
     confirmReset: "确定重置"
   },
   qrcode: {
+    title: '二维码工具',
+    encodeTab: '二维码转换',
+    decodeTab: '二维码解析',
+    selectImage: '选择图片',
+    dragTip: '或将图片拖放到此处',
+    decodedResult: '解析结果',
+    decodeError: '无法解析二维码',
     placeholder: '请输入要转换的文本...',
     save: '生成二维码',
     reset: '重置',
+    cancel: '取消',
     history: '历史记录',
     clearAll: '清空全部',
     copy: '复制文本',
@@ -54,7 +62,8 @@ export default {
     deleteTitle: '删除',
     confirmDelete: '确认删除',
     copySuccess: '复制成功',
-    copyFailed: '复制失败'
+    copyFailed: '复制失败',
+    zoom: '放大模式'
   },
   codec: {
     url: 'URL 编解码',
@@ -98,7 +107,7 @@ export default {
   },
   "json": {
     "inputPlaceholder": "请输入 JSON 数据...",
-    "outputPlaceholder": "JSON 格式化结果将实时显示在这里...",
+    "outputPlaceholder": "JSON 格式���结果将实时显示在这里...",
     "errorPrefix": "❌ 格式化错误",
     "compress": "压缩",
     "toXml": "转 XML",
