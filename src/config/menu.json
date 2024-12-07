@@ -22,6 +22,12 @@
             "titleKey": "menu.devTools.time",
             "component": "TimePage",
             "icon": "Time"
+          },
+          {
+            "id": "json",
+            "titleKey": "menu.devTools.json",
+            "component": "JsonPage",
+            "icon": "Code"
           }
         ]
       }

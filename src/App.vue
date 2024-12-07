@@ -6,6 +6,7 @@ import StoryPage from './components/StoryPage.vue'
 import QrcodePage from './components/QrcodePage.vue'
 import CodecPage from './components/CodecPage.vue'
 import TimePage from './components/TimePage.vue'
+import JsonPage from './components/JsonPage.vue'
 import menuConfig from './config/menu.json'
 import { useI18n } from 'vue-i18n'
 import { LOCALES } from './config/i18n'
@@ -23,7 +24,8 @@ const componentMap = {
   StoryPage,
   QrcodePage,
   CodecPage,
-  TimePage
+  TimePage,
+  JsonPage
 } as const
 
 // 状态管理

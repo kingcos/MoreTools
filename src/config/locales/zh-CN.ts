@@ -17,7 +17,8 @@ export default {
       title: '开发常备',
       qrcode: '文本转二维码',
       codec: '编解码工具',
-      time: '时间工具'
+      time: '时间工具',
+      json: 'JSON工具'
     }
   },
   common: {
@@ -26,7 +27,12 @@ export default {
     toolbox: '工具箱',
     confirmUnstar: '确认取消收藏',
     cancel: '取消',
-    advertisement: '广告'
+    advertisement: '广告',
+    copy: "复制",
+    copied: "已复制！",
+    reset: "重置",
+    confirmTitle: "确认",
+    confirmReset: "确定重置"
   },
   qrcode: {
     placeholder: '请输入要转换的文本...',
@@ -88,5 +94,14 @@ export default {
     confirmReset: '确认重置',
     copySuccess: '复制成功',
     copyFailed: '复制失败'
+  },
+  "json": {
+    "inputPlaceholder": "请输入 JSON 数据...",
+    "outputPlaceholder": "JSON 格式化结果将实时显示在这里...",
+    "errorPrefix": "❌ 格式化错误",
+    "compress": "压缩",
+    "toXml": "转 XML",
+    "showLineNumbers": "显示行号",
+    "confirmReset": "确定要清空当前内容吗？"
   }
 }
