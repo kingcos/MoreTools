@@ -27,7 +27,7 @@
             "id": "json",
             "titleKey": "menu.devTools.json",
             "component": "JsonPage",
-            "icon": "Code"
+            "icon": "Json"
           }
         ]
       }

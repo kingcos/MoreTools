@@ -14,6 +14,7 @@ import QrcodeIcon from './components/icons/QrcodeIcon.vue'
 import Adsense from './components/Adsense.vue'
 import CodeIcon from './components/icons/CodeIcon.vue'
 import TimeIcon from './components/icons/TimeIcon.vue'
+import JsonIcon from './components/icons/JsonIcon.vue'
 import { useDark, useToggle } from '@vueuse/core'
 import { useDisplayMode } from '@/composables/useDisplayMode'
 
@@ -176,7 +177,8 @@ const changeLocale = (code: string) => {
 const icons: Record<string, ReturnType<typeof defineComponent>> = {
   QrcodeIcon,
   CodeIcon,
-  TimeIcon
+  TimeIcon,
+  JsonIcon
 }
 
 // 显示模式配置
@@ -512,7 +514,7 @@ const selectDisplayMode = (mode: typeof displayModes[0]) => {
               </span>
             </button>
             
-            <!-- 语言选择下拉菜单 -->
+            <!-- 语言选择下拉菜�� -->
             <div
               v-if="isLocaleMenuOpen"
               class="absolute bottom-full left-0 mb-2 w-32 bg-white dark:bg-gray-800 rounded-lg shadow-lg 
@@ -578,7 +580,7 @@ const selectDisplayMode = (mode: typeof displayModes[0]) => {
       />
     </div>
 
-    <!-- 遮罩层 - 仅在移��端且开时显示 -->
+    <!-- 遮罩层 - 仅在移动端且开时显示 -->
     <div
       v-if="isSidebarOpen"
       @click="toggleSidebar"
