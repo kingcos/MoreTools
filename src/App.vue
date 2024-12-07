@@ -15,8 +15,8 @@ import Adsense from './components/Adsense.vue'
 import CodeIcon from './components/icons/CodeIcon.vue'
 import TimeIcon from './components/icons/TimeIcon.vue'
 import JsonIcon from './components/icons/JsonIcon.vue'
-import { useDark, useToggle } from '@vueuse/core'
-import { useDisplayMode } from '@/composables/useDisplayMode'
+import { useDark } from '@vueuse/core'
+import { useDisplayMode } from './composables/useDisplayMode'
 
 const { locale, t } = useI18n()
 
@@ -188,7 +188,7 @@ const displayModes = [
 ]
 
 const isDisplayModeOpen = ref(false)
-const { isCompactMode, currentMode, toggleDisplayMode } = useDisplayMode()
+const { currentMode, toggleDisplayMode } = useDisplayMode()
 
 const currentDisplayMode = computed(() => 
   displayModes.find(mode => mode.key === currentMode.value) || displayModes[0]
@@ -514,7 +514,7 @@ const selectDisplayMode = (mode: typeof displayModes[0]) => {
               </span>
             </button>
             
-            <!-- 语言选择下拉菜�� -->
+            <!-- 语言选择下拉菜单 -->
             <div
               v-if="isLocaleMenuOpen"
               class="absolute bottom-full left-0 mb-2 w-32 bg-white dark:bg-gray-800 rounded-lg shadow-lg 

@@ -127,7 +127,7 @@ import { useI18n } from 'vue-i18n'
 import { ElMessage, ElTabs, ElTabPane } from 'element-plus'
 import 'element-plus/dist/index.css'
 import Adsense from './Adsense.vue'
-import { useDisplayMode } from '@/composables/useDisplayMode'
+import { useDisplayMode } from '../composables/useDisplayMode'
 
 const { t } = useI18n()
 const inputText = ref('')

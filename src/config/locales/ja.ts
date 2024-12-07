@@ -15,9 +15,10 @@ export default {
     },
     devTools: {
       title: '開発ツール',
-      qrcode: 'テキストからQRコード',
-      codec: 'エンコード・デコード',
-      time: '時間ツール'
+      qrcode: 'QRコード',
+      codec: 'エンコード',
+      time: '時間',
+      json: 'JSON'
     }
   },
   common: {
@@ -26,7 +27,16 @@ export default {
     toolbox: 'ツールボックス',
     confirmUnstar: 'お気に入りを解除',
     cancel: 'キャンセル',
-    advertisement: '広告'
+    advertisement: '広告',
+    copy: "コピー",
+    copied: "コピーしました！",
+    reset: "リセット",
+    confirmTitle: "確認",
+    confirmReset: "リセット確認",
+    displayMode: {
+      compact: 'コンパクトモード',
+      fullscreen: '全画面モード'
+    }
   },
   qrcode: {
     placeholder: '変換するテキストを入力...',
@@ -48,7 +58,15 @@ export default {
     deleteTitle: '削除',
     confirmDelete: '削除を確認',
     copySuccess: 'コピーしました',
-    copyFailed: 'コピーに失敗しました'
+    copyFailed: 'コピーに失敗しました',
+    title: 'QRコードツール',
+    encodeTab: 'QRコード生成',
+    decodeTab: 'QRコード読み取り',
+    selectImage: '画像を選択',
+    dragTip: 'または画像をここにドロップ',
+    decodedResult: '読み取り結果',
+    decodeError: 'QRコードを読み取れません',
+    zoom: 'ズームモード'
   },
   codec: {
     url: 'URLエンコード/デコード',
@@ -64,7 +82,8 @@ export default {
     confirmReset: 'リセット確認',
     cancel: 'キャンセル',
     copySuccess: 'コピーしました',
-    copyFailed: 'コピーに失敗しました'
+    copyFailed: 'コピーに失敗しました',
+    title: 'エンコードツール'
   },
   time: {
     timestampConverter: 'タイムスタンプ変換',
@@ -86,7 +105,23 @@ export default {
     copy: 'コピー',
     reset: 'リセット',
     confirmReset: 'リセット確認',
+    copySuccess: 'コピーしまた',
+    copyFailed: 'コピーに失敗しました',
+    title: '時間ツール',
+    refresh: '現在時刻を更新',
+    inputDate: '日付入力'
+  },
+  json: {
+    format: 'JSON フォーマット',
+    title: 'JSON ツール',
+    inputLabel: '入力',
+    outputLabel: '出力',
+    compress: '圧縮モード',
+    reset: 'リセット',
+    confirmReset: 'リセット確認',
+    cancel: 'キャンセル',
+    copy: 'コピー',
     copySuccess: 'コピーしました',
-    copyFailed: 'コピーに失敗しました'
+    copyError: 'コピーに失敗しました'
   }
 }

@@ -14,10 +14,11 @@ export default {
       story: '故事維維'
     },
     devTools: {
-      title: '開發常備',
-      qrcode: '文本轉二維碼',
-      codec: '編碼與解碼',
-      time: '時間工具'
+      title: '開發工具',
+      qrcode: '二維碼',
+      codec: '編解碼',
+      time: '時間',
+      json: 'JSON'
     }
   },
   common: {
@@ -26,7 +27,16 @@ export default {
     toolbox: '工具箱',
     confirmUnstar: '確認取消收藏',
     cancel: '取消',
-    advertisement: '廣告'
+    advertisement: '廣告',
+    copy: "複製",
+    copied: "已複製！",
+    reset: "重置",
+    confirmTitle: "確認",
+    confirmReset: "確認重置",
+    displayMode: {
+      compact: '緊湊模式',
+      fullscreen: '全屏模式'
+    }
   },
   qrcode: {
     placeholder: '請輸入要轉換的文本...',
@@ -48,7 +58,15 @@ export default {
     deleteTitle: '刪除',
     confirmDelete: '確認除',
     copySuccess: '複製成功',
-    copyFailed: '複製失敗'
+    copyFailed: '複製失敗',
+    title: '二維碼工具',
+    encodeTab: '二維碼轉換',
+    decodeTab: '二維碼解析',
+    selectImage: '選擇圖片',
+    dragTip: '或將圖片拖放到此處',
+    decodedResult: '解析結果',
+    decodeError: '無法解析二維碼',
+    zoom: '放大模式'
   },
   codec: {
     url: 'URL編解碼',
@@ -64,7 +82,8 @@ export default {
     confirmReset: '確認重置',
     cancel: '取消',
     copySuccess: '複製成功',
-    copyFailed: '複製失敗'
+    copyFailed: '複製失敗',
+    title: '編解碼工具'
   },
   time: {
     timestampConverter: '時間戳轉換',
@@ -87,6 +106,22 @@ export default {
     reset: '重置',
     confirmReset: '確認重置',
     copySuccess: '複製成功',
-    copyFailed: '複製失敗'
+    copyFailed: '複製失敗',
+    title: '時間工具',
+    refresh: '刷新當前時間',
+    inputDate: '輸入日期'
+  },
+  json: {
+    format: 'JSON 格式化',
+    title: 'JSON 工具',
+    inputLabel: '輸入',
+    outputLabel: '輸出',
+    compress: '壓縮模式',
+    reset: '重置',
+    confirmReset: '確認重置',
+    cancel: '取消',
+    copy: '複製',
+    copySuccess: '複製成功',
+    copyError: '複製失敗'
   }
 }

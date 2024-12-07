@@ -132,7 +132,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { ElTabs, ElTabPane, ElButton, ElButtonGroup, ElMessage, ElIcon } from 'element-plus'
+import { ElTabs, ElTabPane, ElMessage, ElIcon } from 'element-plus'
 import { Codemirror } from 'vue-codemirror'
 import { json } from '@codemirror/lang-json'
 import { lineNumbers } from '@codemirror/view'
@@ -140,7 +140,7 @@ import { EditorView } from '@codemirror/view'
 import { EditorState } from '@codemirror/state'
 import Adsense from './Adsense.vue'
 import { Fold } from '@element-plus/icons-vue'
-import { useDisplayMode } from '@/composables/useDisplayMode'
+import { useDisplayMode } from '../composables/useDisplayMode'
 
 const { t } = useI18n()
 const { isCompactMode } = useDisplayMode()

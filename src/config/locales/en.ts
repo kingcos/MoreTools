@@ -14,10 +14,11 @@ export default {
       story: 'Story Vivi'
     },
     devTools: {
-      title: 'Dev Tools',
-      qrcode: 'Text to QR Code',
-      codec: 'Encode & Decode',
-      time: 'Time Tools'
+      title: 'Developer Tools',
+      qrcode: 'QR Code',
+      codec: 'Codec',
+      time: 'Time',
+      json: 'JSON'
     }
   },
   common: {
@@ -26,7 +27,16 @@ export default {
     toolbox: 'Toolbox',
     confirmUnstar: 'Confirm Unstar',
     cancel: 'Cancel',
-    advertisement: 'Ad'
+    advertisement: 'Ad',
+    copy: 'Copy',
+    copied: 'Copied!',
+    reset: 'Reset',
+    confirmTitle: 'Confirm',
+    confirmReset: 'Confirm Reset',
+    displayMode: {
+      compact: 'Compact Mode',
+      fullscreen: 'Fullscreen Mode'
+    }
   },
   qrcode: {
     placeholder: 'Enter text to convert...',
@@ -48,7 +58,15 @@ export default {
     deleteTitle: 'Delete',
     confirmDelete: 'Confirm Delete',
     copySuccess: 'Copied successfully',
-    copyFailed: 'Copy failed'
+    copyFailed: 'Copy failed',
+    title: 'QR Code Tools',
+    encodeTab: 'Generate QR Code',
+    decodeTab: 'Decode QR Code',
+    selectImage: 'Select Image',
+    dragTip: 'or drag and drop image here',
+    decodedResult: 'Decoded Result',
+    decodeError: 'Failed to decode QR code',
+    zoom: 'Zoom Mode'
   },
   codec: {
     url: 'URL Encode/Decode',
@@ -64,7 +82,8 @@ export default {
     confirmReset: 'Confirm Reset',
     cancel: 'Cancel',
     copySuccess: 'Copied successfully',
-    copyFailed: 'Copy failed'
+    copyFailed: 'Copy failed',
+    title: 'Codec Tools'
   },
   time: {
     timestampConverter: 'Timestamp Converter',
@@ -87,6 +106,22 @@ export default {
     reset: 'Reset',
     confirmReset: 'Confirm Reset',
     copySuccess: 'Copied successfully',
-    copyFailed: 'Copy failed'
+    copyFailed: 'Copy failed',
+    title: 'Time Tools',
+    refresh: 'Refresh Current Time',
+    inputDate: 'Input Date'
+  },
+  json: {
+    format: 'JSON Format',
+    title: 'JSON Tools',
+    inputLabel: 'Input',
+    outputLabel: 'Output',
+    compress: 'Compress Mode',
+    reset: 'Reset',
+    confirmReset: 'Confirm Reset',
+    cancel: 'Cancel',
+    copy: 'Copy',
+    copySuccess: 'Copied successfully',
+    copyError: 'Copy failed'
   }
 }
