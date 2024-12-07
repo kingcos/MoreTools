@@ -2,32 +2,25 @@
   <div class="flex-1 bg-gray-50 dark:bg-gray-900 overflow-hidden flex flex-col">
     <div class="p-4 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
       <div class="max-w-4xl mx-auto">
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ t('menu.devTools.codec') }}</h1>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ t('codec.title') }}</h1>
       </div>
     </div>
 
     <div class="flex-1 overflow-y-auto">
       <div class="p-4 max-w-4xl mx-auto space-y-4">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
-          <!-- Tab切换 -->
-          <div class="flex space-x-2 mb-4">
-            <button
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+          <!-- 使用 Element Plus 的 Tabs 组件 -->
+          <el-tabs v-model="currentTab" class="dark-mode-tabs" type="border-card">
+            <el-tab-pane
               v-for="tab in tabs"
               :key="tab.key"
-              @click="currentTab = tab.key"
-              class="px-4 py-2 rounded-lg transition-colors focus:outline-none"
-              :class="[
-                currentTab === tab.key
-                  ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
-              ]"
-            >
-              {{ t(tab.title) }}
-            </button>
-          </div>
+              :label="t(tab.title)"
+              :name="tab.key"
+            />
+          </el-tabs>
 
-          <!-- 输入区域 -->
-          <div class="space-y-4">
+          <!-- 输入输出区域 -->
+          <div class="p-6 space-y-6">
             <!-- 输入框标签和文本框 -->
             <div class="space-y-2">
               <div class="flex items-center">
@@ -37,21 +30,12 @@
               </div>
               <textarea
                 v-model="inputText"
-                class="w-full h-40 p-2 border border-gray-200 dark:border-gray-700 rounded-lg resize-none 
+                class="w-full h-40 p-3 border border-gray-200 dark:border-gray-700 rounded-lg resize-none 
                        bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-0 focus:border-gray-300 
                        dark:focus:border-gray-600"
                 :placeholder="t('codec.input')"
               ></textarea>
             </div>
-
-            <!-- 交换按钮 -->
-            <button
-              @click="swapContent"
-              class="mx-auto block px-4 py-2 bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 
-                     text-gray-700 dark:text-gray-300 rounded-lg transition-colors focus:outline-none"
-            >
-              🔄
-            </button>
 
             <!-- 输出框标签和文本框 -->
             <div class="space-y-2">
@@ -62,7 +46,7 @@
               </div>
               <textarea
                 v-model="outputText"
-                class="w-full h-40 p-2 border border-gray-200 dark:border-gray-700 rounded-lg resize-none 
+                class="w-full h-40 p-3 border border-gray-200 dark:border-gray-700 rounded-lg resize-none 
                        bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-0 focus:border-gray-300 
                        dark:focus:border-gray-600"
                 readonly
@@ -71,7 +55,7 @@
             </div>
 
             <!-- 操作按钮 -->
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center pt-2">
               <div class="space-x-2">
                 <button
                   @click="handleEncode"
@@ -89,8 +73,9 @@
                 <button
                   v-if="inputText"
                   @click="copyText"
-                  class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600
-                         text-gray-600 dark:text-gray-300 rounded-lg transition-colors focus:outline-none"
+                  class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
+                         bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600
+                         text-gray-600 dark:text-gray-300"
                 >{{ t('codec.copy') }}</button>
 
                 <div v-if="inputText" class="inline-block">
@@ -104,7 +89,7 @@
                       @click="confirmingClear = false"
                       class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                              bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
-                    >{{ t('common.cancel') }}</button>
+                    >{{ t('codec.cancel') }}</button>
                   </div>
                   <button
                     v-else
@@ -139,7 +124,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElTabs, ElTabPane } from 'element-plus'
+import 'element-plus/dist/index.css'
 import Adsense from './Adsense.vue'
 
 const { t } = useI18n()
@@ -177,13 +163,6 @@ const handleDecode = () => {
   }
 }
 
-// 交换输入和输出内容
-const swapContent = () => {
-  const temp = inputText.value
-  inputText.value = outputText.value
-  outputText.value = temp
-}
-
 // 复制文本
 const copyText = async () => {
   try {
@@ -210,3 +189,77 @@ const handleReset = () => {
   confirmingClear.value = false
 }
 </script>
+
+<style scoped>
+/* Tabs 样式优化 */
+:deep(.dark-mode-tabs.el-tabs) {
+  /* 移除默认边框 */
+  &.el-tabs--border-card {
+    background: transparent;
+    border: none;
+  }
+
+  .el-tabs__header {
+    background: transparent;
+    border: none;
+    margin: 0;
+  }
+
+  .el-tabs__nav {
+    border: none !important;
+  }
+
+  /* Tab 项样式 */
+  .el-tabs__item {
+    height: 48px;
+    line-height: 48px;
+    padding: 0 24px;
+    font-size: 14px;
+    color: rgba(75, 85, 99, 0.7);
+    transition: all 0.3s ease;
+    border: none;
+    margin-right: 0;
+    position: relative;
+    
+    &:hover {
+      color: var(--el-color-primary);
+    }
+    
+    &.is-active {
+      color: var(--el-color-primary);
+      background: transparent;
+
+      /* 活动状态下的底部指示条 */
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--el-color-primary);
+      }
+    }
+  }
+
+  /* 内容区域样式 */
+  .el-tabs__content {
+    padding: 0;
+  }
+}
+
+/* 暗黑模式特定样式 */
+:deep(.dark .dark-mode-tabs.el-tabs) {
+  .el-tabs__item {
+    color: rgba(255, 255, 255, 0.7);
+    
+    &:hover {
+      color: var(--el-color-primary);
+    }
+    
+    &.is-active {
+      color: var(--el-color-primary);
+    }
+  }
+}
+</style>

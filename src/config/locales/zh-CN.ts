@@ -57,8 +57,8 @@ export default {
     copyFailed: '复制失败'
   },
   codec: {
-    url: 'URL编解码',
-    base64: 'Base64编解码',
+    url: 'URL 编解码',
+    base64: 'Base64 编解码',
     input: '输入文本...',
     output: '输出结果',
     inputLabel: '输入',
@@ -67,10 +67,11 @@ export default {
     decode: '解码',
     copy: '复制',
     reset: '重置',
-    confirmReset: '确认重置',
+    confirmReset: '确定重置',
     cancel: '取消',
     copySuccess: '复制成功',
-    copyFailed: '复制失败'
+    copyFailed: '复制失败',
+    title: '编解码工具'
   },
   time: {
     timestampConverter: '时间戳转换',
