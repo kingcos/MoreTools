@@ -107,8 +107,10 @@ export default {
     reset: 'Reset',
     confirmReset: 'Confirm Reset',
     cancel: 'Cancel',
-    copy: 'Copy',
-    copySuccess: 'Copied successfully',
-    copyError: 'Copy failed'
+    diff: 'JSON Compare',
+    diffLegend: 'Legend',
+    removed: 'Removed',
+    added: 'Added',
+    invalidJson: 'Invalid JSON format'
   }
 }

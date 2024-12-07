@@ -107,8 +107,10 @@ export default {
     reset: 'リセット',
     confirmReset: 'リセット確認',
     cancel: 'キャンセル',
-    copy: 'コピー',
-    copySuccess: 'コピーしました',
-    copyError: 'コピーに失敗しました'
+    diff: 'JSON 比較',
+    diffLegend: '凡例',
+    removed: '削除',
+    added: '追加',
+    invalidJson: '無効な JSON 形式'
   }
 }

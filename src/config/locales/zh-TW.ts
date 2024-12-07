@@ -107,8 +107,10 @@ export default {
     reset: '重置',
     confirmReset: '確認重置',
     cancel: '取消',
-    copy: '複製',
-    copySuccess: '複製成功',
-    copyError: '複製失敗'
+    diff: 'JSON 對比',
+    diffLegend: '圖例',
+    removed: '刪除',
+    added: '新增',
+    invalidJson: '無效的 JSON 格式'
   }
 }
