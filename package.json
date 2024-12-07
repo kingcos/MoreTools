@@ -9,10 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@codemirror/commands": "^6.7.1",
+    "@codemirror/lang-json": "^6.0.1",
+    "@codemirror/state": "^6.4.1",
+    "@codemirror/view": "^6.35.2",
+    "@element-plus/icons-vue": "^2.3.1",
+    "codemirror": "^6.0.1",
     "element-plus": "^2.9.0",
     "qr-scanner": "^1.4.2",
     "qrcode.vue": "^3.6.0",
     "vue": "^3.5.13",
+    "vue-codemirror": "^6.1.1",
     "vue-i18n": "^11.0.0-beta.2"
   },
   "devDependencies": {

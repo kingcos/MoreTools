@@ -177,6 +177,34 @@ const icons: Record<string, ReturnType<typeof defineComponent>> = {
   CodeIcon,
   TimeIcon
 }
+
+// 显示模式配置
+const displayModes = [
+  { key: 'compact', name: '紧凑模式', emoji: '📱' },
+  { key: 'fullscreen', name: '全屏模式', emoji: '🖥️' }
+]
+
+const isDisplayModeOpen = ref(false)
+const currentDisplayMode = ref(displayModes[0]) // 默认紧凑模式
+
+// 从本地存储加载显示模式
+onMounted(() => {
+  const savedMode = localStorage.getItem('display-mode')
+  if (savedMode) {
+    const mode = displayModes.find(m => m.key === savedMode)
+    if (mode) {
+      currentDisplayMode.value = mode
+    }
+  }
+})
+
+// 选择显示模式
+const selectDisplayMode = (mode: typeof displayModes[0]) => {
+  currentDisplayMode.value = mode
+  localStorage.setItem('display-mode', mode.key)
+  isDisplayModeOpen.value = false
+}
+
 </script>
 
 <template>
@@ -442,42 +470,78 @@ const icons: Record<string, ReturnType<typeof defineComponent>> = {
           </div>
         </div>
 
-        <!-- 底部语言切换按钮 -->
-        <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+        <!-- 底部按钮区域 -->
+        <div class="flex items-center justify-between px-4 py-3 border-t border-gray-200 dark:border-gray-700">
+          <!-- 显示模式选择 -->
+          <div class="relative">
+            <button
+              @click="isDisplayModeOpen = !isDisplayModeOpen"
+              class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
+                     text-gray-800 dark:text-white border border-transparent transition-all focus:outline-none"
+            >
+              <span class="flex items-center justify-center w-6 h-6">
+                {{ currentDisplayMode.emoji }}
+              </span>
+            </button>
+
+            <!-- 显示模式下拉菜单 -->
+            <div
+              v-show="isDisplayModeOpen"
+              class="absolute bottom-full left-0 mb-2 w-32 bg-white dark:bg-gray-800 rounded-lg shadow-lg 
+                     border border-gray-200 dark:border-gray-700"
+            >
+              <a
+                v-for="mode in displayModes"
+                :key="mode.key"
+                href="#"
+                @click.prevent="selectDisplayMode(mode)"
+                class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 
+                       text-gray-900 dark:text-white first:rounded-t-lg last:rounded-b-lg"
+                :class="{ 'bg-gray-100 dark:bg-gray-700': currentDisplayMode.key === mode.key }"
+              >
+                <div class="flex items-center space-x-2">
+                  <span>{{ mode.emoji }}</span>
+                  <span>{{ mode.name }}</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- 语言选择 -->
           <div class="relative">
             <button
               @click="isLocaleMenuOpen = !isLocaleMenuOpen"
               class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
                      text-gray-800 dark:text-white border border-transparent transition-all focus:outline-none"
             >
-              <div class="flex items-center">
-                <span class="w-6 h-6 flex items-center justify-center">
-                  {{ LOCALES.find(l => l.code === locale)?.emoji }}
-                </span>
-              </div>
+              <span class="flex items-center justify-center w-6 h-6">
+                {{ LOCALES.find(l => l.code === locale)?.emoji }}
+              </span>
             </button>
             
             <!-- 语言选择下拉菜单 -->
             <div
               v-if="isLocaleMenuOpen"
-              class="absolute bottom-full left-0 mb-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-50"
+              class="absolute bottom-full left-0 mb-2 w-32 bg-white dark:bg-gray-800 rounded-lg shadow-lg 
+                     border border-gray-200 dark:border-gray-700"
             >
-              <div class="py-1">
-                <a
-                  v-for="lang in LOCALES"
-                  :key="lang.code"
-                  @click="changeLocale(lang.code); isLocaleMenuOpen = false"
-                  class="block px-4 py-2 text-sm cursor-pointer"
-                  :class="[
-                    locale === lang.code 
-                      ? 'bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-200' 
-                      : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
-                  ]"
-                >
-                  <span class="mr-2">{{ lang.emoji }}</span>
+              <a
+                v-for="lang in LOCALES"
+                :key="lang.code"
+                @click="changeLocale(lang.code); isLocaleMenuOpen = false"
+                class="block px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 
+                       text-gray-900 dark:text-white first:rounded-t-lg last:rounded-b-lg"
+                :class="[
+                  locale === lang.code 
+                    ? 'bg-gray-100 dark:bg-gray-700' 
+                    : ''
+                ]"
+              >
+                <div class="flex items-center space-x-2">
+                  <span>{{ lang.emoji }}</span>
                   <span>{{ lang.name }}</span>
-                </a>
-              </div>
+                </div>
+              </a>
             </div>
           </div>
         </div>
@@ -521,7 +585,7 @@ const icons: Record<string, ReturnType<typeof defineComponent>> = {
       />
     </div>
 
-    <!-- 遮罩层 - 仅在移动端且边栏开时显示 -->
+    <!-- 遮罩层 - 仅在移动端且开时显示 -->
     <div
       v-if="isSidebarOpen"
       @click="toggleSidebar"

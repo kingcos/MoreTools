@@ -32,7 +32,11 @@ export default {
     copied: "已复制！",
     reset: "重置",
     confirmTitle: "确认",
-    confirmReset: "确定重置"
+    confirmReset: "确定重置",
+    displayMode: {
+      compact: '紧凑模式',
+      fullscreen: '全屏模式'
+    }
   },
   qrcode: {
     title: '二维码工具',
@@ -83,6 +87,7 @@ export default {
     title: '编解码工具'
   },
   time: {
+    title: '时间工具',
     timestampConverter: '时间戳转换',
     timestampToDate: '时间戳转日期',
     dateToTimestamp: '日期转时间戳',
@@ -108,13 +113,17 @@ export default {
     copySuccess: '复制成功',
     copyFailed: '复制失败'
   },
-  "json": {
-    "inputPlaceholder": "请输入 JSON 数据...",
-    "outputPlaceholder": "JSON 格式化结果将实时显示在这里...",
-    "errorPrefix": "❌ 格式化错误",
-    "compress": "压缩",
-    "toXml": "转 XML",
-    "showLineNumbers": "显示行号",
-    "confirmReset": "确定要清空当前内容吗？"
+  json: {
+    format: 'JSON 格式化',
+    title: 'JSON 工具',
+    inputLabel: '输入',
+    outputLabel: '输出',
+    compress: '压缩模式',
+    reset: '重置',
+    confirmReset: '确定重置',
+    cancel: '取消',
+    copy: '复制',
+    copySuccess: '复制成功',
+    copyError: '复制失败'
   }
 }
