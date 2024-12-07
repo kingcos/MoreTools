@@ -8,97 +8,164 @@
 
     <div class="flex-1 overflow-y-auto">
       <div class="p-4 max-w-4xl mx-auto space-y-4">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
-          <!-- Tab切换 -->
-          <div class="flex space-x-2 mb-4">
-            <button
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+          <el-tabs v-model="currentTab" class="dark-mode-tabs" type="border-card">
+            <el-tab-pane
               v-for="tab in tabs"
               :key="tab.key"
-              @click="currentTab = tab.key"
-              class="px-4 py-2 rounded-lg transition-colors focus:outline-none"
-              :class="[
-                currentTab === tab.key
-                  ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
-              ]"
-            >
-              {{ t(tab.title) }}
-            </button>
-          </div>
+              :label="t(tab.title)"
+              :name="tab.key"
+            />
+          </el-tabs>
 
-          <!-- 时间戳转换内容 -->
-          <div v-if="currentTab === 'timestamp'">
-            <div class="space-y-4">
-              <!-- 时间戳转日期时间 -->
-              <div class="space-y-4">
-                <div class="flex justify-between items-center mb-4">
-                  <h2 class="text-lg font-medium text-gray-900 dark:text-white">{{ t('time.timestampToDate') }}</h2>
+          <div class="p-6 space-y-6">
+            <div v-if="currentTab === 'timestampToDate'" class="space-y-4">
+              <div class="space-y-2">
+                <div class="flex items-center">
+                  <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    {{ t('time.inputTimestamp') }}
+                  </label>
                 </div>
-                <div class="space-y-2">
-                  <div class="flex items-center justify-between">
-                    <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      {{ t('time.inputTimestamp') }}
-                    </label>
-                  </div>
-                  <div class="flex items-center space-x-2">
-                    <input
-                      v-model="inputTimestamp"
-                      type="number"
-                      class="flex-1 p-2 border border-gray-200 dark:border-gray-700 rounded-lg
-                             bg-white dark:bg-gray-800 text-gray-900 dark:text-white 
-                             focus:ring-0 focus:border-gray-300 dark:focus:border-gray-600"
-                    />
-                    <div class="flex items-center">
-                      <div v-if="inputTimestamp && confirmingAction === 'reset'" class="flex items-center space-x-2">
-                        <button
-                          @click="handleConfirm('reset')"
-                          class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
-                                 bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
-                        >{{ t('time.confirmReset') }}</button>
-                        <button
-                          @click="cancelAction"
-                          class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
-                                 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
-                        >{{ t('common.cancel') }}</button>
-                      </div>
-                      <button
-                        v-else-if="inputTimestamp"
-                        @click="confirmingAction = 'reset'"
-                        class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none"
-                        :class="[
-                          confirmingAction === 'reset'
-                            ? 'bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400'
-                            : 'bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400'
-                        ]"
-                      >{{ t('time.reset') }}</button>
+                <div class="flex items-center space-x-2">
+                  <input
+                    v-model="inputTimestamp"
+                    type="number"
+                    class="flex-1 p-2 border border-gray-200 dark:border-gray-700 rounded-lg
+                           bg-white dark:bg-gray-800 text-gray-900 dark:text-white 
+                           focus:ring-0 focus:border-gray-300 dark:focus:border-gray-600"
+                  />
+                </div>
+                <div class="flex items-center justify-between mt-2">
+                  <button
+                    @click="isMilliseconds = !isMilliseconds"
+                    class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none"
+                    :class="[
+                      isMilliseconds
+                        ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
+                        : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                    ]"
+                  >
+                    <div class="flex items-center space-x-1.5">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span class="text-sm">{{ t('time.isMilliseconds') }}</span>
                     </div>
-                  </div>
-                  <div class="flex items-center mt-2">
-                    <input
-                      type="checkbox"
-                      v-model="isMilliseconds"
-                      class="rounded border-gray-300 text-blue-600 
-                             focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
-                    />
-                    <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">
-                      {{ t('time.isMilliseconds') }}
-                    </span>
-                  </div>
-                </div>
+                  </button>
 
-                <!-- 仅当有结果时显示 -->
-                <div v-if="convertedDate" class="space-y-2">
-                  <div class="flex items-center justify-between">
-                    <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      {{ t('time.outputDate') }}
-                    </label>
-                  </div>
-                  <div class="flex justify-between items-center">
-                    <div class="font-mono text-gray-900 dark:text-white text-lg">
-                      {{ convertedDate }}
+                  <div class="flex items-center">
+                    <div v-if="inputTimestamp && confirmingAction === 'reset'" class="flex items-center space-x-2">
+                      <button
+                        @click="handleConfirm('reset')"
+                        class="px-4 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
+                               bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
+                      >{{ t('time.confirmReset') }}</button>
+                      <button
+                        @click="cancelAction"
+                        class="px-4 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
+                               bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+                      >{{ t('common.cancel') }}</button>
                     </div>
                     <button
-                      @click="copyText(convertedDate)"
+                      v-else-if="inputTimestamp"
+                      @click="confirmingAction = 'reset'"
+                      class="px-4 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
+                             bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400"
+                    >{{ t('time.reset') }}</button>
+                  </div>
+                </div>
+              </div>
+
+              <div v-if="convertedDate" class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    {{ t('time.outputDate') }}
+                  </label>
+                </div>
+                <div class="flex justify-between items-center">
+                  <div class="font-mono text-gray-900 dark:text-white text-lg">
+                    {{ convertedDate }}
+                  </div>
+                  <button
+                    @click="copyText(convertedDate)"
+                    class="px-4 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 
+                           dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg 
+                           transition-colors focus:outline-none"
+                  >{{ t('time.copy') }}</button>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="currentTab === 'dateToTimestamp'" class="space-y-4">
+              <div class="flex items-center">
+                <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {{ t('time.inputDate') }}
+                </label>
+              </div>
+              
+              <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+                <div v-for="(unit, index) in dateUnits" :key="index" class="flex items-center">
+                  <input
+                    v-model="unit.value"
+                    type="number"
+                    :min="0"
+                    :max="getMaxValue(unit.name)"
+                    class="w-full p-2 border border-gray-200 dark:border-gray-700 rounded-lg
+                           bg-white dark:bg-gray-800 text-gray-900 dark:text-white 
+                           focus:ring-0 focus:border-gray-300 dark:focus:border-gray-600"
+                  />
+                  <span class="ml-1 text-sm text-gray-500 dark:text-gray-400">{{ t(`time.${unit.name}`) }}</span>
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <button
+                  @click="refreshCurrentTime"
+                  class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
+                         bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
+                         text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                >
+                  <div class="flex items-center space-x-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <span>{{ t('time.refresh') }}</span>
+                  </div>
+                </button>
+
+                <div class="flex items-center justify-between">
+                  <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    {{ t('time.outputTimestamp') }}
+                  </label>
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <div class="flex justify-between items-center">
+                  <div class="font-mono text-gray-900 dark:text-white text-lg">
+                    {{ convertedTimestampMs }}
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ t('time.milliseconds') }}</span>
+                    <button
+                      @click="copyText(convertedTimestampMs)"
+                      class="px-4 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 
+                             dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg 
+                             transition-colors focus:outline-none"
+                    >{{ t('time.copy') }}</button>
+                  </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                  <div class="font-mono text-gray-900 dark:text-white text-lg">
+                    {{ convertedTimestampSec }}
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ t('time.seconds') }}</span>
+                    <button
+                      @click="copyText(convertedTimestampSec)"
                       class="px-4 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 
                              dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg 
                              transition-colors focus:outline-none"
@@ -106,88 +173,10 @@
                   </div>
                 </div>
               </div>
-
-              <!-- 分割线 -->
-              <div class="w-full border-t border-gray-200 dark:border-gray-700 my-4"></div>
-
-              <!-- 日期间转时间戳 -->
-              <div class="space-y-4">
-                <div class="flex justify-between items-center mb-4">
-                  <h2 class="text-lg font-medium text-gray-900 dark:text-white">{{ t('time.dateToTimestamp') }}</h2>
-                  <button
-                    @click="refreshCurrentTime"
-                    class="w-8 h-8 flex items-center justify-center rounded-lg
-                           bg-gray-100 dark:bg-gray-700 
-                           hover:bg-gray-200 dark:hover:bg-gray-600 
-                           text-gray-600 dark:text-gray-400 
-                           hover:text-gray-800 dark:hover:text-gray-200 
-                           transition-colors focus:outline-none"
-                  >
-                    <span class="text-xl">🔄</span>
-                  </button>
-                </div>
-                
-                <div class="space-y-4">
-                  <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
-                    <div v-for="(unit, index) in dateUnits" :key="index" class="flex items-center">
-                      <input
-                        v-model="unit.value"
-                        type="number"
-                        :min="0"
-                        :max="getMaxValue(unit.name)"
-                        class="w-full p-2 border border-gray-200 dark:border-gray-700 rounded-lg
-                               bg-white dark:bg-gray-800 text-gray-900 dark:text-white 
-                               focus:ring-0 focus:border-gray-300 dark:focus:border-gray-600"
-                      />
-                      <span class="ml-1 text-sm text-gray-500 dark:text-gray-400">{{ t(`time.${unit.name}`) }}</span>
-                    </div>
-                  </div>
-
-                  <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                      <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {{ t('time.outputTimestamp') }}
-                      </label>
-                    </div>
-                    <div class="space-y-2">
-                      <div class="flex justify-between items-center">
-                        <div class="font-mono text-gray-900 dark:text-white text-lg">
-                          {{ convertedTimestampMs }}
-                        </div>
-                        <div class="flex items-center space-x-2">
-                          <span class="text-sm text-gray-500 dark:text-gray-400">{{ t('time.milliseconds') }}</span>
-                          <button
-                            @click="copyText(convertedTimestampMs)"
-                            class="px-4 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 
-                                   dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg 
-                                   transition-colors focus:outline-none"
-                          >{{ t('time.copy') }}</button>
-                        </div>
-                      </div>
-                      
-                      <div class="flex justify-between items-center">
-                        <div class="font-mono text-gray-900 dark:text-white text-lg">
-                          {{ convertedTimestampSec }}
-                        </div>
-                        <div class="flex items-center space-x-2">
-                          <span class="text-sm text-gray-500 dark:text-gray-400">{{ t('time.seconds') }}</span>
-                          <button
-                            @click="copyText(convertedTimestampSec)"
-                            class="px-4 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 
-                                   dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg 
-                                   transition-colors focus:outline-none"
-                          >{{ t('time.copy') }}</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
 
-        <!-- 广告区域 -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 relative">
           <Adsense
             adStyle="max-height: 150px; width: 100%;"
@@ -204,22 +193,20 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElTabs, ElTabPane } from 'element-plus'
 import Adsense from './Adsense.vue'
 
 const { t } = useI18n()
 
-// Tab 配置
-const currentTab = ref('timestamp')
+const currentTab = ref('timestampToDate')
 const tabs = [
-  { key: 'timestamp', title: 'time.timestampConverter' }
+  { key: 'timestampToDate', title: 'time.timestampToDate' },
+  { key: 'dateToTimestamp', title: 'time.dateToTimestamp' }
 ]
 
-// 间戳日期时间
 const inputTimestamp = ref('')
 const isMilliseconds = ref(true)
 
-// 实时转换时间戳
 const convertedDate = computed(() => {
   if (!inputTimestamp.value) return ''
   
@@ -259,7 +246,6 @@ const handleReset = () => {
   inputTimestamp.value = ''
 }
 
-// 刷新当前时间
 const refreshCurrentTime = () => {
   const now = new Date()
   dateUnits.value = [
@@ -273,7 +259,6 @@ const refreshCurrentTime = () => {
   ]
 }
 
-// 年月日转时间戳
 const dateUnits = ref([
   { name: 'year', value: '' },
   { name: 'month', value: '' },
@@ -306,7 +291,6 @@ const convertedTimestampSec = computed(() => {
   return Math.floor(convertedTimestampMs.value / 1000)
 })
 
-// 复制文本
 const copyText = async (text: string | number) => {
   try {
     await navigator.clipboard.writeText(String(text))
@@ -325,7 +309,6 @@ const copyText = async (text: string | number) => {
   }
 }
 
-// 初始化日期输入为当前时间
 onMounted(() => {
   const now = new Date()
   dateUnits.value = [
@@ -339,3 +322,71 @@ onMounted(() => {
   ]
 })
 </script>
+
+<style scoped>
+:deep(.dark-mode-tabs.el-tabs) {
+  &.el-tabs--border-card {
+    background: transparent;
+    border: none;
+  }
+
+  .el-tabs__header {
+    background: transparent;
+    border: none;
+    margin: 0;
+  }
+
+  .el-tabs__nav {
+    border: none !important;
+  }
+
+  .el-tabs__item {
+    height: 48px;
+    line-height: 48px;
+    padding: 0 24px;
+    font-size: 14px;
+    color: rgba(75, 85, 99, 0.7);
+    transition: all 0.3s ease;
+    border: none;
+    margin-right: 0;
+    position: relative;
+    
+    &:hover {
+      color: var(--el-color-primary);
+    }
+    
+    &.is-active {
+      color: var(--el-color-primary);
+      background: transparent;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--el-color-primary);
+      }
+    }
+  }
+
+  .el-tabs__content {
+    padding: 0;
+  }
+}
+
+:deep(.dark .dark-mode-tabs.el-tabs) {
+  .el-tabs__item {
+    color: rgba(255, 255, 255, 0.7);
+    
+    &:hover {
+      color: var(--el-color-primary);
+    }
+    
+    &.is-active {
+      color: var(--el-color-primary);
+    }
+  }
+}
+</style>
