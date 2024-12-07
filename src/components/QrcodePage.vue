@@ -7,7 +7,7 @@
     </div>
 
     <div class="flex-1 overflow-y-auto">
-      <div class="p-4 max-w-4xl mx-auto space-y-4">
+      <div class="p-4 mx-auto space-y-4" :class="{ 'max-w-4xl': isCompactMode }">
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
           <el-tabs v-model="currentTab" class="dark-mode-tabs" type="border-card">
             <el-tab-pane
@@ -308,6 +308,7 @@ import { useDark } from '@vueuse/core'
 import QrScanner from 'qr-scanner'
 import { ElTabs, ElTabPane } from 'element-plus'
 import 'element-plus/dist/index.css'
+import { useDisplayMode } from '../composables/useDisplayMode'
 
 const { t } = useI18n()
 const inputText = ref('')
@@ -320,6 +321,7 @@ const instantMode = ref(false)
 const currentTab = ref('encode')
 const decodedText = ref('')
 const fileInput = ref<HTMLInputElement>()
+const { isCompactMode } = useDisplayMode()
 
 const tabs = [
   { key: 'encode', title: 'qrcode.encodeTab' },
@@ -531,7 +533,7 @@ const copyDecodedText = async () => {
   }
 }
 
-// 添加放大模式状态
+// 添加大模式状态
 const largeMode = ref(false)
 
 // 添加切换放大模式函数

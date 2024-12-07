@@ -7,7 +7,7 @@
     </div>
 
     <div class="flex-1 overflow-y-auto">
-      <div class="p-4 max-w-4xl mx-auto space-y-4">
+      <div class="p-4 mx-auto space-y-4" :class="{ 'max-w-4xl': isCompactMode }">
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
           <el-tabs v-model="currentTab" class="dark-mode-tabs" type="border-card">
             <el-tab-pane
@@ -25,7 +25,7 @@
                   @click="toggleCompact"
                   class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none inline-flex items-center gap-2"
                   :class="[
-                    isCompact
+                    isCompactMode
                       ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-500 dark:text-blue-400'
                       : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
                   ]"
@@ -140,8 +140,10 @@ import { EditorView } from '@codemirror/view'
 import { EditorState } from '@codemirror/state'
 import Adsense from './Adsense.vue'
 import { Fold } from '@element-plus/icons-vue'
+import { useDisplayMode } from '@/composables/useDisplayMode'
 
 const { t } = useI18n()
+const { isCompactMode } = useDisplayMode()
 
 const currentTab = ref('jsonFormat')
 const tabs = [
@@ -151,7 +153,6 @@ const tabs = [
 const inputJson = ref('')
 const outputJson = ref('')
 const error = ref('')
-const isCompact = ref(false)
 const confirmingClear = ref(false)
 
 // CodeMirror 扩展置
@@ -189,7 +190,7 @@ const handleInputChange = (value: string) => {
     }
     
     const parsed = JSON.parse(value)
-    outputJson.value = JSON.stringify(parsed, null, isCompact.value ? 0 : 2)
+    outputJson.value = JSON.stringify(parsed, null, isCompactMode ? 0 : 2)
     error.value = ''
   } catch (e) {
     error.value = e instanceof Error ? e.message : String(e)
@@ -199,7 +200,6 @@ const handleInputChange = (value: string) => {
 
 // 切换压缩/展开
 const toggleCompact = () => {
-  isCompact.value = !isCompact.value
   handleInputChange(inputJson.value)
 }
 

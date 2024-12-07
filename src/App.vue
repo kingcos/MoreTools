@@ -15,6 +15,7 @@ import Adsense from './components/Adsense.vue'
 import CodeIcon from './components/icons/CodeIcon.vue'
 import TimeIcon from './components/icons/TimeIcon.vue'
 import { useDark, useToggle } from '@vueuse/core'
+import { useDisplayMode } from '@/composables/useDisplayMode'
 
 const { locale, t } = useI18n()
 
@@ -153,7 +154,7 @@ onMounted(() => {
       }
     }
   })
-  // 从 localStorage 读取主题设置
+  // 从 localStorage 取主题设置
   const savedTheme = localStorage.getItem('darkMode')
   if (savedTheme) {
     isDarkMode.value = savedTheme === 'dark'
@@ -185,23 +186,15 @@ const displayModes = [
 ]
 
 const isDisplayModeOpen = ref(false)
-const currentDisplayMode = ref(displayModes[0]) // 默认紧凑模式
+const { isCompactMode, currentMode, toggleDisplayMode } = useDisplayMode()
 
-// 从本地存储加载显示模式
-onMounted(() => {
-  const savedMode = localStorage.getItem('display-mode')
-  if (savedMode) {
-    const mode = displayModes.find(m => m.key === savedMode)
-    if (mode) {
-      currentDisplayMode.value = mode
-    }
-  }
-})
+const currentDisplayMode = computed(() => 
+  displayModes.find(mode => mode.key === currentMode.value) || displayModes[0]
+)
 
 // 选择显示模式
 const selectDisplayMode = (mode: typeof displayModes[0]) => {
-  currentDisplayMode.value = mode
-  localStorage.setItem('display-mode', mode.key)
+  toggleDisplayMode(mode.key as 'compact' | 'fullscreen')
   isDisplayModeOpen.value = false
 }
 
@@ -585,7 +578,7 @@ const selectDisplayMode = (mode: typeof displayModes[0]) => {
       />
     </div>
 
-    <!-- 遮罩层 - 仅在移动端且开时显示 -->
+    <!-- 遮罩层 - 仅在移��端且开时显示 -->
     <div
       v-if="isSidebarOpen"
       @click="toggleSidebar"

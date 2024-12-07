@@ -7,7 +7,7 @@
     </div>
 
     <div class="flex-1 overflow-y-auto">
-      <div class="p-4 max-w-4xl mx-auto space-y-4">
+      <div class="p-4 mx-auto space-y-4" :class="{ 'max-w-4xl': isCompactMode }">
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
           <!-- 使用 Element Plus 的 Tabs 组件 -->
           <el-tabs v-model="currentTab" class="dark-mode-tabs" type="border-card">
@@ -127,12 +127,14 @@ import { useI18n } from 'vue-i18n'
 import { ElMessage, ElTabs, ElTabPane } from 'element-plus'
 import 'element-plus/dist/index.css'
 import Adsense from './Adsense.vue'
+import { useDisplayMode } from '@/composables/useDisplayMode'
 
 const { t } = useI18n()
 const inputText = ref('')
 const outputText = ref('')
 const currentTab = ref('url')
 const confirmingClear = ref(false)
+const { isCompactMode } = useDisplayMode()
 
 const tabs = [
   { key: 'url', title: 'codec.url' },
