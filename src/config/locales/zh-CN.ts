@@ -111,6 +111,14 @@ export default {
     cancel: '取消',
     copy: '复制',
     copySuccess: '复制成功',
-    copyError: '复制失败'
+    copyError: '复制失败',
+    diff: 'JSON 对比',
+    originalJson: '原始 JSON',
+    modifiedJson: '修改后 JSON',
+    diffResult: '差异结果',
+    diffLegend: '图例',
+    removed: '删除',
+    added: '新增',
+    invalidJson: '无效的 JSON 格式'
   }
 }

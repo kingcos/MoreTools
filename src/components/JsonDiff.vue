@@ -3,101 +3,64 @@
     <div class="flex justify-between items-center">
       <div class="flex items-center gap-2">
         <button
-          @click="toggleCompact"
-          class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none"
-          :class="[
-            isCompressed
-              ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
-              : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
-          ]"
+          @click="handleJsonChange"
+          class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none
+                 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 
+                 text-white"
         >
           <div class="flex items-center space-x-1.5">
-            <el-icon class="w-4 h-4"><Fold /></el-icon>
-            <span class="text-sm">{{ t('json.compress') }}</span>
+            <span class="text-sm">{{ t('json.format') }}</span>
           </div>
         </button>
       </div>
       
       <div class="flex items-center gap-2">
-        <button
-          v-if="diffResult"
-          @click="copyDiff"
-          class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
-                 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600
-                 text-gray-600 dark:text-gray-300"
-        >
-          {{ t('json.copy') }}
-        </button>
-        <button
-          @click="resetContent"
-          class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
-                 bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400
-                 hover:bg-red-100 dark:hover:bg-red-900/50"
-        >
-          {{ t('json.reset') }}
-        </button>
+        <div v-if="originalJson || modifiedJson" class="inline-block">
+          <div v-if="confirmingClear" class="flex items-center space-x-2">
+            <button
+              @click="resetContent"
+              class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
+                     bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
+            >
+              {{ t('json.confirmReset') }}
+            </button>
+            <button
+              @click="confirmingClear = false"
+              class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
+                     bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+            >
+              {{ t('json.cancel') }}
+            </button>
+          </div>
+          <button
+            v-else
+            @click="confirmingClear = true"
+            class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
+                   bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400
+                   hover:bg-red-100 dark:hover:bg-red-900/50"
+          >
+            {{ t('json.reset') }}
+          </button>
+        </div>
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="space-y-2">
-        <div class="flex items-center">
-          <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-            {{ t('json.originalJson') }}
-          </label>
-        </div>
-        <div class="min-h-[200px]">
-          <Codemirror
-            v-model="originalJson"
-            :indent-with-tab="true"
-            :tab-size="2"
-            :extensions="extensions"
-            @change="handleJsonChange"
-            class="h-full mt-3"
-          />
-        </div>
-      </div>
-      
-      <div class="space-y-2">
-        <div class="flex items-center">
-          <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-            {{ t('json.modifiedJson') }}
-          </label>
-        </div>
-        <div class="min-h-[200px]">
-          <Codemirror
-            v-model="modifiedJson"
-            :indent-with-tab="true"
-            :tab-size="2"
-            :extensions="extensions"
-            @change="handleJsonChange"
-            class="h-full mt-3"
-          />
-        </div>
-      </div>
-    </div>
+    <div class="min-h-[200px] max-h-[500px]" ref="editorContainer"></div>
 
     <div class="space-y-2">
-      <div class="flex items-center justify-between">
-        <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
-          {{ t('json.diffResult') }}
-        </label>
+      <div class="flex items-center justify-end">
         <div class="flex items-center gap-2">
           <span class="text-xs text-gray-500 dark:text-gray-400">{{ t('json.diffLegend') }}:</span>
           <span class="text-xs px-1 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-400">{{ t('json.removed') }}</span>
           <span class="text-xs px-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-400">{{ t('json.added') }}</span>
         </div>
       </div>
-      <div class="min-h-[200px] bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-        <pre v-if="!error" class="whitespace-pre-wrap text-sm" v-html="diffResult"></pre>
-        <pre v-else class="whitespace-pre-wrap text-sm text-red-500">{{ error }}</pre>
-      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElIcon } from 'element-plus'
 import { Codemirror } from 'vue-codemirror'
@@ -106,6 +69,9 @@ import { lineNumbers } from '@codemirror/view'
 import { EditorView } from '@codemirror/view'
 import { Fold } from '@element-plus/icons-vue'
 import * as DiffMatchPatch from 'diff-match-patch'
+import { MergeView } from '@codemirror/merge'
+import { basicSetup } from 'codemirror'
+import { EditorState } from '@codemirror/state'
 
 const { t } = useI18n()
 
@@ -113,7 +79,8 @@ const originalJson = ref('')
 const modifiedJson = ref('')
 const diffResult = ref('')
 const error = ref('')
-const isCompressed = ref(false)
+const confirmingClear = ref(false)
+const editorContainer = ref<HTMLElement | null>(null)
 
 const dmp = new DiffMatchPatch.diff_match_patch()
 
@@ -138,67 +105,82 @@ const extensions = computed(() => [
 
 const formatJson = (jsonStr: string): string => {
   try {
-    return JSON.stringify(JSON.parse(jsonStr), null, isCompressed.value ? 0 : 2)
+    if (!jsonStr.trim()) return ''
+    return JSON.stringify(JSON.parse(jsonStr), null, 2)
   } catch (e) {
     throw new Error(t('json.invalidJson'))
   }
 }
 
-const handleJsonChange = () => {
-  try {
-    if (!originalJson.value.trim() || !modifiedJson.value.trim()) {
-      diffResult.value = ''
-      error.value = ''
-      return
-    }
-
-    const original = formatJson(originalJson.value)
-    const modified = formatJson(modifiedJson.value)
-
-    const diffs = dmp.diff_main(original, modified)
-    dmp.diff_cleanupSemantic(diffs)
-
-    let htmlResult = ''
-    for (const [type, text] of diffs) {
-      const escapedText = text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;')
-
-      if (type === -1) {
-        htmlResult += `<span class="bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-400">${escapedText}</span>`
-      } else if (type === 1) {
-        htmlResult += `<span class="bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-400">${escapedText}</span>`
-      } else {
-        htmlResult += `<span class="text-gray-900 dark:text-gray-100">${escapedText}</span>`
-      }
-    }
-
-    diffResult.value = htmlResult
-    error.value = ''
-  } catch (e) {
-    error.value = e instanceof Error ? e.message : String(e)
-    diffResult.value = ''
-  }
-}
-
-const toggleCompact = () => {
-  isCompressed.value = !isCompressed.value
-  handleJsonChange()
-}
-
 const resetContent = () => {
   originalJson.value = ''
   modifiedJson.value = ''
-  diffResult.value = ''
   error.value = ''
+  confirmingClear.value = false
+  createMergeView()
+}
+
+const handleJsonChange = () => {
+  try {
+    if (originalJson.value.trim()) {
+      originalJson.value = formatJson(originalJson.value)
+    }
+    if (modifiedJson.value.trim()) {
+      modifiedJson.value = formatJson(modifiedJson.value)
+    }
+    createMergeView()
+    error.value = ''
+  } catch (e) {
+    error.value = e instanceof Error ? e.message : String(e)
+  }
+}
+
+const createMergeView = () => {
+  if (!editorContainer.value) return
+
+  editorContainer.value.innerHTML = ''
+
+  const mergeViewConfig = new MergeView({
+    a: {
+      doc: originalJson.value,
+      extensions: [
+        basicSetup,
+        json(),
+        EditorState.tabSize.of(2),
+        EditorView.lineWrapping,
+        EditorView.updateListener.of(update => {
+          if (update.docChanged) {
+            originalJson.value = update.state.doc.toString()
+          }
+        })
+      ]
+    },
+    b: {
+      doc: modifiedJson.value,
+      extensions: [
+        basicSetup,
+        json(),
+        EditorState.tabSize.of(2),
+        EditorView.lineWrapping,
+        EditorView.updateListener.of(update => {
+          if (update.docChanged) {
+            modifiedJson.value = update.state.doc.toString()
+          }
+        })
+      ]
+    },
+    parent: editorContainer.value,
+    revertControls: true,
+    highlightChanges: true,
+    collapseUnchanged: {
+      margin: 50,
+      minSize: 30
+    }
+  })
 }
 
 const copyDiff = async () => {
   try {
-    // 移除HTML标签后再复制
     const tempDiv = document.createElement('div')
     tempDiv.innerHTML = diffResult.value
     await navigator.clipboard.writeText(tempDiv.textContent || '')
@@ -207,12 +189,19 @@ const copyDiff = async () => {
     ElMessage.error(t('json.copyError'))
   }
 }
+
+onMounted(() => {
+  nextTick(() => {
+    createMergeView()
+  })
+})
 </script>
 
 <style scoped>
 :deep(.cm-editor) {
-  height: 100%;
   min-height: 200px;
+  max-height: 500px;
+  height: auto !important;
   border: 1px solid var(--el-border-color);
   border-radius: 4px;
 }
@@ -228,12 +217,16 @@ const copyDiff = async () => {
 
 :deep(.cm-scroller) {
   min-height: 200px !important;
+  max-height: 500px !important;
+  overflow: auto !important;
 }
 
 :deep(.cm-editor .cm-content) {
   margin: 0;
   padding: 4px 8px;
   text-align: left;
+  min-height: 200px;
+  height: auto !important;
 }
 
 :deep(.cm-line) {
@@ -245,5 +238,28 @@ pre {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   line-height: 1.5;
   overflow-x: auto;
+}
+
+:deep(.cm-merge) {
+  min-height: 200px;
+  max-height: 500px;
+  height: auto !important;
+  border: 1px solid var(--el-border-color);
+  border-radius: 4px;
+}
+
+:deep(.cm-merge-pane) {
+  min-height: 200px;
+  max-height: 500px;
+  height: auto !important;
+}
+
+:deep(.cm-merge-gap) {
+  min-height: 200px;
+  max-height: 500px;
+  height: auto !important;
+  background-color: var(--el-border-color-lighter);
+  border-left: 1px solid var(--el-border-color);
+  border-right: 1px solid var(--el-border-color);
 }
 </style> 

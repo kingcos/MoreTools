@@ -11,6 +11,7 @@
   "dependencies": {
     "@codemirror/commands": "^6.7.1",
     "@codemirror/lang-json": "^6.0.1",
+    "@codemirror/merge": "^6.7.4",
     "@codemirror/state": "^6.4.1",
     "@codemirror/view": "^6.35.2",
     "@element-plus/icons-vue": "^2.3.1",
