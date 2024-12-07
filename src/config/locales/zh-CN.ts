@@ -1,18 +1,5 @@
 export default {
   menu: {
-    ai: {
-      title: 'AI 助手',
-      chat: 'ChatGPT',
-      claude: 'Claude'
-    },
-    social: {
-      title: '社交平台',
-      fanfou: '我的饭否'
-    },
-    entertainment: {
-      title: '娱乐',
-      story: '故事维维'
-    },
     devTools: {
       title: '开发工具',
       qrcode: '二维码',

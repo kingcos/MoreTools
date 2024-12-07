@@ -1,18 +1,5 @@
 export default {
   menu: {
-    ai: {
-      title: 'AI アシスタント',
-      chat: 'ChatGPT',
-      claude: 'Claude'
-    },
-    social: {
-      title: 'ソーシャル',
-      fanfou: 'マイファンフォー'
-    },
-    entertainment: {
-      title: 'エンターテイメント',
-      story: 'ストーリービビ'
-    },
     devTools: {
       title: '開発ツール',
       qrcode: 'QRコード',

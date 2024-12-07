@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, nextTick, defineComponent } from 'vue'
-import ChatPage from './components/ChatPage.vue'
-import FanfouPage from './components/FanfouPage.vue'
-import StoryPage from './components/StoryPage.vue'
 import QrcodePage from './components/QrcodePage.vue'
 import CodecPage from './components/CodecPage.vue'
 import TimePage from './components/TimePage.vue'
@@ -22,9 +19,6 @@ const { locale, t } = useI18n()
 
 // 组件映射
 const componentMap = {
-  ChatPage,
-  FanfouPage,
-  StoryPage,
   QrcodePage,
   CodecPage,
   TimePage,
