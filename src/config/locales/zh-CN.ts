@@ -103,6 +103,7 @@ export default {
     seconds: '秒',
     copy: '复制',
     reset: '重置',
+    cancel: '取消',
     confirmReset: '确认重置',
     copySuccess: '复制成功',
     copyFailed: '复制失败'

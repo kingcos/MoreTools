@@ -65,7 +65,7 @@
                         @click="cancelAction"
                         class="px-4 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
                                bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
-                      >{{ t('common.cancel') }}</button>
+                      >{{ t('time.cancel') }}</button>
                     </div>
                     <button
                       v-else-if="inputTimestamp"

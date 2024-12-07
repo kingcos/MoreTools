@@ -14,6 +14,7 @@ import QrcodeIcon from './components/icons/QrcodeIcon.vue'
 import Adsense from './components/Adsense.vue'
 import CodeIcon from './components/icons/CodeIcon.vue'
 import TimeIcon from './components/icons/TimeIcon.vue'
+import { useDark, useToggle } from '@vueuse/core'
 
 const { locale, t } = useI18n()
 
@@ -30,7 +31,20 @@ const componentMap = {
 
 // 状态管理
 const isSidebarOpen = ref(window.innerWidth >= 768)
-const isDarkMode = ref(document.documentElement.classList.contains('dark'))
+const isDarkMode = useDark({
+  selector: 'html',
+  attribute: 'class',
+  valueDark: 'dark',
+  valueLight: 'light',
+})
+const toggleDarkMode = () => {
+  isDarkMode.value = !isDarkMode.value
+  document.documentElement.classList.toggle('dark', isDarkMode.value)
+  localStorage.setItem('darkMode', isDarkMode.value ? 'dark' : 'light')
+  window.dispatchEvent(new CustomEvent('theme-change', { 
+    detail: { isDark: isDarkMode.value } 
+  }))
+}
 const currentPage = ref('')
 const searchQuery = ref('')
 const confirmingUnstar = ref<string | null>(null)
@@ -100,12 +114,6 @@ const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value
 }
 
-const toggleDarkMode = () => {
-  isDarkMode.value = !isDarkMode.value
-  document.documentElement.classList.toggle('dark', isDarkMode.value)
-  localStorage.setItem('darkMode', isDarkMode.value ? 'dark' : 'light')
-}
-
 const toggleMenu = (menuId: string) => {
   const menu = menuItems.value.find(item => item.id === menuId)
   if (menu) {
@@ -145,6 +153,16 @@ onMounted(() => {
       }
     }
   })
+  // 从 localStorage 读取主题设置
+  const savedTheme = localStorage.getItem('darkMode')
+  if (savedTheme) {
+    isDarkMode.value = savedTheme === 'dark'
+    document.documentElement.classList.toggle('dark', isDarkMode.value)
+  } else {
+    // 如果没有保存的设置，则使用系统主题
+    isDarkMode.value = window.matchMedia('(prefers-color-scheme: dark)').matches
+    document.documentElement.classList.toggle('dark', isDarkMode.value)
+  }
 })
 
 // 添加语言切换函数
