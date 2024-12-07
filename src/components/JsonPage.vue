@@ -23,15 +23,17 @@
               <div>
                 <button
                   @click="toggleCompact"
-                  class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none inline-flex items-center gap-2"
+                  class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none"
                   :class="[
-                    isCompactMode
-                      ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-500 dark:text-blue-400'
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
+                    isJsonCompressed
+                      ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                   ]"
                 >
-                  <el-icon class="w-4 h-4"><Fold /></el-icon>
-                  {{ t('json.compress') }}
+                  <div class="flex items-center space-x-1.5">
+                    <el-icon class="w-4 h-4"><Fold /></el-icon>
+                    <span class="text-sm">{{ t('json.compress') }}</span>
+                  </div>
                 </button>
               </div>
               
@@ -39,7 +41,7 @@
                 <button
                   v-if="outputJson"
                   @click="copyFormatted"
-                  class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
+                  class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
                          bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600
                          text-gray-600 dark:text-gray-300"
                 >
@@ -50,14 +52,14 @@
                   <div v-if="confirmingClear" class="flex items-center space-x-2">
                     <button
                       @click="resetContent"
-                      class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
+                      class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
                              bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
                     >
                       {{ t('json.confirmReset') }}
                     </button>
                     <button
                       @click="confirmingClear = false"
-                      class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
+                      class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
                              bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
                     >
                       {{ t('json.cancel') }}
@@ -66,7 +68,7 @@
                   <button
                     v-else
                     @click="confirmingClear = true"
-                    class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
+                    class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
                            bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400
                            hover:bg-red-100 dark:hover:bg-red-900/50"
                   >
@@ -108,7 +110,7 @@
                     :readonly="true"
                     :editable="false"
                     :extensions="[...extensions, EditorState.readOnly.of(true)]"
-                    class="h-full mt-3"
+                    :class="['h-full mt-3', { 'error-output': error }]"
                   />
                 </div>
               </div>
@@ -155,6 +157,9 @@ const outputJson = ref('')
 const error = ref('')
 const confirmingClear = ref(false)
 
+// 新增压缩模式状态
+const isJsonCompressed = ref(false)
+
 // CodeMirror 扩展置
 const extensions = computed(() => [
   json(),
@@ -190,16 +195,17 @@ const handleInputChange = (value: string) => {
     }
     
     const parsed = JSON.parse(value)
-    outputJson.value = JSON.stringify(parsed, null, isCompactMode ? 0 : 2)
+    outputJson.value = JSON.stringify(parsed, null, isJsonCompressed.value ? 0 : 2)
     error.value = ''
   } catch (e) {
     error.value = e instanceof Error ? e.message : String(e)
-    outputJson.value = ''
+    outputJson.value = `Error: ${error.value}`
   }
 }
 
 // 切换压缩/展开
 const toggleCompact = () => {
+  isJsonCompressed.value = !isJsonCompressed.value
   handleInputChange(inputJson.value)
 }
 
@@ -332,7 +338,7 @@ const copyFormatted = async () => {
   min-width: 3em;
 }
 
-/* 可以添加按钮hover效果的样式 */
+/* 可以添加按钮hover���果的样式 */
 button {
   transition: all 0.2s ease;
 }
@@ -341,5 +347,13 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+:deep(.error-output .cm-content) {
+  color: var(--el-color-danger) !important;
+}
+
+:deep(.dark .error-output .cm-content) {
+  color: var(--el-color-danger) !important;
 }
 </style>
