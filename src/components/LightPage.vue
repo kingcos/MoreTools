@@ -83,7 +83,7 @@
                 <input
                   type="color"
                   :value="block.color"
-                  @input="e => setBlockColor(index, e.target.value)"
+                  @input="(e: Event) => setBlockColor(index, (e.target as HTMLInputElement).value)"
                   class="w-8 h-8 rounded-md cursor-pointer border-2 border-blue-500 shadow-md"
                 >
 
@@ -208,7 +208,7 @@
         </svg>
       </button>
 
-      <!-- 右侧：全屏���钮 -->
+      <!-- 右侧：全屏按钮 -->
       <button
         @click="toggleFullscreen"
         class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
@@ -241,13 +241,18 @@
 <script setup lang="ts">
 import { ref, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useDisplayMode } from '../composables/useDisplayMode'
 import { ElMessage } from 'element-plus'
 
-const { t } = useI18n()
-const { isCompactMode } = useDisplayMode()
+// 添加 ImageCapture 类型定义
+declare global {
+  interface Window {
+    ImageCapture: any
+  }
+}
 
-// 从本地存储加载收藏颜��
+const { t } = useI18n()
+
+// 从本地存储加载收藏颜色
 const loadFavoriteColors = () => {
   const saved = localStorage.getItem('favoriteColors')
   return saved ? JSON.parse(saved) : [
@@ -331,7 +336,7 @@ const exitFullscreen = () => {
 const isCameraOpen = ref(false)
 const videoRef = ref<HTMLVideoElement | null>(null)
 let mediaStream: MediaStream | null = null
-let imageCapturer: ImageCapture | null = null
+let imageCapturer: typeof window.ImageCapture | null = null
 
 // 修改相机配置
 const constraints = {
@@ -352,7 +357,7 @@ const startCamera = async () => {
 
       // 获取视频轨道并创建 ImageCapture
       const videoTrack = mediaStream.getVideoTracks()[0]
-      imageCapturer = new ImageCapture(videoTrack)
+      imageCapturer = new window.ImageCapture(videoTrack)
     }
     isCameraOpen.value = true
   } catch (err) {
