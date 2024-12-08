@@ -118,5 +118,9 @@ export default {
     removed: '删除',
     added: '新增',
     invalidJson: '无效的 JSON 格式'
+  },
+  light: {
+    title: '拍照补光灯',
+    brightness: '亮度'
   }
 }

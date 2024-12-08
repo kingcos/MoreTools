@@ -4,6 +4,7 @@ import QrcodePage from './components/QrcodePage.vue'
 import CodecPage from './components/CodecPage.vue'
 import TimePage from './components/TimePage.vue'
 import JsonPage from './components/JsonPage.vue'
+import LightPage from './components/LightPage.vue'
 import menuConfig from './config/menu.json'
 import { useI18n } from 'vue-i18n'
 import { LOCALES } from './config/i18n'
@@ -23,7 +24,8 @@ const componentMap = {
   QrcodePage,
   CodecPage,
   TimePage,
-  JsonPage
+  JsonPage,
+  LightPage
 } as const
 
 // 状态管理
@@ -156,7 +158,7 @@ onMounted(() => {
     isDarkMode.value = savedTheme === 'dark'
     document.documentElement.classList.toggle('dark', isDarkMode.value)
   } else {
-    // 如果没有���存的设置，则使用系统主题
+    // 如果没有存的设置，则使用系统主题
     isDarkMode.value = window.matchMedia('(prefers-color-scheme: dark)').matches
     document.documentElement.classList.toggle('dark', isDarkMode.value)
   }
