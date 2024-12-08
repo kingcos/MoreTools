@@ -6,6 +6,10 @@ export default {
       codec: '编解码',
       time: '时间',
       json: 'JSON'
+    },
+    lifeTools: {
+      title: '生活必备',
+      light: '拍照补光灯'
     }
   },
   common: {

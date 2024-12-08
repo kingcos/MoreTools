@@ -14,6 +14,7 @@ import TimeIcon from './components/icons/TimeIcon.vue'
 import JsonIcon from './components/icons/JsonIcon.vue'
 import { useDark } from '@vueuse/core'
 import { useDisplayMode } from './composables/useDisplayMode'
+import LightIcon from './components/icons/LightIcon.vue'
 
 const { locale, t } = useI18n()
 
@@ -62,7 +63,7 @@ const menuItems = ref(menuConfig.menuItems.map(item => ({
   }))
 })))
 
-// 计算收藏项目
+// 计算收藏项
 const starredItems = computed(() => {
   const items: any[] = []
   menuItems.value.forEach(menu => {
@@ -155,7 +156,7 @@ onMounted(() => {
     isDarkMode.value = savedTheme === 'dark'
     document.documentElement.classList.toggle('dark', isDarkMode.value)
   } else {
-    // 如果没有保存的设置，则使用系统主题
+    // 如果没有���存的设置，则使用系统主题
     isDarkMode.value = window.matchMedia('(prefers-color-scheme: dark)').matches
     document.documentElement.classList.toggle('dark', isDarkMode.value)
   }
@@ -172,7 +173,8 @@ const icons: Record<string, ReturnType<typeof defineComponent>> = {
   QrcodeIcon,
   CodeIcon,
   TimeIcon,
-  JsonIcon
+  JsonIcon,
+  LightIcon
 }
 
 // 显示模式配置

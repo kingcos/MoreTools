@@ -30,6 +30,19 @@
             "icon": "Json"
           }
         ]
+      },
+      {
+        "id": "life-tools",
+        "titleKey": "menu.lifeTools.title", 
+        "isOpen": true,
+        "children": [
+          {
+            "id": "light",
+            "titleKey": "menu.lifeTools.light",
+            "component": "LightPage",
+            "icon": "Light"
+          }
+        ]
       }
     ]
-  }
+}
