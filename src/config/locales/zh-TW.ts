@@ -6,6 +6,10 @@ export default {
       codec: '編解碼',
       time: '時間',
       json: 'JSON'
+    },
+    lifeTools: {
+      title: '生活必備',
+      light: '拍照補光燈'
     }
   },
   common: {
@@ -112,5 +116,17 @@ export default {
     removed: '刪除',
     added: '新增',
     invalidJson: '無效的 JSON 格式'
+  },
+  light: {
+    title: '拍照補光燈',
+    brightness: '亮度',
+    favorite: '收藏',
+    camera: {
+      mirror: '鏡像',
+      takePhoto: '拍照',
+      photoSuccess: '拍照成功，照片已開始下載',
+      photoFailed: '拍照失敗，請重試',
+      permissionDenied: '相機權限被拒絕'
+    }
   }
 }

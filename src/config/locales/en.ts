@@ -6,6 +6,10 @@ export default {
       codec: 'Codec',
       time: 'Time',
       json: 'JSON'
+    },
+    lifeTools: {
+      title: 'Life Tools',
+      light: 'Photo Light'
     }
   },
   common: {
@@ -112,5 +116,17 @@ export default {
     removed: 'Removed',
     added: 'Added',
     invalidJson: 'Invalid JSON format'
+  },
+  light: {
+    title: 'Photo Light',
+    brightness: 'Brightness',
+    favorite: 'Favorite',
+    camera: {
+      mirror: 'Mirror',
+      takePhoto: 'Take Photo',
+      photoSuccess: 'Photo taken successfully and download started',
+      photoFailed: 'Failed to take photo, please try again',
+      permissionDenied: 'Camera permission denied'
+    }
   }
 }

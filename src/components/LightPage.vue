@@ -89,7 +89,7 @@
 
                 <!-- 右侧：收藏颜色 -->
                 <div v-if="favoriteColors.length > 0" class="flex items-center gap-2">
-                  <span class="text-xs text-gray-500 dark:text-gray-400 w-8">收藏</span>
+                  <span class="text-xs text-gray-500 dark:text-gray-400 w-8">{{ t('light.favorite') }}</span>
                   <div class="flex items-center gap-1">
                     <button
                       v-for="color in favoriteColors"
@@ -130,6 +130,7 @@
               <!-- 镜像切换按钮 -->
               <button
                 @click="toggleMirror"
+                :title="t('light.camera.mirror')"
                 class="w-9 h-9 rounded-full flex items-center justify-center cursor-pointer
                        transition-colors shadow-lg backdrop-blur-sm p-0"
                 :class="[
@@ -157,6 +158,7 @@
               <!-- 拍照按钮 -->
               <button
                 @click="takePhoto"
+                :title="t('light.camera.takePhoto')"
                 class="w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 
                        flex items-center justify-center cursor-pointer
                        transition-colors shadow-lg backdrop-blur-sm p-0"
@@ -361,7 +363,7 @@ const startCamera = async () => {
     }
     isCameraOpen.value = true
   } catch (err) {
-    console.error('相机权限被拒绝:', err)
+    console.error(t('light.camera.permissionDenied'), err)
   }
 }
 
@@ -418,11 +420,10 @@ const takePhoto = async () => {
     URL.revokeObjectURL(url)
     
     // 显示成功提示
-    ElMessage.success('拍照成功，照片已开始下载')
+    ElMessage.success(t('light.camera.photoSuccess'))
   } catch (err) {
-    console.error('拍照失败:', err)
-    // 显示错误提示
-    ElMessage.error('拍照失败，请重试')
+    console.error(t('light.camera.photoFailed'), err)
+    ElMessage.error(t('light.camera.photoFailed'))
   }
 }
 

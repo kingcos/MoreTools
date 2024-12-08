@@ -121,6 +121,14 @@ export default {
   },
   light: {
     title: '拍照补光灯',
-    brightness: '亮度'
+    brightness: '亮度',
+    favorite: '收藏',
+    camera: {
+      mirror: '镜像',
+      takePhoto: '拍照',
+      photoSuccess: '拍照成功，照片已开始下载',
+      photoFailed: '拍照失败，请重试',
+      permissionDenied: '相机权限被拒绝'
+    }
   }
 }

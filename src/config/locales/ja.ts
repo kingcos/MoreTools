@@ -6,6 +6,10 @@ export default {
       codec: 'エンコード',
       time: '時間',
       json: 'JSON'
+    },
+    lifeTools: {
+      title: '生活ツール',
+      light: '写真ライト'
     }
   },
   common: {
@@ -112,5 +116,17 @@ export default {
     removed: '削除',
     added: '追加',
     invalidJson: '無効な JSON 形式'
+  },
+  light: {
+    title: '写真ライト',
+    brightness: '明るさ',
+    favorite: 'お気に入り',
+    camera: {
+      mirror: 'ミラー',
+      takePhoto: '撮影',
+      photoSuccess: '写真を保存しました',
+      photoFailed: '撮影に失敗しました。もう一度お試しください',
+      permissionDenied: 'カメラの使用が許可されていません'
+    }
   }
 }
