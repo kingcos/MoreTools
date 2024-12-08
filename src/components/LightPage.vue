@@ -10,7 +10,7 @@
     <!-- 主要内容区域 -->
     <div class="flex-1 overflow-hidden flex flex-col">
       <!-- 色块展示区域 -->
-      <div class="h-full flex flex-wrap">
+      <div class="h-full flex flex-wrap relative">
         <div
           v-for="(block, index) in colorBlocks"
           :key="index"
@@ -104,6 +104,71 @@
             </div>
           </div>
         </div>
+
+        <!-- 相机预览 -->
+        <div 
+          v-show="isCameraOpen"
+          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          :class="[
+            isFullscreen 
+              ? 'fixed z-[60]'
+              : 'z-40'
+          ]"
+          @click.stop
+        >
+          <div class="relative">
+            <video
+              ref="videoRef"
+              class="w-[320px] h-[240px] rounded-lg shadow-lg"
+              :class="{ 'scale-x-[-1]': isMirrored }"
+              autoplay
+              playsinline
+            ></video>
+
+            <!-- 相机控制按钮 -->
+            <div class="absolute top-2 right-2 flex gap-2">
+              <!-- 镜像切换按钮 -->
+              <button
+                @click="toggleMirror"
+                class="w-9 h-9 rounded-full flex items-center justify-center cursor-pointer
+                       transition-colors shadow-lg backdrop-blur-sm p-0"
+                :class="[
+                  isMirrored
+                    ? 'bg-blue-500 hover:bg-blue-600' 
+                    : 'bg-black/40 hover:bg-black/60'
+                ]"
+              >
+                <svg 
+                  class="w-5 h-5 text-white" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                  :class="{ 'scale-x-[-1]': isMirrored }"
+                >
+                  <path 
+                    stroke-linecap="round" 
+                    stroke-linejoin="round" 
+                    stroke-width="2" 
+                    d="M8 7h8M8 7l4-4M8 7l4 4m4 6h-8m8 0l-4 4m4-4l-4-4"
+                  />
+                </svg>
+              </button>
+
+              <!-- 拍照按钮 -->
+              <button
+                @click="takePhoto"
+                class="w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 
+                       flex items-center justify-center cursor-pointer
+                       transition-colors shadow-lg backdrop-blur-sm p-0"
+              >
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8" stroke-width="2"/>
+                  <circle cx="12" cy="12" r="3" stroke-width="2" class="fill-current"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -125,19 +190,33 @@
         </svg>
       </button>
 
-      <!-- 右侧：全屏按钮 -->
+      <!-- 中间：相机开关按钮 -->
+      <button
+        @click="startCamera"
+        class="p-2 rounded-lg transition-all focus:outline-none border border-transparent"
+        :class="[
+          isCameraOpen 
+            ? 'bg-blue-500 hover:bg-blue-600 text-white' 
+            : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-white'
+        ]"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+      </button>
+
+      <!-- 右侧：全屏���钮 -->
       <button
         @click="toggleFullscreen"
         class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
                text-gray-800 dark:text-white border border-transparent transition-all focus:outline-none"
       >
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path 
-            stroke-linecap="round" 
-            stroke-linejoin="round" 
-            stroke-width="2" 
-            d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"
-          />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"/>
         </svg>
       </button>
     </div>
@@ -160,14 +239,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useDisplayMode } from '../composables/useDisplayMode'
+import { ElMessage } from 'element-plus'
 
 const { t } = useI18n()
 const { isCompactMode } = useDisplayMode()
 
-// 从本地存储加载收藏颜色
+// 从本地存储加载收藏颜��
 const loadFavoriteColors = () => {
   const saved = localStorage.getItem('favoriteColors')
   return saved ? JSON.parse(saved) : [
@@ -184,7 +264,7 @@ const isFullscreen = ref(false)
 const colorBlocks = ref([{ color: loadFavoriteColors()[0] }])
 const favoriteColors = ref(loadFavoriteColors())
 
-// 取色块类名
+// 取色块名
 const getBlockClass = () => {
   const count = colorBlocks.value.length
   
@@ -246,6 +326,124 @@ const toggleFullscreen = () => {
 const exitFullscreen = () => {
   isFullscreen.value = false
 }
+
+// 相机相关
+const isCameraOpen = ref(false)
+const videoRef = ref<HTMLVideoElement | null>(null)
+let mediaStream: MediaStream | null = null
+let imageCapturer: ImageCapture | null = null
+
+// 修改相机配置
+const constraints = {
+  video: {width: { exact: 320 }, pan: true, tilt: true, zoom: true}
+}
+
+const startCamera = async () => {
+  try {
+    // 如果已经开启则关闭
+    if (isCameraOpen.value) {
+      closeCamera()
+      return
+    }
+    
+    mediaStream = await navigator.mediaDevices.getUserMedia(constraints)
+    if (videoRef.value) {
+      videoRef.value.srcObject = mediaStream
+
+      // 获取视频轨道并创建 ImageCapture
+      const videoTrack = mediaStream.getVideoTracks()[0]
+      imageCapturer = new ImageCapture(videoTrack)
+    }
+    isCameraOpen.value = true
+  } catch (err) {
+    console.error('相机权限被拒绝:', err)
+  }
+}
+
+const takePhoto = async () => {
+  if (!imageCapturer) return
+  
+  try {
+    let blob = await imageCapturer.takePhoto()
+    console.log('拍照成功:', blob.type, blob.size + 'B')
+    
+    // 如果开启了镜像，需要对照片进行处理
+    if (isMirrored.value) {
+      // 创建 canvas 和 Image 对象
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      const img = new Image()
+      
+      // 等待图片加载
+      await new Promise((resolve) => {
+        img.onload = resolve
+        img.src = URL.createObjectURL(blob)
+      })
+      
+      // 设置 canvas 尺寸
+      canvas.width = img.width
+      canvas.height = img.height
+      
+      // 水平翻转图像
+      if (ctx) {
+        ctx.scale(-1, 1)
+        ctx.drawImage(img, -canvas.width, 0)
+      }
+      
+      // 转换为 blob
+      const mirroredBlob = await new Promise<Blob>((resolve) => {
+        canvas.toBlob((b) => resolve(b as Blob), 'image/png')
+      })
+      
+      // 清理资源
+      URL.revokeObjectURL(img.src)
+      
+      // 使用处理后的 blob
+      blob = mirroredBlob
+    }
+    
+    // 创建下载链接
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `photo_${new Date().getTime()}.png`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+    
+    // 显示成功提示
+    ElMessage.success('拍照成功，照片已开始下载')
+  } catch (err) {
+    console.error('拍照失败:', err)
+    // 显示错误提示
+    ElMessage.error('拍照失败，请重试')
+  }
+}
+
+const closeCamera = () => {
+  if (mediaStream) {
+    mediaStream.getTracks().forEach(track => track.stop())
+    mediaStream = null
+  }
+  if (videoRef.value) {
+    videoRef.value.srcObject = null
+  }
+  isCameraOpen.value = false
+}
+
+// 组件卸载时确保关闭相机
+onUnmounted(() => {
+  closeCamera()
+})
+
+// 添加镜像状态
+const isMirrored = ref(false)
+
+// 切换镜像
+const toggleMirror = () => {
+  isMirrored.value = !isMirrored.value
+}
 </script>
 
 <style scoped>
@@ -284,5 +482,10 @@ button {
 }
 button:hover {
   transform: scale(1.05);
+}
+
+/* 添加镜像过渡效果 */
+video {
+  transition: transform 0.3s ease;
 }
 </style> 
