@@ -116,7 +116,10 @@ export default {
     removed: 'Removed',
     added: 'Added',
     invalidJson: 'Invalid JSON format',
-    copy: 'Copy'
+    copy: 'Copy',
+    copySuccess: 'Copied successfully',
+    copyFailed: 'Copy failed',
+    copyError: 'Copy failed'
   },
   light: {
     title: 'Photo Light',

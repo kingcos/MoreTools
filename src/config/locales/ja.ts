@@ -116,7 +116,10 @@ export default {
     removed: '削除',
     added: '追加',
     invalidJson: '無効な JSON 形式',
-    copy: 'コピー'
+    copy: 'コピー',
+    copySuccess: 'コピーしました',
+    copyFailed: 'コピーに失敗しました',
+    copyError: 'コピーに失敗しました'
   },
   light: {
     title: '写真ライト',

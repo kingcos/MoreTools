@@ -176,15 +176,6 @@
             </div>
           </div>
         </div>
-
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 relative">
-          <Adsense
-            adStyle="max-height: 150px; width: 100%;"
-            slotId="2839839840"
-            format="auto"
-            fullWidthResponsive="true"
-          />
-        </div>
       </div>
     </div>
   </div>
@@ -194,7 +185,6 @@
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElTabs, ElTabPane } from 'element-plus'
-import Adsense from './Adsense.vue'
 import { useDisplayMode } from '../composables/useDisplayMode'
 
 const { t } = useI18n()

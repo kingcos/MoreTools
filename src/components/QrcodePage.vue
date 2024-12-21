@@ -106,15 +106,6 @@
               </div>
             </div>
 
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 relative">
-              <Adsense
-                adStyle="max-height: 150px; width: 100%;"
-                slotId="2839839840"
-                format="auto"
-                fullWidthResponsive="true"
-              />
-            </div>
-            
             <div v-if="history.length > 0 && !instantMode" class="space-y-4">
               <div class="flex justify-between items-center">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ t('qrcode.history') }}</h2>
@@ -301,7 +292,6 @@
 import { ref, onMounted, computed } from 'vue'
 import QrcodeVue from 'qrcode.vue'
 import { useI18n } from 'vue-i18n'
-import Adsense from '../components/Adsense.vue'
 import { ElMessage } from 'element-plus'
 import 'element-plus/es/components/message/style/css'
 import { useDark } from '@vueuse/core'

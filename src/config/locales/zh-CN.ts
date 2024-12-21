@@ -119,6 +119,9 @@ export default {
     added: '新增',
     invalidJson: '无效的 JSON 格式',
     copy: '复制',
+    copySuccess: '复制成功',
+    copyFailed: '复制失败',
+    copyError: '复制失败'
   },
   light: {
     title: '拍照补光灯',

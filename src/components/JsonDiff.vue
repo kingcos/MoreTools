@@ -175,6 +175,7 @@ onMounted(() => {
 
 :deep(.dark .cm-editor) {
   color: var(--el-text-color-primary);
+  background-color: var(--el-bg-color);
 }
 
 :deep(.cm-scroller) {
@@ -223,5 +224,11 @@ pre {
   background-color: var(--el-border-color-lighter);
   border-left: 1px solid var(--el-border-color);
   border-right: 1px solid var(--el-border-color);
+}
+
+:deep(.dark .cm-merge-gap) {
+  background-color: var(--el-fill-color-darker);
+  border-left: 1px solid var(--el-border-color-darker);
+  border-right: 1px solid var(--el-border-color-darker);
 }
 </style> 
