@@ -115,7 +115,8 @@ export default {
     diffLegend: '圖例',
     removed: '刪除',
     added: '新增',
-    invalidJson: '無效的 JSON 格式'
+    invalidJson: '無效的 JSON 格式',
+    copy: '複製',
   },
   light: {
     title: '拍照補光燈',

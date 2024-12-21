@@ -115,7 +115,8 @@ export default {
     diffLegend: 'Legend',
     removed: 'Removed',
     added: 'Added',
-    invalidJson: 'Invalid JSON format'
+    invalidJson: 'Invalid JSON format',
+    copy: 'Copy'
   },
   light: {
     title: 'Photo Light',

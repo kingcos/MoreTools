@@ -115,7 +115,8 @@ export default {
     diffLegend: '凡例',
     removed: '削除',
     added: '追加',
-    invalidJson: '無効な JSON 形式'
+    invalidJson: '無効な JSON 形式',
+    copy: 'コピー'
   },
   light: {
     title: '写真ライト',
