@@ -10,7 +10,8 @@ export default {
     lifeTools: {
       title: '生活必备',
       light: '拍照补光灯'
-    }
+    },
+    about: '关于'
   },
   common: {
     search: '搜索...',

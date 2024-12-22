@@ -522,7 +522,7 @@ const selectDisplayMode = (mode: typeof displayModes[0]) => {
           >
             <span class="flex items-center space-x-1">
               <component :is="icons.About" class="w-5 h-5" />
-              <span class="text-sm">{{ t('menu.system.about') }}</span>
+              <span class="text-sm">{{ t('menu.about') }}</span>
             </span>
           </button>
 
