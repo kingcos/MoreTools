@@ -32,6 +32,19 @@
         ]
       },
       {
+        "id": "work-tools",
+        "titleKey": "menu.workTools.title", 
+        "isOpen": true,
+        "children": [
+          {
+            "id": "text",
+            "titleKey": "menu.workTools.text",
+            "component": "TextPage",
+            "icon": "Text"
+          }
+        ]
+      },
+      {
         "id": "life-tools",
         "titleKey": "menu.lifeTools.title",
         "isOpen": true,

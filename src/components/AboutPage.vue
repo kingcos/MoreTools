@@ -67,7 +67,7 @@
                     <h3 class="font-medium text-gray-900 dark:text-white text-sm">
                       {{ t(`about.tools.${tool.id}.title`) }}
                     </h3>
-                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400 line-clamp-3">
                       {{ t(`about.tools.${tool.id}.description`) }}
                     </p>
                   </div>

@@ -5,6 +5,7 @@ import CodecPage from './components/CodecPage.vue'
 import TimePage from './components/TimePage.vue'
 import JsonPage from './components/JsonPage.vue'
 import LightPage from './components/LightPage.vue'
+import TextPage from './components/TextPage.vue'
 import AboutPage from './components/AboutPage.vue'
 import menuConfig from './config/menu.json'
 import { useI18n } from 'vue-i18n'
@@ -23,6 +24,7 @@ const componentMap = {
   TimePage,
   JsonPage,
   LightPage,
+  TextPage,
   AboutPage
 } as const
 
@@ -610,7 +612,11 @@ const copyLink = async () => {
       <!-- 新增: 右侧分享按钮 -->
       <button
         @click="copyLink"
-        class="fixed right-4 top-4 p-2 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-white border border-transparent z-50 transition-all focus:outline-none"
+        :class="[
+          'fixed right-4 top-4 p-2 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700',
+          'text-gray-800 dark:text-white border border-transparent transition-all focus:outline-none',
+          isSidebarOpen ? 'z-0' : 'z-50'
+        ]"
       >
         <svg
           class="w-6 h-6"

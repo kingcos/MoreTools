@@ -11,6 +11,10 @@ export default {
       title: '生活ツール',
       light: '写真ライト'
     },
+    workTools: {
+      title: '作業ツール',
+      text: 'テキストツール'
+    },
     about: 'について'
   },
   common: {
@@ -133,6 +137,24 @@ export default {
       photoFailed: '撮影に失敗しました。もう一度お試しください',
       permissionDenied: 'カメラの使用が許可されていません'
     }
+  },
+  text: {
+    title: 'テキストツール',
+    input: '入力テキスト',
+    output: '出力結果',
+    functions: {
+      trim: '空白削除',
+      uppercase: '大文字に変換',
+      lowercase: '小文字に変換',
+      reverse: 'テキスト反転',
+      length: '文字数カウント'
+    },
+    copy: 'コピー',
+    reset: 'リセット',
+    cancel: 'キャンセル',
+    confirmReset: 'リセット確認',
+    copySuccess: 'コピーしました',
+    copyFailed: 'コピーに失敗しました'
   },
   about: {
     title: 'MoreTools について',

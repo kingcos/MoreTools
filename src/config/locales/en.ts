@@ -11,6 +11,10 @@ export default {
       title: 'Life Tools',
       light: 'Photo Light'
     },
+    workTools: {
+      title: 'Work Tools',
+      text: 'Text Tools'
+    },
     about: 'About'
   },
   common: {
@@ -167,5 +171,23 @@ export default {
       devTools: 'Developer Tools',
       lifeTools: 'Life Tools'
     }
+  },
+  text: {
+    title: 'Text Tools',
+    input: 'Input Text',
+    output: 'Output Result',
+    functions: {
+      trim: 'Trim Spaces',
+      uppercase: 'To Uppercase',
+      lowercase: 'To Lowercase',
+      reverse: 'Reverse Text',
+      length: 'Character Count'
+    },
+    copy: 'Copy',
+    reset: 'Reset',
+    cancel: 'Cancel',
+    confirmReset: 'Confirm Reset',
+    copySuccess: 'Copied successfully',
+    copyFailed: 'Copy failed'
   }
 }

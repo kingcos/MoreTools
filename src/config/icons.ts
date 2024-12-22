@@ -5,9 +5,10 @@ import TimeIcon from '../components/icons/TimeIcon.vue'
 import JsonIcon from '../components/icons/JsonIcon.vue'
 import LightIcon from '../components/icons/LightIcon.vue'
 import AboutIcon from '../components/icons/AboutIcon.vue'
+import TextIcon from '../components/icons/TextIcon.vue'
 
 // 定义图标名称的类型
-export type IconName = 'Qrcode' | 'Code' | 'Time' | 'Json' | 'Light' | 'About'
+export type IconName = 'Qrcode' | 'Code' | 'Time' | 'Json' | 'Light' | 'About' | 'Text'
 
 // 添加类型注解
 export const icons: Record<IconName, Component> = {
@@ -16,5 +17,9 @@ export const icons: Record<IconName, Component> = {
   Time: TimeIcon,
   Json: JsonIcon,
   Light: LightIcon,
-  About: AboutIcon
-} 
+  About: AboutIcon,
+  Text: TextIcon
+} as const
+
+export type IconName = keyof typeof icons
+  

@@ -11,6 +11,10 @@ export default {
       title: '生活必備',
       light: '拍照補光燈'
     },
+    workTools: {
+      title: '工作常用',
+      text: '文字處理'
+    },
     about: '關於'
   },
   common: {
@@ -133,6 +137,24 @@ export default {
       photoFailed: '拍照失敗，請重試',
       permissionDenied: '相機權限被拒絕'
     }
+  },
+  text: {
+    title: '文字處理',
+    input: '輸入文字',
+    output: '輸出結果',
+    functions: {
+      trim: '去除空格',
+      uppercase: '轉大寫',
+      lowercase: '轉小寫',
+      reverse: '反轉文字',
+      length: '字元統計'
+    },
+    copy: '複製',
+    reset: '重置',
+    cancel: '取消',
+    confirmReset: '確認重置',
+    copySuccess: '複製成功',
+    copyFailed: '複製失敗'
   },
   about: {
     title: '關於 MoreTools',

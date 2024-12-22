@@ -11,6 +11,10 @@ export default {
       title: '生活必备',
       light: '拍照补光灯'
     },
+    workTools: {
+      title: '工作常用',
+      text: '文本处理'
+    },
     about: '关于'
   },
   common: {
@@ -134,6 +138,42 @@ export default {
       photoSuccess: '拍照成功，照片已开始下载',
       photoFailed: '拍照失败，请重试',
       permissionDenied: '相机权限被拒绝'
+    }
+  },
+  text: {
+    title: '文本处理',
+    input: '输入文本',
+    output: '输出结果',
+    functions: {
+      trim: '去除空格',
+      uppercase: '转大写',
+      lowercase: '转小写',
+      reverse: '反转文本',
+      length: '字符统计'
+    },
+    copy: '复制',
+    reset: '重置',
+    cancel: '取消',
+    confirmReset: '确认重置',
+    copySuccess: '复制成功',
+    copyFailed: '复制失败',
+    replace: {
+      title: '字符替换',
+      input: '输入文本',
+      inputPlaceholder: '请输入要处理的文本...',
+      from: '查找内容',
+      fromPlaceholder: '要替换的文本',
+      to: '替换为',
+      toPlaceholder: '替换后的文本',
+      execute: '执行替换',
+      regex: '正则',
+      newline: '换行符',
+      error: '替换失败，请检查输入',
+      quote: '引号',
+      regexMode: '正则模式'
+    },
+    basic: {
+      title: '基础功能'
     }
   },
   about: {
