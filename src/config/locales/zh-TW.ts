@@ -204,12 +204,18 @@ export default {
     },
     projectInfo: {
       title: '項目介紹',
-      description: 'MoreTools 是一個開源的在線工具箱，集成了多種實用的開發工具和生活工具。項目採用 Vue 3 + TypeScript 開發，支持深色模式和國際化，致力於提供簡潔、高效的在線工具服務。歡迎訪問 GitHub 倉庫了解更多信息或貢獻代碼。',
+      description: 'MoreTools 是一個開源的線上工具箱，集成了多種實用的開發和生活工具。支持深色模式和國際化。',
       github: 'GitHub 倉庫'
     },
-    sections: {
-      devTools: '開發工具',
-      lifeTools: '生活工具'
+    author: {
+      title: '關於作者',
+      description: '我是 kingcos，一名開發者/創作者。',
+      social: {
+        github: 'GitHub',
+        weibo: '微博',
+        wechat: '微信公眾號',
+        xiaohongshu: '小紅書'
+      }
     }
   }
 }

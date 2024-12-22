@@ -140,6 +140,24 @@ export default {
   },
   about: {
     title: 'About MoreTools',
+    projectInfo: {
+      title: 'Project Introduction',
+      description: 'MoreTools is an open-source online toolbox that integrates various practical development and life tools. Supports dark mode and internationalization.',
+      github: 'GitHub Repository',
+      issues: 'GitHub Issues Feedback'
+    },
+    author: {
+      title: 'About Author',
+      description: "I'm kingcos, a developer/creator.",
+      social: {
+        github: 'GitHub',
+        weibo: 'Weibo',
+        wechat: 'WeChat',
+        xiaohongshu: 'Xiaohongshu',
+        blog: 'Blog',
+        more: 'More About'
+      }
+    },
     tools: {
       qrcode: {
         title: 'QR Code Tools',
@@ -166,14 +184,12 @@ export default {
         description: 'Provides text processing functions including text replacement, regex matching, newline replacement and quote wrapping'
       }
     },
-    projectInfo: {
-      title: 'Project Introduction',
-      description: 'MoreTools is an open-source online toolbox that integrates various practical development tools and life tools. The project is developed using Vue 3 + TypeScript, supports dark mode and internationalization, and is committed to providing simple and efficient online tool services. Visit the GitHub repository to learn more or contribute code.',
-      github: 'GitHub Repository'
-    },
     sections: {
       devTools: 'Developer Tools',
       lifeTools: 'Life Tools'
+    },
+    reward: {
+      title: 'Support'
     }
   },
   text: {

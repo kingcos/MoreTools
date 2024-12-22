@@ -204,12 +204,18 @@ export default {
     },
     projectInfo: {
       title: 'プロジェクト紹介',
-      description: 'MoreToolsは、様々な実用的な開発ツールと生活ツールを統合したオープンソースのオンラインツールボックスです。Vue 3 + TypeScriptで開発され、ダークモードと国際化をサポートし、シンプルで効率的なオンラインツールサービスを提供することを目指しています。GitHubリポジトリを訪問して、詳細を確認したりコードを提供したりすることができます。',
+      description: 'MoreToolsは、様々な実用的な開発ツールと生活ツールを統合したオープンソースのオンラインツールボックスです。ダークモードと国際化をサポートしています。',
       github: 'GitHubリポジトリ'
     },
-    sections: {
-      devTools: '開発ツール',
-      lifeTools: '生活ツール'
+    author: {
+      title: '作者について',
+      description: '私はkingcosです。開発者/クリエイターです。',
+      social: {
+        github: 'GitHub',
+        weibo: 'Weibo',
+        wechat: 'WeChat公式アカウント',
+        xiaohongshu: 'Xiaohongshu'
+      }
     }
   }
 }
