@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, nextTick, defineComponent } from 'vue'
+import { ref, onMounted, computed, nextTick } from 'vue'
 import QrcodePage from './components/QrcodePage.vue'
 import CodecPage from './components/CodecPage.vue'
 import TimePage from './components/TimePage.vue'
@@ -11,7 +11,7 @@ import { useI18n } from 'vue-i18n'
 import { LOCALES } from './config/i18n'
 import { useDark } from '@vueuse/core'
 import { useDisplayMode } from './composables/useDisplayMode'
-import { icons } from './config/icons'
+import { icons, type IconName } from './config/icons'
 import { ElMessage } from 'element-plus'
 
 const { locale, t } = useI18n()
@@ -58,6 +58,7 @@ const menuItems = ref(menuConfig.menuItems.map(item => ({
   ...item,
   children: item.children.map(child => ({
     ...child,
+    icon: child.icon as IconName,
     component: componentMap[child.component as keyof typeof componentMap],
     isStarred: loadStarredState()[child.id] || false
   }))

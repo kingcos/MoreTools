@@ -85,13 +85,19 @@
 import { useI18n } from 'vue-i18n'
 import { useDisplayMode } from '../composables/useDisplayMode'
 import menuConfig from '../config/menu.json'
-import { icons } from '../config/icons'
+import { icons, type IconName } from '../config/icons'
 
 const { t } = useI18n()
-const { isCompactMode } = useDisplayMode()
+const { isCompactMode: _isCompactMode } = useDisplayMode()
 
-// 初始化菜单数据
-const menuItems = menuConfig.menuItems
+// 确保 tool.icon 的类型正确
+const menuItems = menuConfig.menuItems.map(item => ({
+  ...item,
+  children: item.children.map(child => ({
+    ...child,
+    icon: child.icon as IconName
+  }))
+}))
 
 const selectPage = (pageId: string) => {
   const url = new URL(window.location.href)
