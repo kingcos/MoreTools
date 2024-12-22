@@ -161,32 +161,4 @@ const selectPage = (pageId: string) => {
   url.searchParams.set('page', pageId)
   window.location.href = url.toString()
 }
-
-// 社交媒体链接配置
-const socialLinks = {
-  github: {
-    url: 'https://github.com/kingcos',
-    icon: 'GithubIcon'
-  },
-  blog: {
-    url: 'https://kingcos.me',
-    icon: 'BlogIcon'
-  },
-  weibo: {
-    url: 'https://weibo.com/kingcos',
-    icon: 'WeiboIcon'
-  },
-  wechat: {
-    url: 'https://mp.weixin.qq.com/s/I_kJ8kL2xKyl1DI6iSmHVA',
-    icon: 'WechatIcon'
-  },
-  xiaohongshu: {
-    url: 'https://www.xiaohongshu.com/user/profile/5c6b4f52000000001102f4d5',
-    icon: 'XiaohongshuIcon'
-  },
-  more: {
-    url: 'https://kingcos.me/about/',
-    icon: 'MoreIcon'
-  }
-}
 </script> 
