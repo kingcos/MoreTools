@@ -168,12 +168,9 @@ export default {
       execute: '执行替换',
       regex: '正则',
       newline: '换行符',
-      error: '替换失败，请检查输入',
       quote: '引号',
-      regexMode: '正则模式'
-    },
-    basic: {
-      title: '基础功能'
+      regexMode: '正则模式',
+      error: '替换失败，请检查输入'
     }
   },
   about: {
@@ -198,6 +195,10 @@ export default {
       light: {
         title: '拍照补光灯',
         description: '提供屏幕补光功能，支持亮度调节和镜像模式，让自拍更出色'
+      },
+      text: {
+        title: '文本处理',
+        description: '提供字符替换、正则匹配等文本处理功能，支持换行符替换和引号包裹等特殊处理'
       }
     },
     projectInfo: {

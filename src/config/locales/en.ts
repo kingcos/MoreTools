@@ -160,6 +160,10 @@ export default {
       light: {
         title: 'Photo Light',
         description: 'Provides screen lighting function with adjustable brightness and mirror mode for better selfies'
+      },
+      text: {
+        title: 'Text Tools',
+        description: 'Provides text processing functions including text replacement, regex matching, newline replacement and quote wrapping'
       }
     },
     projectInfo: {
@@ -188,6 +192,21 @@ export default {
     cancel: 'Cancel',
     confirmReset: 'Confirm Reset',
     copySuccess: 'Copied successfully',
-    copyFailed: 'Copy failed'
+    copyFailed: 'Copy failed',
+    replace: {
+      title: 'Text Replace',
+      input: 'Input Text',
+      inputPlaceholder: 'Enter text to process...',
+      from: 'Find',
+      fromPlaceholder: 'Text to find',
+      to: 'Replace with',
+      toPlaceholder: 'Replacement text',
+      execute: 'Replace',
+      regex: 'Regex',
+      newline: 'Newline',
+      quote: 'Quote',
+      regexMode: 'Regex Mode',
+      error: 'Replace failed, please check input'
+    }
   }
 }

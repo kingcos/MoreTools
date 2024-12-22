@@ -93,28 +93,26 @@
                   <div class="flex items-center space-x-2">
                     <button
                       @click="() => { fromOptions.isNewline = !fromOptions.isNewline; handleNewlineChange() }"
-                      class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none"
+                      class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none text-sm"
                       :class="[
                         fromOptions.isNewline 
                           ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
                           : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                       ]"
                     >
-                      <div class="flex items-center space-x-1.5">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                        <span class="text-sm">{{ t('text.replace.newline') }}</span>
-                      </div>
+                      {{ t('text.replace.newline') }}
                     </button>
                   </div>
                 </div>
                 <input
                   v-model="replaceFrom"
                   type="text"
-                  class="w-full p-2 border border-gray-200 dark:border-gray-700 rounded-lg
-                         bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  class="w-full p-2 border rounded-lg transition-colors"
+                  :class="[
+                    fromOptions.isNewline
+                      ? 'bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
+                      : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white'
+                  ]"
                   :placeholder="t('text.replace.fromPlaceholder')"
                   :readonly="fromOptions.isNewline"
                 />
@@ -129,45 +127,37 @@
                   <div class="flex items-center space-x-2">
                     <button
                       @click="() => { toOptions.isNewline = !toOptions.isNewline; handleToNewlineChange() }"
-                      class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none"
+                      class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none text-sm"
                       :class="[
                         toOptions.isNewline 
                           ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
                           : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                       ]"
                     >
-                      <div class="flex items-center space-x-1.5">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                        <span class="text-sm">{{ t('text.replace.newline') }}</span>
-                      </div>
+                      {{ t('text.replace.newline') }}
                     </button>
                     <button
                       @click="() => { toOptions.isQuote = !toOptions.isQuote; handleToQuoteChange() }"
-                      class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none"
+                      class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none text-sm"
                       :class="[
                         toOptions.isQuote 
                           ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
                           : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                       ]"
                     >
-                      <div class="flex items-center space-x-1.5">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                d="M8 11V7a4 4 0 118 0m-4 8v-2m-2 4h4" />
-                        </svg>
-                        <span class="text-sm">{{ t('text.replace.quote') }}</span>
-                      </div>
+                      {{ t('text.replace.quote') }}
                     </button>
                   </div>
                 </div>
                 <input
                   v-model="replaceTo"
                   type="text"
-                  class="w-full p-2 border border-gray-200 dark:border-gray-700 rounded-lg
-                         bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  class="w-full p-2 border rounded-lg transition-colors"
+                  :class="[
+                    toOptions.isNewline || toOptions.isQuote
+                      ? 'bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
+                      : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white'
+                  ]"
                   :placeholder="t('text.replace.toPlaceholder')"
                   :readonly="toOptions.isNewline || toOptions.isQuote"
                 />
@@ -304,8 +294,7 @@ const { isCompactMode } = useDisplayMode()
 
 const currentTab = ref('replace')
 const tabs = [
-  { key: 'replace', title: 'text.replace.title' },
-  { key: 'basic', title: 'text.basic.title' }
+  { key: 'replace', title: 'text.replace.title' }
 ]
 
 const inputText = ref('')

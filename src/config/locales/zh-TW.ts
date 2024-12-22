@@ -154,7 +154,22 @@ export default {
     cancel: '取消',
     confirmReset: '確認重置',
     copySuccess: '複製成功',
-    copyFailed: '複製失敗'
+    copyFailed: '複製失敗',
+    replace: {
+      title: '字元替換',
+      input: '輸入文字',
+      inputPlaceholder: '請輸入要處理的文字...',
+      from: '查找內容',
+      fromPlaceholder: '要替換的文字',
+      to: '替換為',
+      toPlaceholder: '替換後的文字',
+      execute: '執行替換',
+      regex: '正則',
+      newline: '換行符',
+      quote: '引號',
+      regexMode: '正則模式',
+      error: '替換失敗，請檢查輸入'
+    }
   },
   about: {
     title: '關於 MoreTools',
@@ -178,6 +193,10 @@ export default {
       light: {
         title: '拍照補光燈',
         description: '提供屏幕補光功能，支持亮度調節和鏡像模式，讓自拍更出色'
+      },
+      text: {
+        title: '文字處理',
+        description: '提供字元替換、正則匹配等文字處理功能，支持換行符替換和引號包裹等特殊處理'
       }
     },
     projectInfo: {

@@ -154,7 +154,22 @@ export default {
     cancel: 'キャンセル',
     confirmReset: 'リセット確認',
     copySuccess: 'コピーしました',
-    copyFailed: 'コピーに失敗しました'
+    copyFailed: 'コピーに失敗しました',
+    replace: {
+      title: 'テキスト置換',
+      input: '入力テキスト',
+      inputPlaceholder: '処理するテキストを入力...',
+      from: '検索',
+      fromPlaceholder: '検索するテキスト',
+      to: '置換後',
+      toPlaceholder: '置換後のテキスト',
+      execute: '置換',
+      regex: '正規表現',
+      newline: '改行',
+      quote: '引用符',
+      regexMode: '正規表現モード',
+      error: '置換に失敗しました。入力を確認してください'
+    }
   },
   about: {
     title: 'MoreTools について',
@@ -178,6 +193,10 @@ export default {
       light: {
         title: '写真ライト',
         description: '画面ライト機能を提供し、明るさ調整とミラーモードをサポートして、より良いセルフィーを実現します'
+      },
+      text: {
+        title: 'テキストツール',
+        description: 'テキスト置換、正規表現マッチング、改行置換、引用符で囲むなどのテキスト処理機能を提供します'
       }
     },
     projectInfo: {
