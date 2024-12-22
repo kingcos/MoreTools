@@ -168,7 +168,10 @@ export default {
       newline: '改行',
       quote: '引用符',
       regexMode: '正規表現モード',
-      error: '置換に失敗しました。入力を確認してください'
+      error: '置換に失敗しました。入力を確認してください',
+      number: '数字',
+      letter: 'アルファベット',
+      noMatch: '一致する内容が見つかりません'
     }
   },
   about: {

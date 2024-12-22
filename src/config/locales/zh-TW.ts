@@ -168,7 +168,10 @@ export default {
       newline: '換行符',
       quote: '引號',
       regexMode: '正則模式',
-      error: '替換失敗，請檢查輸入'
+      error: '替換失敗，請檢查輸入',
+      number: '數字',
+      letter: '英文',
+      noMatch: '未找到匹配內容'
     }
   },
   about: {

@@ -206,7 +206,10 @@ export default {
       newline: 'Newline',
       quote: 'Quote',
       regexMode: 'Regex Mode',
-      error: 'Replace failed, please check input'
+      error: 'Replace failed, please check input',
+      number: 'Numbers',
+      letter: 'Letters',
+      noMatch: 'No matches found'
     }
   }
 }

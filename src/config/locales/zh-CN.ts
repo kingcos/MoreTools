@@ -170,7 +170,10 @@ export default {
       newline: '换行符',
       quote: '引号',
       regexMode: '正则模式',
-      error: '替换失败，请检查输入'
+      error: '替换失败，请检查输入',
+      number: '数字',
+      letter: '英文',
+      noMatch: '未找到匹配内容'
     }
   },
   about: {

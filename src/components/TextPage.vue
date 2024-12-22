@@ -102,6 +102,28 @@
                     >
                       {{ t('text.replace.newline') }}
                     </button>
+                    <button
+                      @click="() => { fromOptions.isNumber = !fromOptions.isNumber; handleNumberChange() }"
+                      class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none text-sm"
+                      :class="[
+                        fromOptions.isNumber 
+                          ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
+                          : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                      ]"
+                    >
+                      {{ t('text.replace.number') }}
+                    </button>
+                    <button
+                      @click="() => { fromOptions.isLetter = !fromOptions.isLetter; handleLetterChange() }"
+                      class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none text-sm"
+                      :class="[
+                        fromOptions.isLetter 
+                          ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
+                          : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                      ]"
+                    >
+                      {{ t('text.replace.letter') }}
+                    </button>
                   </div>
                 </div>
                 <input
@@ -109,12 +131,12 @@
                   type="text"
                   class="w-full p-2 border rounded-lg transition-colors"
                   :class="[
-                    fromOptions.isNewline
+                    fromOptions.isNewline || fromOptions.isNumber || fromOptions.isLetter
                       ? 'bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
                       : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white'
                   ]"
                   :placeholder="t('text.replace.fromPlaceholder')"
-                  :readonly="fromOptions.isNewline"
+                  :readonly="fromOptions.isNewline || fromOptions.isNumber || fromOptions.isLetter"
                 />
               </div>
 
@@ -305,7 +327,9 @@ const confirmingReset = ref(false)
 const replaceFrom = ref('')
 const replaceTo = ref('')
 const fromOptions = ref({
-  isNewline: false
+  isNewline: false,
+  isNumber: false,
+  isLetter: false
 })
 const toOptions = ref({
   isNewline: false,
@@ -334,6 +358,28 @@ const handleNewlineChange = () => {
   if (fromOptions.value.isNewline) {
     replaceFrom.value = '\\r?\\n'
     isRegexMode.value = true
+    fromOptions.value.isNumber = false
+    fromOptions.value.isLetter = false
+  }
+}
+
+// 处理查找内容数字选项变化
+const handleNumberChange = () => {
+  if (fromOptions.value.isNumber) {
+    replaceFrom.value = '\\d+'
+    isRegexMode.value = true
+    fromOptions.value.isNewline = false
+    fromOptions.value.isLetter = false
+  }
+}
+
+// 处理查找内容英文选项变化
+const handleLetterChange = () => {
+  if (fromOptions.value.isLetter) {
+    replaceFrom.value = '[a-zA-Z]+'
+    isRegexMode.value = true
+    fromOptions.value.isNewline = false
+    fromOptions.value.isNumber = false
   }
 }
 
@@ -341,7 +387,6 @@ const handleNewlineChange = () => {
 const handleToNewlineChange = () => {
   if (toOptions.value.isNewline) {
     replaceTo.value = '\\n'
-    isRegexMode.value = true
     toOptions.value.isQuote = false
   }
 }
@@ -349,8 +394,7 @@ const handleToNewlineChange = () => {
 // 处理替换为引号选项变化
 const handleToQuoteChange = () => {
   if (toOptions.value.isQuote) {
-    replaceTo.value = "'$&',"
-    isRegexMode.value = true
+    replaceTo.value = "'$&'"
     toOptions.value.isNewline = false
   }
 }
@@ -363,23 +407,48 @@ const handleReplace = () => {
     let searchValue: string | RegExp = replaceFrom.value
     let replaceValue = replaceTo.value
 
-    // 如果是正则模式或特殊选项,使用正则表达式
-    if (isRegexMode.value || fromOptions.value.isNewline) {
-      searchValue = new RegExp(replaceFrom.value, 'g')
-    }
-
     // 处理替换内容
     if (toOptions.value.isNewline) {
       // 如果是换行符替换
       replaceValue = replaceTo.value.replace(/\\n/g, '\n')
     } else if (toOptions.value.isQuote) {
-      // 如果是引号包裹
-      const items = inputText.value.split(/[,\n]+/).map(item => item.trim()).filter(Boolean)
-      outputText.value = items.map(item => `'${item}'`).join(',')
+      // 如果是引号包裹,先处理搜索值
+      let searchValue: string | RegExp
+      if (isRegexMode.value || fromOptions.value.isNewline || 
+          fromOptions.value.isNumber || fromOptions.value.isLetter) {
+        searchValue = new RegExp(`(${replaceFrom.value})`, 'g')
+      } else {
+        // 非正则模式，转义特殊字符
+        searchValue = new RegExp(`(${replaceFrom.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'g')
+      }
+      // 先替换中间的匹配项
+      let result = inputText.value.replace(searchValue, "'$1'")
+      
+      outputText.value = "'" +  result + "'"
       return
     }
 
-    outputText.value = inputText.value.replace(searchValue, replaceValue)
+    // 如果是正则模式或特殊选项,使用正则表达式
+    if (isRegexMode.value || fromOptions.value.isNewline || 
+        fromOptions.value.isNumber || fromOptions.value.isLetter) {
+      searchValue = new RegExp(replaceFrom.value, 'g')
+    } else {
+      // 非正则模式下转义特殊字符并使用全局替换
+      searchValue = new RegExp(replaceFrom.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')
+    }
+
+    const result = inputText.value.replace(searchValue, replaceValue)
+    
+    // 检查替换结果是否与原文相同
+    if (result === inputText.value) {
+      ElMessage({
+        message: t('text.replace.noMatch'),
+        type: 'warning',
+        duration: 2000
+      })
+    }
+    
+    outputText.value = result
   } catch (err) {
     ElMessage.error(t('text.replace.error'))
   }
@@ -439,7 +508,9 @@ const handleReset = () => {
   replaceFrom.value = ''
   replaceTo.value = ''
   fromOptions.value = {
-    isNewline: false
+    isNewline: false,
+    isNumber: false,
+    isLetter: false
   }
   toOptions.value = {
     isNewline: false,
