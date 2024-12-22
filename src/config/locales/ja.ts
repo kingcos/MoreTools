@@ -10,7 +10,8 @@ export default {
     lifeTools: {
       title: '生活ツール',
       light: '写真ライト'
-    }
+    },
+    about: 'について'
   },
   common: {
     search: '検索...',
@@ -131,6 +132,40 @@ export default {
       photoSuccess: '写真を保存しました',
       photoFailed: '撮影に失敗しました。もう一度お試しください',
       permissionDenied: 'カメラの使用が許可されていません'
+    }
+  },
+  about: {
+    title: 'MoreTools について',
+    tools: {
+      qrcode: {
+        title: 'QRコードツール',
+        description: 'QRコードの生成と読み取りを素早く行い、履歴とシークレットモードをサポートしています'
+      },
+      codec: {
+        title: 'エンコードツール',
+        description: 'URLエンコード/デコードとBase64エンコード/デコードをサポートし、開発者に便利なエンコード変換機能を提供します'
+      },
+      time: {
+        title: '時間ツール',
+        description: 'タイムスタンプと日時の相互変換、ミリ秒タイムスタンプをサポートし、開発デバッグと日常使用に便利です'
+      },
+      json: {
+        title: 'JSON ツール',
+        description: 'JSONのフォーマット、圧縮、比較ツールで、開発者のJSONデータ処理をサポートします'
+      },
+      light: {
+        title: '写真ライト',
+        description: '画面ライト機能を提供し、明るさ調整とミラーモードをサポートして、より良いセルフィーを実現します'
+      }
+    },
+    projectInfo: {
+      title: 'プロジェクト紹介',
+      description: 'MoreToolsは、様々な実用的な開発ツールと生活ツールを統合したオープンソースのオンラインツールボックスです。Vue 3 + TypeScriptで開発され、ダークモードと国際化をサポートし、シンプルで効率的なオンラインツールサービスを提供することを目指しています。GitHubリポジトリを訪問して、詳細を確認したりコードを提供したりすることができます。',
+      github: 'GitHubリポジトリ'
+    },
+    sections: {
+      devTools: '開発ツール',
+      lifeTools: '生活ツール'
     }
   }
 }

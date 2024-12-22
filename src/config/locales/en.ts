@@ -10,7 +10,8 @@ export default {
     lifeTools: {
       title: 'Life Tools',
       light: 'Photo Light'
-    }
+    },
+    about: 'About'
   },
   common: {
     search: 'Search...',
@@ -131,6 +132,40 @@ export default {
       photoSuccess: 'Photo taken successfully and download started',
       photoFailed: 'Failed to take photo, please try again',
       permissionDenied: 'Camera permission denied'
+    }
+  },
+  about: {
+    title: 'About MoreTools',
+    tools: {
+      qrcode: {
+        title: 'QR Code Tools',
+        description: 'Quickly generate and decode QR codes, with support for history and incognito mode'
+      },
+      codec: {
+        title: 'Codec Tools',
+        description: 'Support URL encoding/decoding and Base64 encoding/decoding, providing convenient encoding conversion for developers'
+      },
+      time: {
+        title: 'Time Tools',
+        description: 'Convert between timestamps and dates, supporting millisecond timestamps for development debugging and daily use'
+      },
+      json: {
+        title: 'JSON Tools',
+        description: 'JSON formatting, compression and comparison tools to help developers better handle JSON data'
+      },
+      light: {
+        title: 'Photo Light',
+        description: 'Provides screen lighting function with adjustable brightness and mirror mode for better selfies'
+      }
+    },
+    projectInfo: {
+      title: 'Project Introduction',
+      description: 'MoreTools is an open-source online toolbox that integrates various practical development tools and life tools. The project is developed using Vue 3 + TypeScript, supports dark mode and internationalization, and is committed to providing simple and efficient online tool services. Visit the GitHub repository to learn more or contribute code.',
+      github: 'GitHub Repository'
+    },
+    sections: {
+      devTools: 'Developer Tools',
+      lifeTools: 'Life Tools'
     }
   }
 }

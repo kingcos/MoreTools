@@ -10,7 +10,8 @@ export default {
     lifeTools: {
       title: '生活必備',
       light: '拍照補光燈'
-    }
+    },
+    about: '關於'
   },
   common: {
     search: '搜索...',
@@ -131,6 +132,40 @@ export default {
       photoSuccess: '拍照成功，照片已開始下載',
       photoFailed: '拍照失敗，請重試',
       permissionDenied: '相機權限被拒絕'
+    }
+  },
+  about: {
+    title: '關於 MoreTools',
+    tools: {
+      qrcode: {
+        title: '二維碼工具',
+        description: '快速生成和解析二維碼，支持歷史記錄和無痕模式，可以輕鬆處理各類二維碼需求'
+      },
+      codec: {
+        title: '編解碼工具',
+        description: '支持 URL 編解碼和 Base64 編解碼，為開發者提供便捷的編碼轉換功能'
+      },
+      time: {
+        title: '時間工具',
+        description: '時間戳與日期的互相轉換，支持毫秒級時間戳，方便開發調試和日常使用'
+      },
+      json: {
+        title: 'JSON 工具',
+        description: 'JSON 格式化、壓縮和對比工具，幫助開發者更好地處理 JSON 數據'
+      },
+      light: {
+        title: '拍照補光燈',
+        description: '提供屏幕補光功能，支持亮度調節和鏡像模式，讓自拍更出色'
+      }
+    },
+    projectInfo: {
+      title: '項目介紹',
+      description: 'MoreTools 是一個開源的在線工具箱，集成了多種實用的開發工具和生活工具。項目採用 Vue 3 + TypeScript 開發，支持深色模式和國際化，致力於提供簡潔、高效的在線工具服務。歡迎訪問 GitHub 倉庫了解更多信息或貢獻代碼。',
+      github: 'GitHub 倉庫'
+    },
+    sections: {
+      devTools: '開發工具',
+      lifeTools: '生活工具'
     }
   }
 }

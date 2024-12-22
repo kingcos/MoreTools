@@ -12,6 +12,7 @@ import { LOCALES } from './config/i18n'
 import { useDark } from '@vueuse/core'
 import { useDisplayMode } from './composables/useDisplayMode'
 import { icons } from './config/icons'
+import { ElMessage } from 'element-plus'
 
 const { locale, t } = useI18n()
 
@@ -222,6 +223,15 @@ const currentDisplayMode = computed(() =>
 const selectDisplayMode = (mode: typeof displayModes[0]) => {
   toggleDisplayMode(mode.key as 'compact' | 'fullscreen')
   isDisplayModeOpen.value = false
+}
+
+const copyLink = async () => {
+  try {
+    await navigator.clipboard.writeText(window.location.href)
+    ElMessage.success(t('common.copied'))
+  } catch (err) {
+    ElMessage.error(t('common.copyFailed'))
+  }
 }
 
 </script>
@@ -592,6 +602,26 @@ const selectDisplayMode = (mode: typeof displayModes[0]) => {
             stroke-linejoin="round"
             stroke-width="2"
             d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+
+      <!-- 新增: 右侧分享按钮 -->
+      <button
+        @click="copyLink"
+        class="fixed right-4 top-4 p-2 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-white border border-transparent z-50 transition-all focus:outline-none"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
           />
         </svg>
       </button>
