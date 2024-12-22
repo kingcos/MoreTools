@@ -5,17 +5,13 @@ import CodecPage from './components/CodecPage.vue'
 import TimePage from './components/TimePage.vue'
 import JsonPage from './components/JsonPage.vue'
 import LightPage from './components/LightPage.vue'
+import AboutPage from './components/AboutPage.vue'
 import menuConfig from './config/menu.json'
 import { useI18n } from 'vue-i18n'
 import { LOCALES } from './config/i18n'
-import QrcodeIcon from './components/icons/QrcodeIcon.vue'
-import Adsense from './components/Adsense.vue'
-import CodeIcon from './components/icons/CodeIcon.vue'
-import TimeIcon from './components/icons/TimeIcon.vue'
-import JsonIcon from './components/icons/JsonIcon.vue'
 import { useDark } from '@vueuse/core'
 import { useDisplayMode } from './composables/useDisplayMode'
-import LightIcon from './components/icons/LightIcon.vue'
+import { icons } from './config/icons'
 
 const { locale, t } = useI18n()
 
@@ -25,7 +21,8 @@ const componentMap = {
   CodecPage,
   TimePage,
   JsonPage,
-  LightPage
+  LightPage,
+  AboutPage
 } as const
 
 // 状态管理
@@ -93,6 +90,11 @@ const filteredMenuItems = computed(() => {
 // 获取当前组件
 const getCurrentComponent = computed(() => {
   const findComponent = (id: string) => {
+    // 处理关于页面的特殊情况
+    if (id === 'about') {
+      return AboutPage
+    }
+
     // 先在收藏项中查找
     const starredItem = starredItems.value.find(item => item.id === id)
     if (starredItem) return starredItem.component
@@ -105,7 +107,12 @@ const getCurrentComponent = computed(() => {
     return null
   }
 
-  return findComponent(currentPage.value) || menuItems.value[0]?.children[0]?.component || null
+  const component = findComponent(currentPage.value)
+  // 如果没有找到组件且没有收藏项，则显示关于页面
+  if (!component && starredItems.value.length === 0) {
+    return AboutPage
+  }
+  return component
 })
 
 // 事件处理
@@ -135,20 +142,41 @@ const toggleStar = (menuId: string, childId: string) => {
 
 const selectPage = (pageId: string) => {
   currentPage.value = pageId
+  // 更新 URL 参数
+  const url = new URL(window.location.href)
+  url.searchParams.set('page', pageId)
+  window.history.pushState({}, '', url)
+  
   if (window.innerWidth < 768) {
     isSidebarOpen.value = false
+  }
+}
+
+// 修改路由参数处理函数
+const handleRouteParams = () => {
+  const urlParams = new URLSearchParams(window.location.search)
+  const pageId = urlParams.get('page')
+  if (pageId) {
+    // 检查页面是否存在（包括关于页面）
+    const exists = pageId === 'about' || menuItems.value.some(menu => 
+      menu.children.some(child => child.id === pageId)
+    )
+    if (exists) {
+      currentPage.value = pageId
+    }
   }
 }
 
 // 初始化
 onMounted(() => {
   nextTick(() => {
-    if (starredItems.value.length > 0) {
-      currentPage.value = starredItems.value[0].id
-    } else {
-      const firstMenu = menuItems.value[0]
-      if (firstMenu?.children.length > 0) {
-        currentPage.value = firstMenu.children[0].id
+    handleRouteParams()
+    // 如果 URL 没有指定页面，则显示关于页面或第一个工具
+    if (!currentPage.value) {
+      if (starredItems.value.length > 0) {
+        currentPage.value = starredItems.value[0].id
+      } else {
+        currentPage.value = 'about'
       }
     }
   })
@@ -164,19 +192,17 @@ onMounted(() => {
   }
 })
 
+// 添加 popstate 事件监听，处理浏览器前进后退
+onMounted(() => {
+  window.addEventListener('popstate', () => {
+    handleRouteParams()
+  })
+})
+
 // 添加语言切换函数
 const changeLocale = (code: string) => {
   locale.value = code
   localStorage.setItem('locale', code)
-}
-
-// 注册图标组件
-const icons: Record<string, ReturnType<typeof defineComponent>> = {
-  QrcodeIcon,
-  CodeIcon,
-  TimeIcon,
-  JsonIcon,
-  LightIcon
 }
 
 // 显示模式配置
@@ -268,7 +294,7 @@ const selectDisplayMode = (mode: typeof displayModes[0]) => {
 
           <!-- 网站信息区域 -->
           <div class="space-y-2">
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center justify-center space-x-2">
               <!-- Logo -->
               <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center shadow-lg">
                 <span class="text-white text-xl font-bold">Mo</span>
@@ -276,13 +302,13 @@ const selectDisplayMode = (mode: typeof displayModes[0]) => {
               
               <!-- 标题链接 -->
               <div class="flex-1">
-                <h1 class="text-lg font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+                <h1 class="text-lg font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent text-left">
                   MoreTools
                   <span class="text-sm text-gray-600 dark:text-gray-300">
                     摸摸工具箱
                   </span>
                 </h1>
-                <div class="text-sm text-gray-500 dark:text-gray-400">
+                <div class="text-sm text-gray-500 dark:text-gray-400 text-left">
                   <a 
                     href="https://kingcos.me/moretools" 
                     target="_blank"
@@ -425,7 +451,7 @@ const selectDisplayMode = (mode: typeof displayModes[0]) => {
                 >
                   <div class="flex items-center">
                     <component
-                      :is="icons[`${child.icon}Icon`]"
+                      :is="icons[child.icon]"
                       class="w-5 h-5 text-gray-600 dark:text-gray-300"
                     />
                     <span class="ml-1 text-sm">{{ t(child.titleKey) }}</span>
@@ -449,18 +475,6 @@ const selectDisplayMode = (mode: typeof displayModes[0]) => {
               </div>
             </div>
           </nav>
-        </div>
-
-        <!-- 广告区域 -->
-        <div class="p-4 border-t border-gray-200 dark:border-gray-700 relative">
-          <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 text-center relative">
-            <Adsense
-              adStyle="max-height: 150px; width: 100%;"
-              slotId="1547745371"
-              format="auto"
-              fullWidthResponsive="true"
-            />
-          </div>
         </div>
 
         <!-- 底部按钮区域 -->
@@ -499,6 +513,18 @@ const selectDisplayMode = (mode: typeof displayModes[0]) => {
               </a>
             </div>
           </div>
+
+          <!-- 关于按钮 -->
+          <button
+            @click="selectPage('about')"
+            class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
+                   text-gray-800 dark:text-white border border-transparent transition-all focus:outline-none"
+          >
+            <span class="flex items-center space-x-1">
+              <component :is="icons.About" class="w-5 h-5" />
+              <span class="text-sm">{{ t('menu.system.about') }}</span>
+            </span>
+          </button>
 
           <!-- 语言选择 -->
           <div class="relative">

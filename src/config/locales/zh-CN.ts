@@ -134,5 +134,39 @@ export default {
       photoFailed: '拍照失败，请重试',
       permissionDenied: '相机权限被拒绝'
     }
+  },
+  about: {
+    title: '关于 MoreTools',
+    tools: {
+      qrcode: {
+        title: '二维码工具',
+        description: '快速生成和解析二维码，支持历史记录和无痕模式，可以轻松处理各类二维码需求'
+      },
+      codec: {
+        title: '编解码工具',
+        description: '支持 URL 编解码和 Base64 编解码，为开发者提供便捷的编码转换功能'
+      },
+      time: {
+        title: '时间工具',
+        description: '时间戳与日期的互相转换，支持毫秒级时间戳，方便开发调试和日常使用'
+      },
+      json: {
+        title: 'JSON 工具',
+        description: 'JSON 格式化、压缩和对比工具，帮助开发者更好地处理 JSON 数据'
+      },
+      light: {
+        title: '拍照补光灯',
+        description: '提供屏幕补光功能，支持亮度调节和镜像模式，让自拍更出色'
+      }
+    },
+    projectInfo: {
+      title: '项目介绍',
+      description: 'MoreTools 是一个开源的在线工具箱，集成了多种实用的开发工具和生活工具。项目采用 Vue 3 + TypeScript 开发，支持深色模式和国际化，致力于提供简洁、高效的在线工具服务。欢迎访问 GitHub 仓库了解更多信息或贡献代码。',
+      github: 'GitHub 仓库'
+    },
+    sections: {
+      devTools: '开发工具',
+      lifeTools: '生活工具'
+    }
   }
 }

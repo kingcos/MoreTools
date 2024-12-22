@@ -33,7 +33,7 @@
       },
       {
         "id": "life-tools",
-        "titleKey": "menu.lifeTools.title", 
+        "titleKey": "menu.lifeTools.title",
         "isOpen": true,
         "children": [
           {
