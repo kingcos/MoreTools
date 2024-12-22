@@ -176,46 +176,26 @@ export default {
   },
   about: {
     title: '關於 MoreTools',
-    tools: {
-      qrcode: {
-        title: '二維碼工具',
-        description: '快速生成和解析二維碼，支持歷史記錄和無痕模式，可以輕鬆處理各類二維碼需求'
-      },
-      codec: {
-        title: '編解碼工具',
-        description: '支持 URL 編解碼和 Base64 編解碼，為開發者提供便捷的編碼轉換功能'
-      },
-      time: {
-        title: '時間工具',
-        description: '時間戳與日期的互相轉換，支持毫秒級時間戳，方便開發調試和日常使用'
-      },
-      json: {
-        title: 'JSON 工具',
-        description: 'JSON 格式化、壓縮和對比工具，幫助開發者更好地處理 JSON 數據'
-      },
-      light: {
-        title: '拍照補光燈',
-        description: '提供屏幕補光功能，支持亮度調節和鏡像模式，讓自拍更出色'
-      },
-      text: {
-        title: '文字處理',
-        description: '提供字元替換、正則匹配等文字處理功能，支持換行符替換和引號包裹等特殊處理'
-      }
-    },
     projectInfo: {
       title: '項目介紹',
-      description: 'MoreTools 是一個開源的線上工具箱，集成了多種實用的開發和生活工具。支持深色模式和國際化。',
-      github: 'GitHub 倉庫'
+      description: 'MoreTools 是基於 Cursor 開發的線上工具箱，集成了多種實用的開發和生活工具，並支持深色模式和國際化。非常感謝您的體驗，也歡迎您在 GitHub Issues 中反饋或建議。',
+      github: 'GitHub 倉庫',
+      issues: 'GitHub Issues 反饋或建議'
     },
     author: {
       title: '關於作者',
-      description: '我是 kingcos，一名開發者/創作者。',
+      description: '我是 kingcos，一名開發者/創作者，希望用自己的創意和代碼為世界帶來一些改變 :D',
       social: {
         github: 'GitHub',
         weibo: '微博',
         wechat: '微信公眾號',
-        xiaohongshu: '小紅書'
+        xiaohongshu: '小紅書',
+        blog: '部落格',
+        more: '關於更多'
       }
+    },
+    reward: {
+      title: '讚賞支持'
     }
   }
 }

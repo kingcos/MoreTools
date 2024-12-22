@@ -206,13 +206,13 @@ export default {
     },
     projectInfo: {
       title: '项目介绍',
-      description: 'MoreTools 是一个开源的在线工具箱，集成了多种实用的开发和生活工具。支持深色模式和国际化。',
+      description: 'MoreTools 是基于 Cursor 开发的在线工具箱，集成了多种实用的开发和生活工具，并支持深色模式和国际化。非常感谢您的体验，也欢迎您在 GitHub Issues 中反馈或建议。',
       github: 'GitHub 仓库',
       issues: 'GitHub Issues 反馈或建议'
     },
     author: {
       title: '关于作者',
-      description: '我是 kingcos，一名开发者/创作者。',
+      description: '我是 kingcos，一名开发者/创作者，希望用自己的创意和代码为世界带来一些改变 :D',
       social: {
         github: 'GitHub',
         weibo: '微博',

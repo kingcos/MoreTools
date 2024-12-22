@@ -142,13 +142,13 @@ export default {
     title: 'About MoreTools',
     projectInfo: {
       title: 'Project Introduction',
-      description: 'MoreTools is an open-source online toolbox that integrates various practical development and life tools. Supports dark mode and internationalization.',
+      description: 'MoreTools is an online toolbox developed based on Cursor, integrating various practical development and life tools, with support for dark mode and internationalization. Thank you for your experience, and welcome to provide feedback or suggestions in GitHub Issues.',
       github: 'GitHub Repository',
       issues: 'GitHub Issues Feedback'
     },
     author: {
       title: 'About Author',
-      description: "I'm kingcos, a developer/creator.",
+      description: "I'm kingcos, a developer/creator, hoping to bring some changes to the world with my creativity and code :D",
       social: {
         github: 'GitHub',
         weibo: 'Weibo',

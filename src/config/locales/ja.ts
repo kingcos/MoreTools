@@ -176,46 +176,26 @@ export default {
   },
   about: {
     title: 'MoreTools について',
-    tools: {
-      qrcode: {
-        title: 'QRコードツール',
-        description: 'QRコードの生成と読み取りを素早く行い、履歴とシークレットモードをサポートしています'
-      },
-      codec: {
-        title: 'エンコードツール',
-        description: 'URLエンコード/デコードとBase64エンコード/デコードをサポートし、開発者に便利なエンコード変換機能を提供します'
-      },
-      time: {
-        title: '時間ツール',
-        description: 'タイムスタンプと日時の相互変換、ミリ秒タイムスタンプをサポートし、開発デバッグと日常使用に便利です'
-      },
-      json: {
-        title: 'JSON ツール',
-        description: 'JSONのフォーマット、圧縮、比較ツールで、開発者のJSONデータ処理をサポートします'
-      },
-      light: {
-        title: '写真ライト',
-        description: '画面ライト機能を提供し、明るさ調整とミラーモードをサポートして、より良いセルフィーを実現します'
-      },
-      text: {
-        title: 'テキストツール',
-        description: 'テキスト置換、正規表現マッチング、改行置換、引用符で囲むなどのテキスト処理機能を提供します'
-      }
-    },
     projectInfo: {
       title: 'プロジェクト紹介',
-      description: 'MoreToolsは、様々な実用的な開発ツールと生活ツールを統合したオープンソースのオンラインツールボックスです。ダークモードと国際化をサポートしています。',
-      github: 'GitHubリポジトリ'
+      description: 'MoreToolsは、Cursorをベースに開発されたオンラインツールボックスで、様々な実用的な開発ツールと生活ツールを統合し、ダークモードと国際化をサポートしています。ご利用ありがとうございます。GitHub Issuesでのフィードバックやご提案もお待ちしております。',
+      github: 'GitHubリポジトリ',
+      issues: 'GitHub Issues フィードバック'
     },
     author: {
       title: '作者について',
-      description: '私はkingcosです。開発者/クリエイターです。',
+      description: '私はkingcosです。開発者/クリエイターとして、自分の創造性とコードで世界に変化をもたらしたいと考えています :D',
       social: {
         github: 'GitHub',
         weibo: 'Weibo',
-        wechat: 'WeChat公式アカウント',
-        xiaohongshu: 'Xiaohongshu'
+        wechat: 'WeChat',
+        xiaohongshu: 'Xiaohongshu',
+        blog: 'ブログ',
+        more: 'もっと詳しく'
       }
+    },
+    reward: {
+      title: 'サポート'
     }
   }
 }

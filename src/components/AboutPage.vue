@@ -12,69 +12,69 @@
         <!-- 项目介绍、作者信息和赞赏支持 -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <!-- 项目介绍卡片 -->
-          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 flex flex-col">
             <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
               {{ t('about.projectInfo.title') }}
             </h2>
-            <div class="prose dark:prose-invert max-w-none">
+            <div class="prose dark:prose-invert max-w-none flex-1">
               <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
                 {{ t('about.projectInfo.description') }}
               </p>
-              <div class="mt-4 flex justify-center gap-4">
-                <a
-                  href="https://github.com/kingcos/moretools"
-                  target="_blank"
-                  class="inline-flex items-center space-x-2 px-3 py-2 text-indigo-500 hover:text-indigo-600 
-                         dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors rounded-lg
-                         hover:bg-indigo-50 dark:hover:bg-indigo-900/20"
-                >
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
-                  </svg>
-                  <span class="text-sm font-medium">{{ t('about.projectInfo.github') }}</span>
-                </a>
-              </div>
+            </div>
+            <div class="mt-auto pt-4 flex justify-center gap-4">
+              <a
+                href="https://github.com/kingcos/moretools"
+                target="_blank"
+                class="inline-flex items-center space-x-2 px-3 py-2 text-indigo-500 hover:text-indigo-600 
+                       dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors rounded-lg
+                       hover:bg-indigo-50 dark:hover:bg-indigo-900/20"
+              >
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+                </svg>
+                <span class="text-sm font-medium">{{ t('about.projectInfo.github') }}</span>
+              </a>
             </div>
           </div>
 
           <!-- 作者信息卡片 -->
-          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 flex flex-col">
             <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
               {{ t('about.author.title') }}
             </h2>
-            <div class="prose dark:prose-invert max-w-none">
+            <div class="prose dark:prose-invert max-w-none flex-1">
               <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
                 {{ t('about.author.description') }}
               </p>
-              <div class="mt-4 flex flex-wrap justify-center gap-3">
-                <!-- GitHub -->
-                <a
-                  href="https://github.com/kingcos"
-                  target="_blank"
-                  class="inline-flex items-center space-x-2 px-3 py-2 text-indigo-500 hover:text-indigo-600 
-                         dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors rounded-lg
-                         hover:bg-indigo-50 dark:hover:bg-indigo-900/20"
-                >
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
-                  </svg>
-                  <span class="text-sm font-medium">{{ t('about.author.social.github') }}</span>
-                </a>
+            </div>
+            <div class="mt-auto pt-4 flex flex-wrap justify-center gap-3">
+              <!-- GitHub -->
+              <a
+                href="https://github.com/kingcos"
+                target="_blank"
+                class="inline-flex items-center space-x-2 px-3 py-2 text-indigo-500 hover:text-indigo-600 
+                       dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors rounded-lg
+                       hover:bg-indigo-50 dark:hover:bg-indigo-900/20"
+              >
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+                </svg>
+                <span class="text-sm font-medium">{{ t('about.author.social.github') }}</span>
+              </a>
 
-                <!-- 关于更多 -->
-                <a
-                  href="https://kingcos.me/about/"
-                  target="_blank"
-                  class="inline-flex items-center space-x-2 px-3 py-2 text-indigo-500 hover:text-indigo-600 
-                         dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors rounded-lg
-                         hover:bg-indigo-50 dark:hover:bg-indigo-900/20"
-                >
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                  </svg>
-                  <span class="text-sm font-medium">{{ t('about.author.social.more') }}</span>
-                </a>
-              </div>
+              <!-- 关于更多 -->
+              <a
+                href="https://kingcos.me/about/"
+                target="_blank"
+                class="inline-flex items-center space-x-2 px-3 py-2 text-indigo-500 hover:text-indigo-600 
+                       dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors rounded-lg
+                       hover:bg-indigo-50 dark:hover:bg-indigo-900/20"
+              >
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                <span class="text-sm font-medium">{{ t('about.author.social.more') }}</span>
+              </a>
             </div>
           </div>
 
