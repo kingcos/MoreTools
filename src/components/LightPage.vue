@@ -192,8 +192,9 @@
         </svg>
       </button>
 
-      <!-- 中间：相机开关按钮 -->
+      <!-- 中间：相机开关按钮（仅在支持相机时显示） -->
       <button
+        v-if="isCameraSupported"
         @click="startCamera"
         class="p-2 rounded-lg transition-all focus:outline-none border border-transparent"
         :class="[
@@ -209,6 +210,9 @@
                 d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
         </svg>
       </button>
+
+      <!-- 如果不支持相机，可以添加一个占位元素保持布局 -->
+      <div v-else class="w-10"></div>
 
       <!-- 右侧：全屏按钮 -->
       <button
@@ -241,7 +245,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onUnmounted } from 'vue'
+import { ref, onUnmounted, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage } from 'element-plus'
 
@@ -444,12 +448,46 @@ onUnmounted(() => {
 })
 
 // 添加镜像状态
-const isMirrored = ref(false)
+const isMirrored = ref(true)
 
 // 切换镜像
 const toggleMirror = () => {
   isMirrored.value = !isMirrored.value
 }
+
+// 添加新的响应式变量用于跟踪相机支持状态
+const isCameraSupported = ref(false)
+
+// 添加检查相机支持的函数
+const checkCameraSupport = async () => {
+  try {
+    // 检查是否支持 getUserMedia
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      isCameraSupported.value = false
+      return
+    }
+    
+    // 检查是否支持 ImageCapture API
+    if (!window.ImageCapture) {
+      isCameraSupported.value = false
+      return
+    }
+    
+    // 检查是否能获取到摄像头
+    const devices = await navigator.mediaDevices.enumerateDevices()
+    const hasCamera = devices.some(device => device.kind === 'videoinput')
+    
+    isCameraSupported.value = hasCamera
+  } catch (err) {
+    console.error('检查相机支持时出错:', err)
+    isCameraSupported.value = false
+  }
+}
+
+// 在组件挂载时检查相机支持
+onMounted(() => {
+  checkCameraSupport()
+})
 </script>
 
 <style scoped>
