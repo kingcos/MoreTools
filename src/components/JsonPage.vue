@@ -9,14 +9,14 @@
     <div class="flex-1 overflow-y-auto">
       <div class="p-4 mx-auto space-y-4" :class="{ 'max-w-4xl': isCompactMode }">
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-          <el-tabs v-model="currentTab" class="dark-mode-tabs" type="border-card">
-            <el-tab-pane
+          <ElTabs v-model="currentTab" class="dark-mode-tabs" type="border-card">
+            <ElTabPane
               v-for="tab in tabs" 
               :key="tab.key"
               :label="t(tab.title)"
               :name="tab.key"
             />
-          </el-tabs>
+          </ElTabs>
 
           <JsonFormatter v-if="currentTab === 'jsonFormat'" />
           <JsonDiff v-if="currentTab === 'jsonDiff'" />

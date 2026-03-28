@@ -10,14 +10,14 @@
       <div class="p-4 mx-auto space-y-4" :class="{ 'max-w-4xl': isCompactMode }">
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
           <!-- 使用 Element Plus 的 Tabs 组件 -->
-          <el-tabs v-model="currentTab" class="dark-mode-tabs" type="border-card">
-            <el-tab-pane
+          <ElTabs v-model="currentTab" class="dark-mode-tabs" type="border-card">
+            <ElTabPane
               v-for="tab in tabs"
               :key="tab.key"
               :label="t(tab.title)"
               :name="tab.key"
             />
-          </el-tabs>
+          </ElTabs>
 
           <!-- 输入输出区域 -->
           <div class="p-6 space-y-6">
@@ -34,7 +34,7 @@
                        bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-0 focus:border-gray-300 
                        dark:focus:border-gray-600"
                 :placeholder="t('codec.input')"
-              ></textarea>
+              />
             </div>
 
             <!-- 输出框标签和文本框 -->
@@ -51,55 +51,55 @@
                        dark:focus:border-gray-600"
                 readonly
                 :placeholder="t('codec.output')"
-              ></textarea>
+              />
             </div>
 
             <!-- 操作按钮 -->
             <div class="flex justify-between items-center pt-2">
               <div class="space-x-2">
                 <button
-                  @click="handleEncode"
                   class="px-4 py-2 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 
                          text-white rounded-lg transition-colors focus:outline-none"
+                  @click="handleEncode"
                 >{{ t('codec.encode') }}</button>
                 <button
-                  @click="handleDecode"
                   class="px-4 py-2 bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 
                          text-white rounded-lg transition-colors focus:outline-none"
+                  @click="handleDecode"
                 >{{ t('codec.decode') }}</button>
               </div>
 
               <div class="space-x-2">
                 <button
                   v-if="inputText"
-                  @click="copyText"
                   class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                          bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600
                          text-gray-600 dark:text-gray-300"
+                  @click="copyText"
                 >{{ t('codec.copy') }}</button>
 
                 <div v-if="inputText" class="inline-block">
                   <div v-if="confirmingClear" class="flex items-center space-x-2">
                     <button
-                      @click="handleReset"
                       class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                              bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
+                      @click="handleReset"
                     >{{ t('codec.confirmReset') }}</button>
                     <button
-                      @click="confirmingClear = false"
                       class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                              bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+                      @click="confirmingClear = false"
                     >{{ t('codec.cancel') }}</button>
                   </div>
                   <button
                     v-else
-                    @click="confirmingClear = true"
                     class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none"
                     :class="[
                       confirmingClear
                         ? 'bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400'
                         : 'bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400'
                     ]"
+                    @click="confirmingClear = true"
                   >{{ t('codec.reset') }}</button>
                 </div>
               </div>

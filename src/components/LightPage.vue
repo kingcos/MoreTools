@@ -27,11 +27,11 @@
               <!-- 删除按钮 -->
               <div
                 v-if="colorBlocks.length > 1"
-                @click="removeBlock(index)"
                 class="w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 
                        flex items-center justify-center cursor-pointer
                        transition-colors shadow-lg backdrop-blur-sm
                        transform hover:scale-105"
+                @click="removeBlock(index)"
               >
                 <svg 
                   class="w-4 h-4 text-white"
@@ -50,11 +50,11 @@
 
               <!-- 收藏按钮 -->
               <div
-                @click="toggleFavorite(block.color)"
                 class="w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 
                        flex items-center justify-center cursor-pointer
                        transition-colors shadow-lg backdrop-blur-sm
                        transform hover:scale-105"
+                @click="toggleFavorite(block.color)"
               >
                 <svg
                   class="w-4 h-4"
@@ -83,9 +83,9 @@
                 <input
                   type="color"
                   :value="block.color"
-                  @input="(e: Event) => setBlockColor(index, (e.target as HTMLInputElement).value)"
                   class="w-8 h-8 rounded-md cursor-pointer border-2 border-blue-500 shadow-md"
-                >
+                  @input="(e: Event) => setBlockColor(index, (e.target as HTMLInputElement).value)"
+                />
 
                 <!-- 右侧：收藏颜色 -->
                 <div v-if="favoriteColors.length > 0" class="flex items-center gap-2">
@@ -97,7 +97,7 @@
                       class="w-6 h-6 rounded-md transition-transform hover:scale-110 focus:outline-none p-0"
                       :style="{ backgroundColor: color }"
                       @click="setBlockColor(index, color)"
-                    ></button>
+                    />
                   </div>
                 </div>
               </div>
@@ -123,13 +123,12 @@
               :class="{ 'scale-x-[-1]': isMirrored }"
               autoplay
               playsinline
-            ></video>
+            />
 
             <!-- 相机控制按钮 -->
             <div class="absolute top-2 right-2 flex gap-2">
               <!-- 镜像切换按钮 -->
               <button
-                @click="toggleMirror"
                 :title="t('light.camera.mirror')"
                 class="w-9 h-9 rounded-full flex items-center justify-center cursor-pointer
                        transition-colors shadow-lg backdrop-blur-sm p-0"
@@ -138,6 +137,7 @@
                     ? 'bg-blue-500 hover:bg-blue-600' 
                     : 'bg-black/40 hover:bg-black/60'
                 ]"
+                @click="toggleMirror"
               >
                 <svg 
                   class="w-5 h-5 text-white" 
@@ -157,11 +157,11 @@
 
               <!-- 拍照按钮 -->
               <button
-                @click="takePhoto"
                 :title="t('light.camera.takePhoto')"
                 class="w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 
                        flex items-center justify-center cursor-pointer
                        transition-colors shadow-lg backdrop-blur-sm p-0"
+                @click="takePhoto"
               >
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <circle cx="12" cy="12" r="8" stroke-width="2"/>
@@ -178,7 +178,6 @@
     <div class="flex items-center justify-between px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
       <!-- 左侧：添加按钮 -->
       <button
-        @click="addBlock"
         :disabled="colorBlocks.length >= 4"
         class="p-2 rounded-lg transition-all focus:outline-none"
         :class="[
@@ -186,6 +185,7 @@
             ? 'bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed' 
             : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-white cursor-pointer'
         ]"
+        @click="addBlock"
       >
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -195,33 +195,36 @@
       <!-- 中间：相机开关按钮（仅在支持相机时显示） -->
       <button
         v-if="isCameraSupported"
-        @click="startCamera"
         class="p-2 rounded-lg transition-all focus:outline-none border border-transparent"
         :class="[
           isCameraOpen 
             ? 'bg-blue-500 hover:bg-blue-600 text-white' 
             : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-white'
         ]"
+        @click="startCamera"
       >
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+          <path
+stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                 d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+          <path
+stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                 d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
         </svg>
       </button>
 
       <!-- 如果不支持相机，可以添加一个占位元素保持布局 -->
-      <div v-else class="w-10"></div>
+      <div v-else class="w-10"/>
 
       <!-- 右侧：全屏按钮 -->
       <button
-        @click="toggleFullscreen"
         class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
                text-gray-800 dark:text-white border border-transparent transition-all focus:outline-none"
+        @click="toggleFullscreen"
       >
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+          <path
+stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                 d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"/>
         </svg>
       </button>
@@ -239,7 +242,7 @@
         class="transition-colors duration-300"
         :class="getBlockClass()"
         :style="{ backgroundColor: block.color }"
-      ></div>
+      />
     </div>
   </div>
 </template>
@@ -249,10 +252,14 @@ import { ref, onUnmounted, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage } from 'element-plus'
 
+interface ImageCapturer {
+  takePhoto: () => Promise<Blob>
+}
+
 // 添加 ImageCapture 类型定义
 declare global {
   interface Window {
-    ImageCapture: any
+    ImageCapture: new (track: MediaStreamTrack) => ImageCapturer
   }
 }
 
@@ -342,7 +349,7 @@ const exitFullscreen = () => {
 const isCameraOpen = ref(false)
 const videoRef = ref<HTMLVideoElement | null>(null)
 let mediaStream: MediaStream | null = null
-let imageCapturer: typeof window.ImageCapture | null = null
+let imageCapturer: ImageCapturer | null = null
 
 // 修改相机配置
 const constraints = {

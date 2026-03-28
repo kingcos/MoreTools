@@ -3,27 +3,27 @@
     <div class="flex justify-between items-center">
       <div class="flex items-center gap-2">
         <button
-          @click="toggleCompact"
           class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none"
           :class="[
             isJsonCompressed
               ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
               : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
           ]"
+          @click="toggleCompact"
         >
           <div class="flex items-center space-x-1.5">
-            <el-icon class="w-4 h-4"><Fold /></el-icon>
+            <ElIcon class="w-4 h-4"><Fold /></ElIcon>
             <span class="text-sm">{{ t('json.compress') }}</span>
           </div>
         </button>
         <button
-          @click="applySortKeys"
           class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none
                  bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700
                  text-white"
+          @click="applySortKeys"
         >
           <div class="flex items-center space-x-1.5">
-            <el-icon class="w-4 h-4"><Sort /></el-icon>
+            <ElIcon class="w-4 h-4"><Sort /></ElIcon>
             <span class="text-sm">{{ t('json.sortKeys') }}</span>
           </div>
         </button>
@@ -32,10 +32,10 @@
       <div class="flex items-center gap-2">
         <button
           v-if="outputJson"
-          @click="copyFormatted"
           class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
                  bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600
                  text-gray-600 dark:text-gray-300"
+          @click="copyFormatted"
         >
           {{ t('json.copy') }}
         </button>
@@ -43,26 +43,26 @@
         <div v-if="inputJson" class="inline-block">
           <div v-if="confirmingClear" class="flex items-center space-x-2">
             <button
-              @click="resetContent"
               class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
                      bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
+              @click="resetContent"
             >
               {{ t('json.confirmReset') }}
             </button>
             <button
-              @click="confirmingClear = false"
               class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
                      bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+              @click="confirmingClear = false"
             >
               {{ t('json.cancel') }}
             </button>
           </div>
           <button
             v-else
-            @click="confirmingClear = true"
             class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
                    bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400
                    hover:bg-red-100 dark:hover:bg-red-900/50"
+            @click="confirmingClear = true"
           >
             {{ t('json.reset') }}
           </button>
@@ -84,8 +84,8 @@
             :indent-with-tab="true"
             :tab-size="2"
             :extensions="extensions"
-            @change="handleInputChange"
             class="h-full mt-3"
+            @change="handleInputChange"
           />
         </div>
       </div>
@@ -193,7 +193,7 @@ const applySortKeys = () => {
     const sorted = sortKeys(parsed)
     inputJson.value = JSON.stringify(sorted, null, isJsonCompressed.value ? 0 : 2)
     handleInputChange(inputJson.value)
-  } catch (e) {
+  } catch {
     // input is invalid JSON, ignore
   }
 }
@@ -209,7 +209,7 @@ const copyFormatted = async () => {
   try {
     await navigator.clipboard.writeText(outputJson.value)
     ElMessage.success(t('json.copySuccess'))
-  } catch (e) {
+  } catch {
     ElMessage.error(t('json.copyError'))
   }
 }

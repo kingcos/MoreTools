@@ -1,10 +1,9 @@
 <template>
   <component 
-    async
     :is="'script'"
+    async
     :src="scriptSrc"
-    crossorigin="anonymous">
-  </component>
+    crossorigin="anonymous"/>
   <ins 
     class="adsbygoogle"
     data-ad-client="ca-pub-9925978992661955"
@@ -13,8 +12,7 @@
     :data-ad-format="format"
     :data-ad-layout-key="layoutKey"
     :data-ad-layout="layout"
-    :data-full-width-responsive="fullWidthResponsive">
-  </ins>
+    :data-full-width-responsive="fullWidthResponsive"/>
   <component :is="'script'">
     (adsbygoogle = window.adsbygoogle || []).push({});
   </component>
@@ -22,7 +20,7 @@
 
 <script lang="ts">
 export default {
-  name: 'Adsense',
+  name: 'AdsenseBlock',
   props: {
     adStyle: {
       type: String,

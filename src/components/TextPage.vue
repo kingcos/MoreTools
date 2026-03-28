@@ -9,14 +9,14 @@
     <div class="flex-1 overflow-y-auto">
       <div class="p-4 mx-auto space-y-4" :class="{ 'max-w-4xl': isCompactMode }">
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-          <el-tabs v-model="currentTab" class="dark-mode-tabs" type="border-card">
-            <el-tab-pane
+          <ElTabs v-model="currentTab" class="dark-mode-tabs" type="border-card">
+            <ElTabPane
               v-for="tab in tabs"
               :key="tab.key"
               :label="t(tab.title)"
               :name="tab.key"
             />
-          </el-tabs>
+          </ElTabs>
 
           <!-- 字符替换 Tab -->
           <div v-if="currentTab === 'replace'" class="p-6 space-y-4">
@@ -33,25 +33,26 @@
                        bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 
                        focus:ring-blue-500 dark:focus:ring-blue-400"
                 :style="{ height: textareaHeight }"
-                @input="adjustTextareaHeight"
                 :placeholder="t('text.replace.inputPlaceholder')"
-              ></textarea>
+                @input="adjustTextareaHeight"
+              />
               
               <!-- 输入框下方的控制区域 -->
               <div class="flex items-center justify-between">
                 <!-- 左侧正则模式切换 -->
                 <button
-                  @click="toggleRegexMode"
                   class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none"
                   :class="[
                     isRegexMode 
                       ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
                       : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                   ]"
+                  @click="toggleRegexMode"
                 >
                   <div class="flex items-center space-x-1.5">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      <path
+stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                             d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                     </svg>
                     <span class="text-sm">{{ t('text.replace.regexMode') }}</span>
@@ -62,21 +63,21 @@
                 <div v-if="inputText">
                   <div v-if="confirmingReset" class="flex items-center space-x-2">
                     <button
-                      @click="handleReset"
                       class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                              bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
+                      @click="handleReset"
                     >{{ t('text.confirmReset') }}</button>
                     <button
-                      @click="confirmingReset = false"
                       class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                              bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+                      @click="confirmingReset = false"
                     >{{ t('text.cancel') }}</button>
                   </div>
                   <button
                     v-else
-                    @click="confirmingReset = true"
                     class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                            bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400"
+                    @click="confirmingReset = true"
                   >{{ t('text.reset') }}</button>
                 </div>
               </div>
@@ -92,35 +93,35 @@
                   </label>
                   <div class="flex items-center space-x-2">
                     <button
-                      @click="() => { fromOptions.isNewline = !fromOptions.isNewline; handleNewlineChange() }"
                       class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none text-sm"
                       :class="[
                         fromOptions.isNewline 
                           ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
                           : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                       ]"
+                      @click="() => { fromOptions.isNewline = !fromOptions.isNewline; handleNewlineChange() }"
                     >
                       {{ t('text.replace.newline') }}
                     </button>
                     <button
-                      @click="() => { fromOptions.isNumber = !fromOptions.isNumber; handleNumberChange() }"
                       class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none text-sm"
                       :class="[
                         fromOptions.isNumber 
                           ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
                           : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                       ]"
+                      @click="() => { fromOptions.isNumber = !fromOptions.isNumber; handleNumberChange() }"
                     >
                       {{ t('text.replace.number') }}
                     </button>
                     <button
-                      @click="() => { fromOptions.isLetter = !fromOptions.isLetter; handleLetterChange() }"
                       class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none text-sm"
                       :class="[
                         fromOptions.isLetter 
                           ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
                           : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                       ]"
+                      @click="() => { fromOptions.isLetter = !fromOptions.isLetter; handleLetterChange() }"
                     >
                       {{ t('text.replace.letter') }}
                     </button>
@@ -148,24 +149,24 @@
                   </label>
                   <div class="flex items-center space-x-2">
                     <button
-                      @click="() => { toOptions.isNewline = !toOptions.isNewline; handleToNewlineChange() }"
                       class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none text-sm"
                       :class="[
                         toOptions.isNewline 
                           ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
                           : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                       ]"
+                      @click="() => { toOptions.isNewline = !toOptions.isNewline; handleToNewlineChange() }"
                     >
                       {{ t('text.replace.newline') }}
                     </button>
                     <button
-                      @click="() => { toOptions.isQuote = !toOptions.isQuote; handleToQuoteChange() }"
                       class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none text-sm"
                       :class="[
                         toOptions.isQuote 
                           ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
                           : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                       ]"
+                      @click="() => { toOptions.isQuote = !toOptions.isQuote; handleToQuoteChange() }"
                     >
                       {{ t('text.replace.quote') }}
                     </button>
@@ -190,10 +191,10 @@
             <div class="flex justify-between">
               <!-- 左侧执行替换按钮 -->
               <button
-                @click="handleReplace"
                 class="px-4 py-2 rounded-lg transition-colors focus:outline-none
                        bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 
                        text-white"
+                @click="handleReplace"
               >
                 {{ t('text.replace.execute') }}
               </button>
@@ -206,10 +207,10 @@
                   {{ t('text.output') }}
                 </label>
                 <button
-                  @click="copyOutput"
                   class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                          bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600
                          text-gray-600 dark:text-gray-300"
+                  @click="copyOutput"
                 >
                   {{ t('text.copy') }}
                 </button>
@@ -219,7 +220,7 @@
                 readonly
                 class="w-full h-40 p-3 border border-gray-200 dark:border-gray-700 rounded-lg resize-none 
                        bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-              ></textarea>
+              />
             </div>
           </div>
 
@@ -236,7 +237,7 @@
                        bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 
                        focus:ring-blue-500 dark:focus:ring-blue-400"
                 :placeholder="t('text.input')"
-              ></textarea>
+              />
             </div>
 
             <!-- 功能按钮组 -->
@@ -244,10 +245,10 @@
               <button
                 v-for="(func, key) in textFunctions"
                 :key="key"
-                @click="func.action"
                 class="px-4 py-2 rounded-lg transition-colors focus:outline-none
                        bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 
                        text-white"
+                @click="func.action"
               >
                 {{ t(`text.functions.${key}`) }}
               </button>
@@ -260,10 +261,10 @@
                   {{ t('text.output') }}
                 </label>
                 <button
-                  @click="copyOutput"
                   class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                          bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600
                          text-gray-600 dark:text-gray-300"
+                  @click="copyOutput"
                 >
                   {{ t('text.copy') }}
                 </button>
@@ -273,28 +274,28 @@
                 readonly
                 class="w-full h-40 p-3 border border-gray-200 dark:border-gray-700 rounded-lg resize-none 
                        bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-              ></textarea>
+              />
             </div>
 
             <!-- 重置按钮 -->
-            <div class="flex justify-end" v-if="inputText || outputText">
+            <div v-if="inputText || outputText" class="flex justify-end">
               <div v-if="confirmingReset" class="flex items-center space-x-2">
                 <button
-                  @click="handleReset"
                   class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                          bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
+                  @click="handleReset"
                 >{{ t('text.confirmReset') }}</button>
                 <button
-                  @click="confirmingReset = false"
                   class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                          bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+                  @click="confirmingReset = false"
                 >{{ t('text.cancel') }}</button>
               </div>
               <button
                 v-else
-                @click="confirmingReset = true"
                 class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                        bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400"
+                @click="confirmingReset = true"
               >{{ t('text.reset') }}</button>
             </div>
           </div>
@@ -422,7 +423,7 @@ const handleReplace = () => {
         searchValue = new RegExp(`(${replaceFrom.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'g')
       }
       // 先替换中间的匹配项
-      let result = inputText.value.replace(searchValue, "'$1'")
+      const result = inputText.value.replace(searchValue, "'$1'")
       
       outputText.value = "'" +  result + "'"
       return
@@ -449,7 +450,7 @@ const handleReplace = () => {
     }
     
     outputText.value = result
-  } catch (err) {
+  } catch {
     ElMessage.error(t('text.replace.error'))
   }
 }
@@ -492,7 +493,7 @@ const copyOutput = async () => {
       type: 'success',
       duration: 2000
     })
-  } catch (err) {
+  } catch {
     ElMessage({
       message: t('text.copyFailed'),
       type: 'error',

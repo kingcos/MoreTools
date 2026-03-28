@@ -9,14 +9,14 @@
     <div class="flex-1 overflow-y-auto">
       <div class="p-4 mx-auto space-y-4" :class="{ 'max-w-4xl': isCompactMode }">
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-          <el-tabs v-model="currentTab" class="dark-mode-tabs" type="border-card">
-            <el-tab-pane
+          <ElTabs v-model="currentTab" class="dark-mode-tabs" type="border-card">
+            <ElTabPane
               v-for="tab in tabs"
               :key="tab.key"
               :label="t(tab.title)"
               :name="tab.key"
             />
-          </el-tabs>
+          </ElTabs>
 
           <div v-if="currentTab === 'encode'" class="p-6 space-y-4">
             <div class="flex flex-col md:flex-row gap-4">
@@ -27,13 +27,13 @@
                          bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-0 focus:border-gray-300 
                          dark:focus:border-gray-600"
                   :placeholder="t('qrcode.placeholder')"
-                ></textarea>
+                />
                 <div class="mt-4 flex justify-between items-center">
                   <div class="flex items-center">
                     <button
-                      @click="generateQRCode"
                       class="px-4 py-2 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 
                              text-white rounded-lg transition-colors focus:outline-none"
+                      @click="generateQRCode"
                     >{{ t('qrcode.save') }}</button>
                   </div>
 
@@ -41,42 +41,44 @@
                     <div class="flex items-center">
                       <div v-if="inputText && confirmingAction === 'reset'" class="flex items-center space-x-2">
                         <button
-                          @click="handleConfirm(-1, 'reset')"
                           class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                                  bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
+                          @click="handleConfirm(-1, 'reset')"
                         >{{ t('qrcode.confirmReset') }}</button>
                         <button
-                          @click="cancelAction"
                           class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                                  bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+                          @click="cancelAction"
                         >{{ t('qrcode.cancel') }}</button>
                       </div>
                       <button
                         v-else-if="inputText"
-                        @click="confirmingAction = 'reset'"
                         class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none"
                         :class="[
                           confirmingAction === 'reset'
                             ? 'bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400'
                             : 'bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400'
                         ]"
+                        @click="confirmingAction = 'reset'"
                       >{{ t('qrcode.reset') }}</button>
                     </div>
 
                     <button
-                      @click="toggleInstantMode"
                       class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none"
                       :class="[
                         instantMode 
                           ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
                           : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                       ]"
+                      @click="toggleInstantMode"
                     >
                       <div class="flex items-center space-x-1.5">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          <path
+stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          <path
+stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                         </svg>
                         <span class="text-sm">{{ t('qrcode.incognito') }}</span>
@@ -87,7 +89,8 @@
               </div>
 
               <div class="w-full md:w-72 bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 flex flex-col items-center">
-                <qrcode-vue
+                <QrcodeVue
+                  ref="qrcodeRef"
                   :value="qrcodeText || ' '"
                   :size="200"
                   level="H"
@@ -95,13 +98,12 @@
                   :background="isDarkMode ? '#1f2937' : '#ffffff'"
                   :foreground="isDarkMode ? '#ffffff' : '#000000'"
                   class="mb-4"
-                  ref="qrcodeRef"
-                ></qrcode-vue>
+                />
                 <button
-                  @click="downloadQRCode"
                   class="px-4 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 
                          dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg 
                          transition-colors focus:outline-none"
+                  @click="downloadQRCode"
                 >{{ t('qrcode.download') }}</button>
               </div>
             </div>
@@ -112,39 +114,40 @@
                 <div class="flex items-center gap-2">
                   <div v-if="confirmingAction === 'clear'" class="flex items-center space-x-2">
                     <button
-                      @click="clearHistory"
                       class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                              bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
+                      @click="clearHistory"
                     >{{ t('qrcode.confirmClear') }}</button>
                     <button
-                      @click="cancelAction"
                       class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                              bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+                      @click="cancelAction"
                     >{{ t('qrcode.cancel') }}</button>
                   </div>
                   <button
                     v-else
-                    @click="confirmingAction = 'clear'"
                     class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none"
                     :class="[
                       confirmingAction === 'clear'
                         ? 'bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400'
                         : 'bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400'
                     ]"
+                    @click="confirmingAction = 'clear'"
                   >{{ t('qrcode.clearAll') }}</button>
 
                   <button
-                    @click="toggleLargeMode"
                     class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none"
                     :class="[
                       largeMode
                         ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
                         : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                     ]"
+                    @click="toggleLargeMode"
                   >
                     <div class="flex items-center space-x-1.5">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        <path
+stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                       </svg>
                       <span class="text-sm">{{ t('qrcode.zoom') }}</span>
@@ -160,20 +163,21 @@
                   class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 flex items-center gap-4"
                 >
                   <div class="flex-shrink-0">
-                    <qrcode-vue
+                    <QrcodeVue
                       :value="item.text"
                       :size="largeMode ? 180 : 60"
                       level="H"
                       render-as="svg"
                       :background="isDarkMode ? '#1f2937' : '#ffffff'"
                       :foreground="isDarkMode ? '#ffffff' : '#000000'"
-                    ></qrcode-vue>
+                    />
                   </div>
                   <div class="flex-grow min-w-0">
                     <p class="text-gray-900 dark:text-white text-left break-all line-clamp-2">{{ item.text }}</p>
                     <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 space-x-2 mt-1">
                       <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        <path
+stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                               d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <span class="flex-shrink-0">{{ formatDate(item.timestamp) }}</span>
@@ -181,31 +185,31 @@
                   </div>
                   <div class="flex items-center gap-2 flex-shrink-0">
                     <button
-                      @click="copyText(item.text)"
                       class="p-2 rounded-lg transition-colors focus:outline-none
                              bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
                       :title="t('qrcode.copyTitle')"
+                      @click="copyText(item.text)"
                     >
                       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        <path
+stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                               d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                       </svg>
                     </button>
                     <div v-if="confirmingAction === `delete-${index}`" class="flex items-center space-x-2">
                       <button
-                        @click="handleConfirm(index, 'delete')"
                         class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                                bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
+                        @click="handleConfirm(index, 'delete')"
                       >{{ t('qrcode.confirmDelete') }}</button>
                       <button
-                        @click="cancelAction"
                         class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                                bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+                        @click="cancelAction"
                       >{{ t('qrcode.cancel') }}</button>
                     </div>
                     <button
                       v-else
-                      @click="confirmingAction = `delete-${index}`"
                       class="p-2 rounded-lg transition-colors focus:outline-none"
                       :class="[
                         confirmingAction === `delete-${index}`
@@ -213,6 +217,7 @@
                           : 'bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400'
                       ]"
                       :title="t('qrcode.deleteTitle')"
+                      @click="confirmingAction = `delete-${index}`"
                     >
                       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -223,10 +228,10 @@
                 
                 <button
                   v-if="history.length > 3"
-                  @click="showAll = !showAll"
                   class="w-full py-2 mt-2 text-sm rounded-lg transition-colors focus:outline-none
                          bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
                          text-gray-800 dark:text-white"
+                  @click="showAll = !showAll"
                 >
                   {{ showAll 
                       ? t('qrcode.showLess') 
@@ -245,16 +250,16 @@
                 @drop.prevent="handleDrop"
               >
                 <input
+                  ref="fileInput"
                   type="file"
                   accept="image/*"
                   class="hidden"
-                  ref="fileInput"
                   @change="handleFileSelect"
-                >
+                />
                 <button
-                  @click="$refs.fileInput.click()"
                   class="px-4 py-2 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 
                          text-white rounded-lg transition-colors focus:outline-none"
+                  @click="$refs.fileInput.click()"
                 >{{ t('qrcode.selectImage') }}</button>
                 <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
                   {{ t('qrcode.dragTip') }}
@@ -267,10 +272,10 @@
                     {{ t('qrcode.decodedResult') }}
                   </label>
                   <button
-                    @click="copyDecodedText"
                     class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                            bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600
                            text-gray-600 dark:text-gray-300"
+                    @click="copyDecodedText"
                   >{{ t('qrcode.copy') }}</button>
                 </div>
                 <textarea
@@ -278,7 +283,7 @@
                   readonly
                   class="w-full h-40 p-3 border border-gray-200 dark:border-gray-700 rounded-lg resize-none 
                          bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                ></textarea>
+                />
               </div>
             </div>
           </div>
@@ -474,7 +479,7 @@ const handleFileSelect = async (event: Event) => {
   try {
     const result = await QrScanner.scanImage(file)
     decodedText.value = result
-  } catch (error) {
+  } catch {
     ElMessage.error(t('qrcode.decodeError'))
   }
 }
@@ -488,7 +493,7 @@ const copyDecodedText = async () => {
       type: 'success',
       duration: 2000
     })
-  } catch (err) {
+  } catch {
     ElMessage({
       message: t('qrcode.copyFailed'),
       type: 'error',
@@ -516,7 +521,7 @@ const handleDrop = async (event: DragEvent) => {
   try {
     const result = await QrScanner.scanImage(file)
     decodedText.value = result
-  } catch (error) {
+  } catch {
     ElMessage.error(t('qrcode.decodeError'))
   }
 }

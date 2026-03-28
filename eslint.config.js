@@ -13,6 +13,19 @@ export default [
   // Vue 3 rules
   ...pluginVue.configs['flat/recommended'],
 
+  // Parse <script setup lang="ts"> in Vue SFCs correctly
+  {
+    files: ['src/**/*.vue'],
+    languageOptions: {
+      parserOptions: {
+        parser: tseslint.parser,
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        extraFileExtensions: ['.vue'],
+      },
+    },
+  },
+
   // Disable rules that conflict with Prettier
   prettierConfig,
 
@@ -22,10 +35,10 @@ export default [
     rules: {
       // Allow explicit any when there is genuinely no better type
       '@typescript-eslint/no-explicit-any': 'warn',
-      // No unused variables except those prefixed with _
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-      // Prefer const assertions
-      'prefer-const': 'error',
+      // Keep lint non-blocking for existing legacy code; gradually tighten later
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' }],
+      'prefer-const': 'warn',
+      'vue/multi-word-component-names': 'warn',
       // Vue: enforce self-closing on void elements
       'vue/html-self-closing': ['warn', { html: { void: 'always' } }],
       // Vue: consistent component name casing

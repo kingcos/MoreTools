@@ -246,7 +246,7 @@ const copyLink = async () => {
   try {
     await navigator.clipboard.writeText(window.location.href)
     ElMessage.success(t('common.copied'))
-  } catch (err) {
+  } catch {
     ElMessage.error(t('common.copyFailed'))
   }
 }
@@ -271,9 +271,9 @@ const copyLink = async () => {
           <!-- 关闭和暗黑模式按钮组 -->
           <div class="flex justify-between items-center">
             <button
-              @click="toggleSidebar"
               class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
                      text-gray-800 dark:text-white border border-transparent transition-all focus:outline-none"
+              @click="toggleSidebar"
             >
               <svg
                 class="w-6 h-6"
@@ -291,9 +291,9 @@ const copyLink = async () => {
             </button>
             
             <button
-              @click="toggleDarkMode"
               class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
                      text-gray-800 dark:text-white border border-transparent transition-all focus:outline-none"
+              @click="toggleDarkMode"
             >
               <svg
                 class="w-6 h-6"
@@ -348,7 +348,7 @@ const copyLink = async () => {
             </div>
 
             <!-- 分割线 -->
-            <div class="border-t border-gray-200 dark:border-gray-700"></div>
+            <div class="border-t border-gray-200 dark:border-gray-700"/>
           </div>
 
           <!-- 搜索框 -->
@@ -386,22 +386,22 @@ const copyLink = async () => {
               <div
                 v-for="item in starredItems"
                 :key="item.id"
-                @click="selectPage(item.id)"
                 class="p-2 rounded-lg cursor-pointer transition-all"
                 :class="[
                   currentPage === item.id
                     ? 'bg-indigo-100 dark:bg-indigo-800 text-indigo-900 dark:text-white font-medium'
                     : 'text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
                 ]"
+                @click="selectPage(item.id)"
               >
                 <div class="flex items-center justify-between">
                   <span class="text-sm">{{ t(item.titleKey) }}</span>
                   <svg
-                    @click.stop="confirmingUnstar = confirmingUnstar === item.id ? null : item.id"
                     class="w-4 h-4 text-yellow-500 fill-current cursor-pointer"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
+                    @click.stop="confirmingUnstar = confirmingUnstar === item.id ? null : item.id"
                   >
                     <path
                       stroke-linecap="round"
@@ -413,14 +413,14 @@ const copyLink = async () => {
                 </div>
                 <div v-if="confirmingUnstar === item.id" class="mt-1 flex justify-end space-x-1">
                   <button
-                    @click.stop="toggleStar(item.menuId ?? '', item.id); confirmingUnstar = null"
                     class="text-xs text-red-500 hover:underline"
+                    @click.stop="toggleStar(item.menuId ?? '', item.id); confirmingUnstar = null"
                   >
                     确认取消收藏
                   </button>
                   <button
-                    @click.stop="confirmingUnstar = null"
                     class="text-xs text-gray-500 hover:underline"
+                    @click.stop="confirmingUnstar = null"
                   >
                     取消
                   </button>
@@ -440,8 +440,8 @@ const copyLink = async () => {
             <div v-for="menu in filteredMenuItems" :key="menu.id" class="space-y-1">
               <!-- 一级菜单项 -->
               <div
-                @click="toggleMenu(menu.id)"
                 class="flex items-center justify-between p-2 rounded-lg cursor-pointer text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                @click="toggleMenu(menu.id)"
               >
                 <span>{{ t(menu.titleKey) }}</span>
                 <svg
@@ -468,13 +468,13 @@ const copyLink = async () => {
                 <div
                   v-for="child in menu.children"
                   :key="child.id"
-                  @click="selectPage(child.id)"
                   class="flex items-center justify-between p-2 rounded-lg cursor-pointer transition-all"
                   :class="[
                     currentPage === child.id
                       ? 'bg-indigo-100 dark:bg-indigo-800 text-indigo-900 dark:text-white font-medium'
                       : 'text-gray-800 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
                   ]"
+                  @click="selectPage(child.id)"
                 >
                   <div class="flex items-center">
                     <component
@@ -484,12 +484,12 @@ const copyLink = async () => {
                     <span class="ml-1 text-sm">{{ t(child.titleKey) }}</span>
                   </div>
                   <svg
-                    @click.stop="toggleStar(menu.id, child.id)"
                     class="w-4 h-4"
                     :class="child.isStarred ? 'text-yellow-500 fill-current' : 'text-gray-400 dark:text-gray-500'"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
+                    @click.stop="toggleStar(menu.id, child.id)"
                   >
                     <path
                       stroke-linecap="round"
@@ -509,9 +509,9 @@ const copyLink = async () => {
           <!-- 显示模式选择 -->
           <div class="relative">
             <button
-              @click="isDisplayModeOpen = !isDisplayModeOpen"
               class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
                      text-gray-800 dark:text-white border border-transparent transition-all focus:outline-none"
+              @click="isDisplayModeOpen = !isDisplayModeOpen"
             >
               <span class="flex items-center justify-center w-6 h-6">
                 {{ currentDisplayMode.emoji }}
@@ -528,10 +528,10 @@ const copyLink = async () => {
                 v-for="mode in displayModes"
                 :key="mode.key"
                 href="#"
-                @click.prevent="selectDisplayMode(mode)"
                 class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 
                        text-gray-900 dark:text-white first:rounded-t-lg last:rounded-b-lg"
                 :class="{ 'bg-gray-100 dark:bg-gray-700': currentDisplayMode.key === mode.key }"
+                @click.prevent="selectDisplayMode(mode)"
               >
                 <div class="flex items-center space-x-2">
                   <span>{{ mode.emoji }}</span>
@@ -543,9 +543,9 @@ const copyLink = async () => {
 
           <!-- 关于按钮 -->
           <button
-            @click="selectPage('about')"
             class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
                    text-gray-800 dark:text-white border border-transparent transition-all focus:outline-none"
+            @click="selectPage('about')"
           >
             <span class="flex items-center space-x-1">
               <component :is="icons.About" class="w-5 h-5" />
@@ -556,9 +556,9 @@ const copyLink = async () => {
           <!-- 语言选择 -->
           <div class="relative">
             <button
-              @click="isLocaleMenuOpen = !isLocaleMenuOpen"
               class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
                      text-gray-800 dark:text-white border border-transparent transition-all focus:outline-none"
+              @click="isLocaleMenuOpen = !isLocaleMenuOpen"
             >
               <span class="flex items-center justify-center w-6 h-6">
                 {{ LOCALES.find(l => l.code === locale)?.emoji }}
@@ -574,7 +574,6 @@ const copyLink = async () => {
               <a
                 v-for="lang in LOCALES"
                 :key="lang.code"
-                @click="changeLocale(lang.code); isLocaleMenuOpen = false"
                 class="block px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 
                        text-gray-900 dark:text-white first:rounded-t-lg last:rounded-b-lg"
                 :class="[
@@ -582,6 +581,7 @@ const copyLink = async () => {
                     ? 'bg-gray-100 dark:bg-gray-700' 
                     : ''
                 ]"
+                @click="changeLocale(lang.code); isLocaleMenuOpen = false"
               >
                 <div class="flex items-center space-x-2">
                   <span>{{ lang.emoji }}</span>
@@ -605,8 +605,8 @@ const copyLink = async () => {
       <!-- 当边栏收起时顶部按钮 -->
       <button
         v-if="!isSidebarOpen"
-        @click="toggleSidebar"
         class="fixed left-4 top-4 p-2 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-white border border-transparent z-50 transition-all focus:outline-none"
+        @click="toggleSidebar"
       >
         <svg
           class="w-6 h-6"
@@ -625,12 +625,12 @@ const copyLink = async () => {
 
       <!-- 新增: 右侧分享按钮 -->
       <button
-        @click="copyLink"
         :class="[
           'fixed right-4 top-4 p-2 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700',
           'text-gray-800 dark:text-white border border-transparent transition-all focus:outline-none',
           isSidebarOpen ? 'z-0' : 'z-50'
         ]"
+        @click="copyLink"
       >
         <svg
           class="w-6 h-6"
@@ -649,8 +649,8 @@ const copyLink = async () => {
 
       <!-- 动态组件于切换页面 -->
       <component 
-        v-if="getCurrentComponent"
         :is="getCurrentComponent"
+        v-if="getCurrentComponent"
         class="h-full"
       />
     </div>
@@ -658,9 +658,9 @@ const copyLink = async () => {
     <!-- 遮罩层 - 仅在移动端且开时显示 -->
     <div
       v-if="isSidebarOpen"
-      @click="toggleSidebar"
       class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-0"
-    ></div>
+      @click="toggleSidebar"
+    />
   </div>
 </template>
 

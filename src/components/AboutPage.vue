@@ -105,13 +105,14 @@
               <div
                 v-for="tool in menu.children"
                 :key="tool.id"
-                @click="selectPage(tool.id)"
                 class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm 
                        hover:shadow-md hover:bg-gray-50 dark:hover:bg-gray-700/50
                        transition-all duration-200 cursor-pointer group"
+                @click="selectPage(tool.id)"
               >
                 <div class="flex flex-col items-center text-center space-y-2">
-                  <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 
+                  <div
+class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 
                               rounded-xl flex items-center justify-center
                               group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900/30 
                               transition-colors">
@@ -140,12 +141,10 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { useDisplayMode } from '../composables/useDisplayMode'
 import menuConfig from '../config/menu.json'
 import { icons, type IconName } from '../config/icons'
 
 const { t } = useI18n()
-const { isCompactMode: _isCompactMode } = useDisplayMode()
 
 // 确保 tool.icon 的类型正确
 const menuItems = menuConfig.menuItems.map(item => ({

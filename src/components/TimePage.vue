@@ -9,14 +9,14 @@
     <div class="flex-1 overflow-y-auto">
       <div class="p-4 mx-auto space-y-4" :class="{ 'max-w-4xl': isCompactMode }">
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-          <el-tabs v-model="currentTab" class="dark-mode-tabs" type="border-card">
-            <el-tab-pane
+          <ElTabs v-model="currentTab" class="dark-mode-tabs" type="border-card">
+            <ElTabPane
               v-for="tab in tabs"
               :key="tab.key"
               :label="t(tab.title)"
               :name="tab.key"
             />
-          </el-tabs>
+          </ElTabs>
 
           <div class="p-6 space-y-6">
             <div v-if="currentTab === 'timestampToDate'" class="space-y-4">
@@ -37,17 +37,18 @@
                 </div>
                 <div class="flex items-center justify-between mt-2">
                   <button
-                    @click="isMilliseconds = !isMilliseconds"
                     class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none"
                     :class="[
                       isMilliseconds
                         ? 'bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-400'
                         : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                     ]"
+                    @click="isMilliseconds = !isMilliseconds"
                   >
                     <div class="flex items-center space-x-1.5">
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        <path
+stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                               d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <span class="text-sm">{{ t('time.isMilliseconds') }}</span>
@@ -57,21 +58,21 @@
                   <div class="flex items-center">
                     <div v-if="inputTimestamp && confirmingAction === 'reset'" class="flex items-center space-x-2">
                       <button
-                        @click="handleConfirm('reset')"
                         class="px-4 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
                                bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
+                        @click="handleConfirm('reset')"
                       >{{ t('time.confirmReset') }}</button>
                       <button
-                        @click="cancelAction"
                         class="px-4 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
                                bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+                        @click="cancelAction"
                       >{{ t('time.cancel') }}</button>
                     </div>
                     <button
                       v-else-if="inputTimestamp"
-                      @click="confirmingAction = 'reset'"
                       class="px-4 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
                              bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400"
+                      @click="confirmingAction = 'reset'"
                     >{{ t('time.reset') }}</button>
                   </div>
                 </div>
@@ -88,10 +89,10 @@
                     {{ convertedDate }}
                   </div>
                   <button
-                    @click="copyText(convertedDate)"
                     class="px-4 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 
                            dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg 
                            transition-colors focus:outline-none"
+                    @click="copyText(convertedDate)"
                   >{{ t('time.copy') }}</button>
                 </div>
               </div>
@@ -121,14 +122,15 @@
 
               <div class="space-y-2">
                 <button
-                  @click="refreshCurrentTime"
                   class="px-4 py-2 text-sm rounded-lg transition-colors focus:outline-none
                          bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 
                          text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                  @click="refreshCurrentTime"
                 >
                   <div class="flex items-center space-x-1.5">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      <path
+stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                             d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
                     <span>{{ t('time.refresh') }}</span>
@@ -150,10 +152,10 @@
                   <div class="flex items-center space-x-2">
                     <span class="text-sm text-gray-500 dark:text-gray-400">{{ t('time.milliseconds') }}</span>
                     <button
-                      @click="copyText(convertedTimestampMs)"
                       class="px-4 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 
                              dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg 
                              transition-colors focus:outline-none"
+                      @click="copyText(convertedTimestampMs)"
                     >{{ t('time.copy') }}</button>
                   </div>
                 </div>
@@ -165,10 +167,10 @@
                   <div class="flex items-center space-x-2">
                     <span class="text-sm text-gray-500 dark:text-gray-400">{{ t('time.seconds') }}</span>
                     <button
-                      @click="copyText(convertedTimestampSec)"
                       class="px-4 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 
                              dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg 
                              transition-colors focus:outline-none"
+                      @click="copyText(convertedTimestampSec)"
                     >{{ t('time.copy') }}</button>
                   </div>
                 </div>

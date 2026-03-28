@@ -3,20 +3,20 @@
     <div class="flex justify-between items-center">
       <div class="flex items-center gap-2">
         <button
-          @click="handleJsonChange"
           class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none
                  bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700
                  text-white"
+          @click="handleJsonChange"
         >
           <div class="flex items-center space-x-1.5">
             <span class="text-sm">{{ t('json.format') }}</span>
           </div>
         </button>
         <button
-          @click="applySortKeys"
           class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none
                  bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700
                  text-white"
+          @click="applySortKeys"
         >
           <div class="flex items-center space-x-1.5">
             <span class="text-sm">{{ t('json.sortKeys') }}</span>
@@ -28,26 +28,26 @@
         <div v-if="originalJson || modifiedJson" class="inline-block">
           <div v-if="confirmingClear" class="flex items-center space-x-2">
             <button
-              @click="resetContent"
               class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
                      bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-400"
+              @click="resetContent"
             >
               {{ t('json.confirmReset') }}
             </button>
             <button
-              @click="confirmingClear = false"
               class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
                      bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400"
+              @click="confirmingClear = false"
             >
               {{ t('json.cancel') }}
             </button>
           </div>
           <button
             v-else
-            @click="confirmingClear = true"
             class="px-3 py-1.5 text-sm rounded-lg transition-colors focus:outline-none
                    bg-red-50 dark:bg-red-950/50 text-red-500 dark:text-red-400
                    hover:bg-red-100 dark:hover:bg-red-900/50"
+            @click="confirmingClear = true"
           >
             {{ t('json.reset') }}
           </button>
@@ -55,7 +55,7 @@
       </div>
     </div>
 
-    <div class="min-h-[200px] max-h-[500px]" ref="editorContainer"></div>
+    <div ref="editorContainer" class="min-h-[200px] max-h-[500px]"/>
 
     <div class="space-y-2">
       <div class="flex items-center justify-end">
@@ -101,7 +101,7 @@ const formatJson = (jsonStr: string): string => {
   try {
     if (!jsonStr.trim()) return ''
     return JSON.stringify(JSON.parse(jsonStr), null, 2)
-  } catch (e) {
+  } catch {
     throw new Error(t('json.invalidJson'))
   }
 }
@@ -116,12 +116,16 @@ const resetContent = () => {
 
 const applySortKeys = () => {
   try {
-    if (originalJson.value.trim()) {
-      originalJson.value = JSON.stringify(sortKeys(JSON.parse(originalJson.value)), null, 2)
-    }
-    if (modifiedJson.value.trim()) {
-      modifiedJson.value = JSON.stringify(sortKeys(JSON.parse(modifiedJson.value)), null, 2)
-    }
+    // Parse both sides first to avoid partial updates when one side is invalid.
+    const nextOriginal = originalJson.value.trim()
+      ? JSON.stringify(sortKeys(JSON.parse(originalJson.value)), null, 2)
+      : ''
+    const nextModified = modifiedJson.value.trim()
+      ? JSON.stringify(sortKeys(JSON.parse(modifiedJson.value)), null, 2)
+      : ''
+
+    originalJson.value = nextOriginal
+    modifiedJson.value = nextModified
     createMergeView()
     error.value = ''
   } catch (e) {
