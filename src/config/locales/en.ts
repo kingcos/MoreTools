@@ -126,7 +126,8 @@ export default {
     copy: 'Copy',
     copySuccess: 'Copied successfully',
     copyFailed: 'Copy failed',
-    copyError: 'Copy failed'
+    copyError: 'Copy failed',
+    sortKeys: 'Sort Keys'
   },
   light: {
     title: 'Photo Light',

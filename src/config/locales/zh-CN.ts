@@ -128,7 +128,8 @@ export default {
     copy: '复制',
     copySuccess: '复制成功',
     copyFailed: '复制失败',
-    copyError: '复制失败'
+    copyError: '复制失败',
+    sortKeys: 'Key 排序'
   },
   light: {
     title: '拍照补光灯',

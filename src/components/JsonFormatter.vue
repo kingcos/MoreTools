@@ -1,7 +1,7 @@
 <template>
   <div class="p-6 space-y-6">
     <div class="flex justify-between items-center">
-      <div>
+      <div class="flex items-center gap-2">
         <button
           @click="toggleCompact"
           class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none"
@@ -14,6 +14,17 @@
           <div class="flex items-center space-x-1.5">
             <el-icon class="w-4 h-4"><Fold /></el-icon>
             <span class="text-sm">{{ t('json.compress') }}</span>
+          </div>
+        </button>
+        <button
+          @click="applySortKeys"
+          class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none
+                 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700
+                 text-white"
+        >
+          <div class="flex items-center space-x-1.5">
+            <el-icon class="w-4 h-4"><Sort /></el-icon>
+            <span class="text-sm">{{ t('json.sortKeys') }}</span>
           </div>
         </button>
       </div>
@@ -108,7 +119,7 @@ import { json } from '@codemirror/lang-json'
 import { lineNumbers } from '@codemirror/view'
 import { EditorView } from '@codemirror/view'
 import { EditorState } from '@codemirror/state'
-import { Fold } from '@element-plus/icons-vue'
+import { Fold, Sort } from '@element-plus/icons-vue'
 
 const { t } = useI18n()
 
@@ -117,6 +128,17 @@ const outputJson = ref('')
 const error = ref('')
 const confirmingClear = ref(false)
 const isJsonCompressed = ref(false)
+
+const sortKeys = (obj: unknown): unknown => {
+  if (Array.isArray(obj)) return obj.map(sortKeys)
+  if (obj !== null && typeof obj === 'object') {
+    return Object.keys(obj as Record<string, unknown>).sort().reduce((acc, key) => {
+      acc[key] = sortKeys((obj as Record<string, unknown>)[key])
+      return acc
+    }, {} as Record<string, unknown>)
+  }
+  return obj
+}
 
 const extensions = computed(() => [
   json(),
@@ -162,6 +184,18 @@ const handleInputChange = (value: string) => {
 const toggleCompact = () => {
   isJsonCompressed.value = !isJsonCompressed.value
   handleInputChange(inputJson.value)
+}
+
+const applySortKeys = () => {
+  try {
+    if (!inputJson.value.trim()) return
+    const parsed = JSON.parse(inputJson.value)
+    const sorted = sortKeys(parsed)
+    inputJson.value = JSON.stringify(sorted, null, isJsonCompressed.value ? 0 : 2)
+    handleInputChange(inputJson.value)
+  } catch (e) {
+    // input is invalid JSON, ignore
+  }
 }
 
 const resetContent = () => {

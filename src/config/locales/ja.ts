@@ -126,7 +126,8 @@ export default {
     copy: 'コピー',
     copySuccess: 'コピーしました',
     copyFailed: 'コピーに失敗しました',
-    copyError: 'コピーに失敗しました'
+    copyError: 'コピーに失敗しました',
+    sortKeys: 'キーソート'
   },
   light: {
     title: '写真ライト',

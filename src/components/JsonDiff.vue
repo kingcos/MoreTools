@@ -5,11 +5,21 @@
         <button
           @click="handleJsonChange"
           class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none
-                 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 
+                 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700
                  text-white"
         >
           <div class="flex items-center space-x-1.5">
             <span class="text-sm">{{ t('json.format') }}</span>
+          </div>
+        </button>
+        <button
+          @click="applySortKeys"
+          class="px-3 py-1.5 rounded-lg transition-colors focus:outline-none
+                 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700
+                 text-white"
+        >
+          <div class="flex items-center space-x-1.5">
+            <span class="text-sm">{{ t('json.sortKeys') }}</span>
           </div>
         </button>
       </div>
@@ -76,6 +86,17 @@ const error = ref('')
 const confirmingClear = ref(false)
 const editorContainer = ref<HTMLElement | null>(null)
 
+const sortKeys = (obj: unknown): unknown => {
+  if (Array.isArray(obj)) return obj.map(sortKeys)
+  if (obj !== null && typeof obj === 'object') {
+    return Object.keys(obj as Record<string, unknown>).sort().reduce((acc, key) => {
+      acc[key] = sortKeys((obj as Record<string, unknown>)[key])
+      return acc
+    }, {} as Record<string, unknown>)
+  }
+  return obj
+}
+
 const formatJson = (jsonStr: string): string => {
   try {
     if (!jsonStr.trim()) return ''
@@ -91,6 +112,21 @@ const resetContent = () => {
   error.value = ''
   confirmingClear.value = false
   createMergeView()
+}
+
+const applySortKeys = () => {
+  try {
+    if (originalJson.value.trim()) {
+      originalJson.value = JSON.stringify(sortKeys(JSON.parse(originalJson.value)), null, 2)
+    }
+    if (modifiedJson.value.trim()) {
+      modifiedJson.value = JSON.stringify(sortKeys(JSON.parse(modifiedJson.value)), null, 2)
+    }
+    createMergeView()
+    error.value = ''
+  } catch (e) {
+    error.value = e instanceof Error ? e.message : String(e)
+  }
 }
 
 const handleJsonChange = () => {
