@@ -134,6 +134,10 @@ class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20
             </div>
           </div>
         </div>
+
+        <div class="mt-2">
+          <ToolAd page="about" />
+        </div>
       </div>
     </div>
   </div>
@@ -143,6 +147,7 @@ class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20
 import { useI18n } from 'vue-i18n'
 import menuConfig from '../config/menu.json'
 import { icons, type IconName } from '../config/icons'
+import ToolAd from './ToolAd.vue'
 
 const { t } = useI18n()
 

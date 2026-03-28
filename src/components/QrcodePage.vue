@@ -288,6 +288,8 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             </div>
           </div>
         </div>
+
+        <ToolAd page="qrcode" />
       </div>
     </div>
   </div>
@@ -303,6 +305,7 @@ import QrScanner from 'qr-scanner'
 import { useDisplayMode } from '../composables/useDisplayMode'
 import { safeGetJSON, safeSetJSON } from '../utils/storage'
 import { addToHistory, removeFromHistory, type QrHistoryItem } from '../utils/qrHistory'
+import ToolAd from './ToolAd.vue'
 
 const { t } = useI18n()
 const inputText = ref('')

@@ -21,6 +21,8 @@
           <JsonFormatter v-if="currentTab === 'jsonFormat'" />
           <JsonDiff v-if="currentTab === 'jsonDiff'" />
         </div>
+
+        <ToolAd page="json" />
       </div>
     </div>
   </div>
@@ -33,6 +35,7 @@ import { ElTabs, ElTabPane } from 'element-plus'
 import JsonFormatter from './JsonFormatter.vue'
 import JsonDiff from './JsonDiff.vue'
 import { useDisplayMode } from '../composables/useDisplayMode'
+import ToolAd from './ToolAd.vue'
 
 const { t } = useI18n()
 const { isCompactMode } = useDisplayMode()

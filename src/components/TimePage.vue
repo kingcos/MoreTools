@@ -178,6 +178,8 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             </div>
           </div>
         </div>
+
+        <ToolAd page="time" />
       </div>
     </div>
   </div>
@@ -188,6 +190,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElTabs, ElTabPane } from 'element-plus'
 import { useDisplayMode } from '../composables/useDisplayMode'
+import ToolAd from './ToolAd.vue'
 
 const { t } = useI18n()
 

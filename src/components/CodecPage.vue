@@ -106,6 +106,8 @@
             </div>
           </div>
         </div>
+
+        <ToolAd page="codec" />
       </div>
     </div>
   </div>
@@ -116,6 +118,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage, ElTabs, ElTabPane } from 'element-plus'
 import { useDisplayMode } from '../composables/useDisplayMode'
+import ToolAd from './ToolAd.vue'
 
 const { t } = useI18n()
 const inputText = ref('')

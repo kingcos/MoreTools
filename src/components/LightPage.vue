@@ -230,6 +230,10 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
       </button>
     </div>
 
+    <div v-if="!isFullscreen" class="px-4 pb-3 bg-gray-50 dark:bg-gray-800">
+      <ToolAd page="light" />
+    </div>
+
     <!-- 全屏模式 -->
     <div 
       v-if="isFullscreen"
@@ -251,6 +255,7 @@ stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
 import { ref, onUnmounted, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ElMessage } from 'element-plus'
+import ToolAd from './ToolAd.vue'
 
 interface ImageCapturer {
   takePhoto: () => Promise<Blob>
