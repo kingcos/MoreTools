@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, nextTick, defineAsyncComponent } from 'vue'
+import { ref, onMounted, computed, nextTick, defineAsyncComponent, markRaw } from 'vue'
 import menuConfig from './config/menu.json'
 import { useI18n } from 'vue-i18n'
 import { LOCALES } from './config/i18n'
@@ -10,13 +10,14 @@ import { ElMessage } from 'element-plus'
 import { safeGetJSON } from './utils/storage'
 
 // 懒加载所有工具页面，减少首屏 JS 体积
-const QrcodePage = defineAsyncComponent(() => import('./components/QrcodePage.vue'))
-const CodecPage = defineAsyncComponent(() => import('./components/CodecPage.vue'))
-const TimePage = defineAsyncComponent(() => import('./components/TimePage.vue'))
-const JsonPage = defineAsyncComponent(() => import('./components/JsonPage.vue'))
-const LightPage = defineAsyncComponent(() => import('./components/LightPage.vue'))
-const TextPage = defineAsyncComponent(() => import('./components/TextPage.vue'))
-const AboutPage = defineAsyncComponent(() => import('./components/AboutPage.vue'))
+// 使用 markRaw 避免 Vue 将组件对象包装为响应式代理，防止样式异常和性能警告
+const QrcodePage = markRaw(defineAsyncComponent(() => import('./components/QrcodePage.vue')))
+const CodecPage = markRaw(defineAsyncComponent(() => import('./components/CodecPage.vue')))
+const TimePage = markRaw(defineAsyncComponent(() => import('./components/TimePage.vue')))
+const JsonPage = markRaw(defineAsyncComponent(() => import('./components/JsonPage.vue')))
+const LightPage = markRaw(defineAsyncComponent(() => import('./components/LightPage.vue')))
+const TextPage = markRaw(defineAsyncComponent(() => import('./components/TextPage.vue')))
+const AboutPage = markRaw(defineAsyncComponent(() => import('./components/AboutPage.vue')))
 
 const { locale, t } = useI18n()
 
