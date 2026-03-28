@@ -299,11 +299,13 @@ import QrScanner from 'qr-scanner'
 import { ElTabs, ElTabPane } from 'element-plus'
 import 'element-plus/dist/index.css'
 import { useDisplayMode } from '../composables/useDisplayMode'
+import { safeGetJSON, safeSetJSON } from '../utils/storage'
+import { addToHistory, removeFromHistory, type QrHistoryItem } from '../utils/qrHistory'
 
 const { t } = useI18n()
 const inputText = ref('')
 const qrcodeText = ref('')
-const history = ref<{ text: string; timestamp: number }[]>([])
+const history = ref<QrHistoryItem[]>([])
 const qrcodeRef = ref()
 const showAll = ref(false)
 const confirmingAction = ref<string | null>(null)
@@ -321,12 +323,9 @@ const tabs = [
 // 检测暗黑模式
 const isDarkMode = useDark()
 
-// 从本地存储载历史记录
+// 从本地存储加载历史记录（安全解析，防止损坏数据导致崩溃）
 onMounted(() => {
-  const savedHistory = localStorage.getItem('qrcode-history')
-  if (savedHistory) {
-    history.value = JSON.parse(savedHistory)
-  }
+  history.value = safeGetJSON<QrHistoryItem[]>('qrcode-history', [])
 })
 
 // 生成二维码
@@ -346,36 +345,15 @@ const resetInput = () => {
 
 // 删除历史记录
 const deleteHistory = (index: number) => {
-  history.value.splice(index, 1)
-  localStorage.setItem('qrcode-history', JSON.stringify(history.value))
+  history.value = removeFromHistory(history.value, index)
+  safeSetJSON('qrcode-history', history.value)
 }
 
-// 修改保存历史记录函数
+// 保存历史记录（去重 + 置顶 + 限制数量）
 const saveToHistory = () => {
   if (!inputText.value) return
-  
-  // 检查是否存在相同文本的记录
-  const existingIndex = history.value.findIndex(item => item.text === inputText.value)
-  
-  if (existingIndex !== -1) {
-    // 如果存在相同文本，则更新时间戳
-    history.value[existingIndex].timestamp = Date.now()
-    // 将更新的记录移到最前面
-    const updatedItem = history.value.splice(existingIndex, 1)[0]
-    history.value.unshift(updatedItem)
-  } else {
-    // 如果不存在，则添加新记录
-    history.value.unshift({
-      text: inputText.value,
-      timestamp: Date.now()
-    })
-    
-    if (history.value.length > 20) {
-      history.value.pop()
-    }
-  }
-  
-  localStorage.setItem('qrcode-history', JSON.stringify(history.value))
+  history.value = addToHistory(history.value, inputText.value)
+  safeSetJSON('qrcode-history', history.value)
 }
 
 // 修改下载二维码图片函数
@@ -424,8 +402,7 @@ const downloadQRCode = () => {
     }
     
     img.src = url
-  } catch (error) {
-    console.error('下载失败:', error)
+  } catch {
     ElMessage.error(t('qrcode.downloadError'))
   }
 }
@@ -464,7 +441,7 @@ const cancelAction = () => {
 // 清空历史记录
 const clearHistory = () => {
   history.value = []
-  localStorage.setItem('qrcode-history', '[]')
+  safeSetJSON('qrcode-history', [])
   confirmingAction.value = null
 }
 
@@ -535,7 +512,7 @@ const toggleLargeMode = () => {
 const handleDrop = async (event: DragEvent) => {
   const file = event.dataTransfer?.files[0]
   if (!file || !file.type.startsWith('image/')) {
-    ElMessage.error('请上传图片文件')
+    ElMessage.error(t('qrcode.invalidImageFile'))
     return
   }
 

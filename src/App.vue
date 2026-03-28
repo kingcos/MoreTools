@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, nextTick } from 'vue'
-import QrcodePage from './components/QrcodePage.vue'
-import CodecPage from './components/CodecPage.vue'
-import TimePage from './components/TimePage.vue'
-import JsonPage from './components/JsonPage.vue'
-import LightPage from './components/LightPage.vue'
-import TextPage from './components/TextPage.vue'
-import AboutPage from './components/AboutPage.vue'
+import { ref, onMounted, computed, nextTick, defineAsyncComponent } from 'vue'
 import menuConfig from './config/menu.json'
 import { useI18n } from 'vue-i18n'
 import { LOCALES } from './config/i18n'
@@ -14,8 +7,29 @@ import { useDark } from '@vueuse/core'
 import { useDisplayMode } from './composables/useDisplayMode'
 import { icons, type IconName } from './config/icons'
 import { ElMessage } from 'element-plus'
+import { safeGetJSON } from './utils/storage'
+
+// 懒加载所有工具页面，减少首屏 JS 体积
+const QrcodePage = defineAsyncComponent(() => import('./components/QrcodePage.vue'))
+const CodecPage = defineAsyncComponent(() => import('./components/CodecPage.vue'))
+const TimePage = defineAsyncComponent(() => import('./components/TimePage.vue'))
+const JsonPage = defineAsyncComponent(() => import('./components/JsonPage.vue'))
+const LightPage = defineAsyncComponent(() => import('./components/LightPage.vue'))
+const TextPage = defineAsyncComponent(() => import('./components/TextPage.vue'))
+const AboutPage = defineAsyncComponent(() => import('./components/AboutPage.vue'))
 
 const { locale, t } = useI18n()
+
+// 菜单子项类型定义
+interface MenuItem {
+  id: string
+  titleKey: string
+  icon: IconName
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component: ReturnType<typeof defineAsyncComponent> | any
+  isStarred: boolean
+  menuId?: string
+}
 
 // 组件映射
 const componentMap = {
@@ -49,10 +63,9 @@ const searchQuery = ref('')
 const confirmingUnstar = ref<string | null>(null)
 const isLocaleMenuOpen = ref(false)
 
-// 收藏状态持久化
-const loadStarredState = () => {
-  const saved = localStorage.getItem('starredItems')
-  return saved ? JSON.parse(saved) : {}
+// 收藏状态持久化（安全读取，防止 JSON 损坏导致崩溃）
+const loadStarredState = (): Record<string, boolean> => {
+  return safeGetJSON<Record<string, boolean>>('starredItems', {})
 }
 
 // 初始化菜单数据
@@ -67,8 +80,8 @@ const menuItems = ref(menuConfig.menuItems.map(item => ({
 })))
 
 // 计算收藏项
-const starredItems = computed(() => {
-  const items: any[] = []
+const starredItems = computed((): MenuItem[] => {
+  const items: MenuItem[] = []
   menuItems.value.forEach(menu => {
     menu.children.forEach(child => {
       if (child.isStarred) {
@@ -399,7 +412,7 @@ const copyLink = async () => {
                 </div>
                 <div v-if="confirmingUnstar === item.id" class="mt-1 flex justify-end space-x-1">
                   <button
-                    @click.stop="toggleStar(item.menuId, item.id); confirmingUnstar = null"
+                    @click.stop="toggleStar(item.menuId ?? '', item.id); confirmingUnstar = null"
                     class="text-xs text-red-500 hover:underline"
                   >
                     确认取消收藏

@@ -42,6 +42,8 @@ export default {
     dragTip: '或将图片拖放到此处',
     decodedResult: '解析结果',
     decodeError: '无法解析二维码',
+    invalidImageFile: '请上传图片文件',
+    downloadError: '下载失败，请重试',
     placeholder: '请输入要转换的文本...',
     save: '生成二维码',
     reset: '重置',

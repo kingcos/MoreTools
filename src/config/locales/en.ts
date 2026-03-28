@@ -62,6 +62,8 @@ export default {
     dragTip: 'or drag and drop image here',
     decodedResult: 'Decoded Result',
     decodeError: 'Failed to decode QR code',
+    invalidImageFile: 'Please upload an image file',
+    downloadError: 'Download failed, please try again',
     zoom: 'Zoom Mode'
   },
   codec: {

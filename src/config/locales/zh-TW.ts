@@ -62,6 +62,8 @@ export default {
     dragTip: '或將圖片拖放到此處',
     decodedResult: '解析結果',
     decodeError: '無法解析二維碼',
+    invalidImageFile: '請上傳圖片文件',
+    downloadError: '下載失敗，請重試',
     zoom: '放大模式'
   },
   codec: {

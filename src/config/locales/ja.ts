@@ -62,6 +62,8 @@ export default {
     dragTip: 'または画像をここにドロップ',
     decodedResult: '読み取り結果',
     decodeError: 'QRコードを読み取れません',
+    invalidImageFile: '画像ファイルをアップロードしてください',
+    downloadError: 'ダウンロードに失敗しました。もう一度お試しください',
     zoom: 'ズームモード'
   },
   codec: {
