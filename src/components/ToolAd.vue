@@ -1,13 +1,13 @@
 <template>
   <div
     v-if="isEnabled"
-    class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-3"
+    class="tool-ad bg-white dark:bg-gray-800 rounded-lg shadow-sm p-3"
   >
     <Adsense
       :slot-id="slotId"
-      ad-style="display: block; width: 100%;"
-      format="rectangle"
-      full-width-responsive="false"
+      ad-style="display: block; width: 100%; min-height: 90px;"
+      format="auto"
+      full-width-responsive="true"
     />
   </div>
 </template>
@@ -35,3 +35,17 @@ const pageSlotMap = {
 const slotId = computed(() => pageSlotMap[props.page] || commonSlot)
 const isEnabled = computed(() => import.meta.env.PROD && !!slotId.value)
 </script>
+
+<style scoped>
+.tool-ad {
+  overflow: hidden;
+  min-height: 114px;
+  contain: layout paint style;
+}
+
+.tool-ad :deep(.adsbygoogle) {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100%;
+}
+</style>

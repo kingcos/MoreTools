@@ -26,6 +26,17 @@ interface AdsByGoogleWindow extends Window {
 
 let adsenseScriptPromise: Promise<void> | null = null
 
+const waitForAdContainerReady = async (el: HTMLElement): Promise<boolean> => {
+  // Wait until ad container has a measurable width before calling adsbygoogle.push.
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    if (el.getBoundingClientRect().width > 0) return true
+    await new Promise<void>((resolve) => {
+      window.requestAnimationFrame(() => resolve())
+    })
+  }
+  return false
+}
+
 const loadAdsenseScript = (adsenseClientId: string): Promise<void> => {
   if (adsenseScriptPromise) return adsenseScriptPromise
 
@@ -91,9 +102,16 @@ onMounted(async () => {
   try {
     await loadAdsenseScript(clientId)
     await nextTick()
+    if (!adEl.value) return
+    if (adEl.value.dataset.adsInitialized === 'true') return
+
+    const isReady = await waitForAdContainerReady(adEl.value)
+    if (!isReady) return
+
     ;(((window as AdsByGoogleWindow).adsbygoogle = (window as AdsByGoogleWindow).adsbygoogle || []) as unknown[]).push(
       {},
     )
+    adEl.value.dataset.adsInitialized = 'true'
   } catch {
     // Script can be blocked by browser extensions/privacy settings.
   }
